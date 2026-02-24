@@ -178,8 +178,8 @@ fig2.update_layout(
 for ann in fig2.layout.annotations:
     ann.font = dict(size=15, family='Georgia', color='#444444')
 
-fig2.update_xaxes(showgrid=True, gridcolor='white', gridwidth=1, zeroline=False, row=1, col=1)
-fig2.update_xaxes(showgrid=True, gridcolor='white', gridwidth=1, zeroline=False, row=2, col=1)
+fig2.update_xaxes(showgrid=True, gridcolor='white', gridwidth=1, zeroline=False, layer='above traces', row=1, col=1)
+fig2.update_xaxes(showgrid=True, gridcolor='white', gridwidth=1, zeroline=False, layer='above traces', row=2, col=1)
 fig2.update_yaxes(showgrid=False, row=1, col=1)
 fig2.update_yaxes(showgrid=False, row=2, col=1)
 fig2.update_xaxes(range=[0, max(sp_total_wpa, rp_total_wpa) * 1.35], row=1, col=1)
@@ -518,6 +518,54 @@ html = f"""<!DOCTYPE html>
     <div class="callout">
       <p><strong>The Core Tension:</strong> WAR says high-leverage relievers are barely worth noticing. WPA says they're the most impactful pitchers in baseball. Neither is fully right.</p>
     </div>
+  </div>
+</section>
+
+<!-- ── Data & Methodology ───────────────────────────────────────── -->
+<section>
+  <div class="container">
+    <h2>Data &amp; Methodology</h2>
+    <p>
+      All data is sourced from <strong>Fangraphs</strong> via the
+      <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a>
+      Python library, covering MLB seasons from <strong>{START_YEAR}&ndash;{END_YEAR}</strong>.
+      A minimum threshold of <strong>{QUAL} innings pitched</strong> per season is applied to filter out
+      position-player pitching appearances and other negligible outings.
+    </p>
+
+    <h3>WAR Variant: fWAR</h3>
+    <p>
+      The WAR values used throughout this analysis are <strong>fWAR</strong> (Fangraphs Wins Above Replacement).
+      Unlike Baseball-Reference&rsquo;s bWAR, which is built on RA9 (runs allowed per 9 innings),
+      fWAR uses <strong>FIP</strong> (Fielding Independent Pitching) as its core performance component.
+      FIP isolates strikeouts, walks, hit-by-pitches, and home runs &mdash; outcomes the pitcher directly controls &mdash;
+      stripping out batted-ball luck and defensive quality. This makes fWAR a better measure of repeatable
+      pitcher skill, but it also means that any value derived from inducing weak contact or suppressing
+      BABIP is not captured.
+    </p>
+
+    <h3>Pitcher Classification</h3>
+    <div class="metrics">
+      <div class="metric-card">
+        <strong>Starting Pitcher (SP)</strong>
+        <p>Games Started &ge; 5 <em>and</em> Innings Pitched &ge; 20 in a season. This captures pitchers with a meaningful starting workload while excluding openers and spot starters with minimal usage.</p>
+      </div>
+      <div class="metric-card">
+        <strong>Relief Pitcher (RP)</strong>
+        <p>Games &ge; 5 <em>and</em> Games Started &lt; 3 in a season. The low GS ceiling excludes swingmen and spot starters, isolating pitchers used primarily in relief. Pitchers who don&rsquo;t meet either definition are excluded.</p>
+      </div>
+    </div>
+
+    <h3>Leverage Clustering</h3>
+    <p>
+      After aggregating each pitcher&rsquo;s career totals across all seasons in the dataset,
+      relievers are separated into three tiers using <strong>k-means clustering</strong> (k&nbsp;=&nbsp;3)
+      on their average <strong>Leverage Index (pLI)</strong>. pLI measures the average importance of
+      the game situations in which a pitcher is used &mdash; an LI of 1.0 is league-average,
+      while values above ~1.1 indicate consistent high-leverage deployment. The clustering
+      is unsupervised: the algorithm finds natural groupings without prior assumptions about
+      where the tier boundaries should fall.
+    </p>
   </div>
 </section>
 
