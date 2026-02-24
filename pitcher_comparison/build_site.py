@@ -82,9 +82,9 @@ fig1 = px.scatter(
     rp_df, x='IP', y='LI',
     color='Cluster_Label',
     color_discrete_map={
-        'Low Leverage': '#BCBD22',
-        'Medium Leverage': '#FF7F0E',
-        'High Leverage': '#D62728',
+        'Low Leverage': '#66A61E',
+        'Medium Leverage': '#7570B3',
+        'High Leverage': '#E7298A',
     },
     hover_data=['Player', 'ERA', 'WAR', 'LI', 'IP', 'Seasons'],
     labels={
@@ -97,7 +97,7 @@ fig1 = px.scatter(
 fig1.update_traces(marker=dict(size=8, opacity=0.4))
 fig1.update_layout(
     font_family='Georgia, Times New Roman, serif',
-    height=550, width=900,
+    height=550,
     legend_title_text='Leverage Tier',
     hoverlabel=dict(font_family='Georgia, Times New Roman, serif'),
     title_x=0.5,
@@ -106,10 +106,12 @@ fig1.update_layout(
     plot_bgcolor='#f9f9f9',
     margin=dict(l=60, r=30, t=80, b=60),
 )
+_hover_bg1 = {'Low Leverage': '#E8F5E0', 'Medium Leverage': '#ECEAF5', 'High Leverage': '#FCE4F0'}
 fig1.for_each_trace(lambda t: t.update(
+    hoverlabel=dict(bgcolor=_hover_bg1.get(t.name, '#fff'), font_color='#333'),
     hovertemplate=t.hovertemplate.replace('=', ' = ') if t.hovertemplate else t.hovertemplate
 ))
-chart1_html = fig1.to_html(full_html=False, include_plotlyjs=False)
+chart1_html = fig1.to_html(full_html=False, include_plotlyjs=False, config={'responsive': True})
 
 # ── Chart 2: Bar chart (recreated in Plotly) ──────────────────────────
 comparison_wpa = comparison_df.dropna(subset=['WPA'])
@@ -129,7 +131,7 @@ fig2 = make_subplots(
 )
 
 categories = ['Starting Pitchers', 'High-Leverage Relievers']
-sp_color, rp_color = '#0072B2', '#E69F00'
+sp_color, rp_color = '#1B9E77', '#D95F02'
 
 # WPA bars
 fig2.add_trace(go.Bar(
@@ -166,7 +168,7 @@ fig2.update_layout(
         x=0.5,
     ),
     font_family='Georgia, Times New Roman, serif',
-    height=700, width=900,
+    height=700,
     paper_bgcolor='rgba(0,0,0,0)',
     plot_bgcolor='#f9f9f9',
     margin=dict(l=180, r=100, t=120, b=40),
@@ -183,7 +185,7 @@ fig2.update_yaxes(showgrid=False, row=2, col=1)
 fig2.update_xaxes(range=[0, max(sp_total_wpa, rp_total_wpa) * 1.35], row=1, col=1)
 fig2.update_xaxes(range=[0, sp_total_war * 1.45], row=2, col=1)
 
-chart2_html = fig2.to_html(full_html=False, include_plotlyjs=False)
+chart2_html = fig2.to_html(full_html=False, include_plotlyjs=False, config={'staticPlot': True, 'responsive': True})
 
 # ── Chart 3: WPA vs WAR scatter ───────────────────────────────────────
 hl_rp_names = high_lev_rp_df['Player'].unique()
@@ -206,12 +208,12 @@ fig3 = px.scatter(
         'WPA': 'Win Probability Added (WPA)',
     },
     title=f'WPA vs WAR: Starting Pitchers vs High-Leverage Relievers<br><sup>Individual Pitcher-Seasons, {START_YEAR}\u2013{END_YEAR}</sup>',
-    color_discrete_map={'SP': '#0072B2', 'RP (High Lev)': '#E69F00'},
+    color_discrete_map={'SP': '#1B9E77', 'RP (High Lev)': '#D95F02'},
 )
 fig3.update_traces(marker=dict(size=4, opacity=0.5))
 fig3.update_layout(
     font_family='Georgia, Times New Roman, serif',
-    height=650, width=950,
+    height=650,
     hoverlabel=dict(font_family='Georgia, Times New Roman, serif'),
     title_x=0.5,
     title_font_size=20,
@@ -219,10 +221,12 @@ fig3.update_layout(
     plot_bgcolor='#f9f9f9',
     margin=dict(l=60, r=30, t=80, b=60),
 )
+_hover_bg3 = {'SP': '#D4F0E7', 'RP (High Lev)': '#FDEBD0'}
 fig3.for_each_trace(lambda t: t.update(
+    hoverlabel=dict(bgcolor=_hover_bg3.get(t.name, '#fff'), font_color='#333'),
     hovertemplate=t.hovertemplate.replace('=', ' = ') if t.hovertemplate else t.hovertemplate
 ))
-chart3_html = fig3.to_html(full_html=False, include_plotlyjs=False)
+chart3_html = fig3.to_html(full_html=False, include_plotlyjs=False, config={'responsive': True})
 
 # ── Cluster stats for the text ────────────────────────────────────────
 cluster_stats = []
@@ -247,15 +251,15 @@ html = f"""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Valuation Gap: High-Leverage Relievers</title>
+<title>Reframing Bullpen Value: WAR, WPA, and the Leverage Gap</title>
 <script src="https://cdn.plot.ly/plotly-2.35.0.min.js"></script>
 <style>
   :root {{
     --bg: #fdfdfd;
     --text: #222;
     --muted: #555;
-    --accent: #0072B2;
-    --accent2: #E69F00;
+    --accent: #1B9E77;
+    --accent2: #D95F02;
     --border: #e0e0e0;
     --card-bg: #ffffff;
   }}
@@ -395,8 +399,7 @@ html = f"""<!DOCTYPE html>
   /* ── Chart wrapper ────────────────────────────── */
   .chart-wrap {{
     margin: 2rem auto;
-    max-width: 960px;
-    overflow-x: auto;
+    max-width: 100%;
   }}
   .chart-wrap > div {{
     margin: 0 auto;
@@ -416,9 +419,9 @@ html = f"""<!DOCTYPE html>
     font-weight: 600;
     color: #fff;
   }}
-  .cluster-tag.high {{ background: #D62728; }}
-  .cluster-tag.med  {{ background: #FF7F0E; }}
-  .cluster-tag.low  {{ background: #BCBD22; color: #333; }}
+  .cluster-tag.high {{ background: #E7298A; }}
+  .cluster-tag.med  {{ background: #7570B3; }}
+  .cluster-tag.low  {{ background: #66A61E; }}
 
   /* ── Conclusion ───────────────────────────────── */
   .conclusion {{
@@ -480,9 +483,9 @@ html = f"""<!DOCTYPE html>
 <!-- ── Hero ──────────────────────────────────────────────────────── -->
 <header class="hero">
   <div class="container">
-    <h1>The Valuation Gap</h1>
+    <h1>Reframing Bullpen Value</h1>
     <p class="subtitle">
-      Where Do High-Leverage Relievers Really Stand?<br>
+      WAR, WPA, and the Leverage Gap<br>
       An analysis of {n_total:,} pitcher-seasons from {START_YEAR}&ndash;{END_YEAR}
     </p>
   </div>
