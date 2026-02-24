@@ -96,25 +96,31 @@ sp_pale, rp_pale = '#A3DFD0', '#F5C49A'
 
 fig_v, (ax_ip, ax_li) = plt.subplots(1, 2, figsize=(14, 6))
 
-def draw_violin_with_box(ax, datasets, positions, colors, pale_colors):
+def draw_violin_with_strip(ax, datasets, positions, colors, pale_colors, jitter_width=0.25):
+    rng = np.random.default_rng(42)
     parts = ax.violinplot(datasets, positions=positions, showmeans=False, showmedians=False, showextrema=False)
     for i, pc in enumerate(parts['bodies']):
         pc.set_facecolor(pale_colors[i])
         pc.set_edgecolor(colors[i])
-        pc.set_alpha(0.45)
+        pc.set_alpha(0.55)
         pc.set_linewidth(0.8)
+        pc.set_zorder(3)
+    for i, (data, pos) in enumerate(zip(datasets, positions)):
+        jitter = rng.uniform(-jitter_width, jitter_width, size=len(data))
+        ax.scatter(pos + jitter, data, s=4, alpha=0.25, color=colors[i],
+                   edgecolors='none', zorder=1, rasterized=True)
     box_width = 0.08
     for i, (data, pos) in enumerate(zip(datasets, positions)):
         q1 = np.percentile(data, 25)
         q3 = np.percentile(data, 75)
         median = np.median(data)
         ax.bar(pos, q3 - q1, bottom=q1, width=box_width,
-               color='white', alpha=0.6, edgecolor='#555', linewidth=0.8, zorder=3)
+               color='white', alpha=0.7, edgecolor='#555', linewidth=0.8, zorder=5)
         ax.hlines(median, pos - box_width / 2, pos + box_width / 2,
-                  color='#333', linewidth=1.5, zorder=4)
+                  color='#333', linewidth=1.5, zorder=6)
 
 # IP violin
-draw_violin_with_box(ax_ip,
+draw_violin_with_strip(ax_ip,
     [sp_data['IP'].values, rp_data['IP'].values],
     [1, 2], [sp_color, rp_color_v], [sp_pale, rp_pale])
 ax_ip.set_xticks([1, 2])
@@ -127,7 +133,7 @@ ax_ip.yaxis.grid(True, color='#ddd', linewidth=0.5)
 ax_ip.set_axisbelow(True)
 
 # pLI violin
-draw_violin_with_box(ax_li,
+draw_violin_with_strip(ax_li,
     [sp_data['LI'].values, rp_data['LI'].values],
     [1, 2], [sp_color, rp_color_v], [sp_pale, rp_pale])
 ax_li.set_xticks([1, 2])
@@ -139,8 +145,8 @@ ax_li.tick_params(length=0)
 ax_li.yaxis.grid(True, color='#ddd', linewidth=0.5)
 ax_li.set_axisbelow(True)
 
-fig_v.suptitle(f'SP vs RP Distributions: Innings Pitched & pLI\nIndividual Pitcher-Seasons, {START_YEAR}\u2013{END_YEAR}',
-               fontsize=20, fontweight='bold', fontname='Georgia', color='#333', y=1.02)
+fig_v.suptitle(f'SP vs RP Distributions: Innings Pitched & pLI\n{START_YEAR}\u2013{END_YEAR} Individual Pitcher-Seasons',
+               fontsize=17, fontweight='normal', fontname='Georgia', color='#444', y=1.02)
 plt.tight_layout()
 plt.subplots_adjust(top=0.85)
 
@@ -313,29 +319,32 @@ fig3.for_each_trace(lambda t: t.update(
 ))
 chart3_html = fig3.to_html(full_html=False, include_plotlyjs=False, config={'responsive': True})
 
-# ── Top 20 WPA tables ─────────────────────────────────────────────────
-def build_top20_html(dataframe, title, accent_color):
-    cols = ['Player', 'WPA', 'WAR', 'IP', 'LI', 'Seasons']
-    t = dataframe.nlargest(20, 'WPA')[cols].copy()
-    t['WPA'] = t['WPA'].round(2)
-    t['WAR'] = t['WAR'].round(2)
-    t['IP'] = t['IP'].round(1)
-    t['LI'] = t['LI'].round(2)
-    t = t.reset_index(drop=True)
-    t.index = t.index + 1
-    rows = ''
-    for i, row in t.iterrows():
-        rows += f'<tr><td>{i}</td><td>{row["Player"]}</td><td>{row["WPA"]:.2f}</td><td>{row["WAR"]:.2f}</td><td>{row["IP"]:.1f}</td><td>{row["LI"]:.2f}</td><td>{int(row["Seasons"])}</td></tr>\n'
-    return f'''<div class="top20-table">
-      <h4 style="color:{accent_color};margin-bottom:0.5rem;">{title}</h4>
-      <table>
-        <thead><tr><th>#</th><th>Player</th><th>WPA</th><th>WAR</th><th>IP</th><th>pLI</th><th>Seasons</th></tr></thead>
-        <tbody>{rows}</tbody>
-      </table>
-    </div>'''
+# ── Top 25 WPA table (combined) ────────────────────────────────────────
+cols_t = ['Player', 'WPA', 'WAR', 'IP', 'LI', 'Seasons', 'Pitcher_Type']
+combined_top = pd.concat([
+    sp_df[cols_t].assign(Role='SP'),
+    high_lev_rp_df[cols_t].assign(Role='RP')
+])
+top25 = combined_top.nlargest(25, 'WPA').copy()
+top25['WPA'] = top25['WPA'].round(1)
+top25['WAR'] = top25['WAR'].round(1)
+top25['IP']  = top25['IP'].round(1)
+top25['LI']  = top25['LI'].round(2)
+top25 = top25.reset_index(drop=True)
+top25.index = top25.index + 1
 
-table_sp_html = build_top20_html(sp_df, 'Starting Pitchers', '#1B9E77')
-table_rp_html = build_top20_html(high_lev_rp_df, 'High-Leverage Relievers', '#D95F02')
+table_rows = ''
+for i, row in top25.iterrows():
+    role = row['Role']
+    cls = ' class="rp-row"' if role == 'RP' else ''
+    table_rows += f'<tr{cls}><td>{i}</td><td>{row["Player"]}</td><td>{role}</td><td>{row["WPA"]:.1f}</td><td>{row["WAR"]:.1f}</td><td>{row["IP"]:.1f}</td><td>{row["LI"]:.2f}</td><td>{int(row["Seasons"])}</td></tr>\n'
+
+table_combined_html = f'''<div class="top20-table" style="max-width:700px;margin:0 auto;">
+  <table>
+    <thead><tr><th>#</th><th>Player</th><th>Role</th><th>WPA</th><th>WAR</th><th>IP</th><th>pLI</th><th>Seasons</th></tr></thead>
+    <tbody>{table_rows}</tbody>
+  </table>
+</div>'''
 
 # ── Cluster stats for the text ────────────────────────────────────────
 cluster_stats = []
@@ -568,13 +577,7 @@ html = f"""<!DOCTYPE html>
     color: #fff;
   }}
 
-  /* ── Top 20 Tables ────────────────────────────── */
-  .top20-grid {{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-top: 1.5rem;
-  }}
+  /* ── Top 25 Table ─────────────────────────────── */
   .top20-table table {{
     width: 100%;
     border-collapse: collapse;
@@ -594,6 +597,12 @@ html = f"""<!DOCTYPE html>
   .top20-table tr:hover td {{
     background: #fafafa;
   }}
+  .top20-table tr.rp-row td {{
+    background: #FFF3E6;
+  }}
+  .top20-table tr.rp-row:hover td {{
+    background: #FFE8CC;
+  }}
 
   /* ── Footer ───────────────────────────────────── */
   footer {{
@@ -611,7 +620,7 @@ html = f"""<!DOCTYPE html>
     .container {{ padding: 0 1.2rem; }}
     .stat .number {{ font-size: 1.7rem; }}
     h2 {{ font-size: 1.5rem; }}
-    .top20-grid {{ grid-template-columns: 1fr; }}
+    .top20-table table {{ font-size: 0.82rem; }}
   }}
 </style>
 </head>
@@ -829,16 +838,13 @@ html = f"""<!DOCTYPE html>
 
     <div class="chart-wrap">{chart3_html}</div>
 
-    <h3>Top 20 by Aggregate WPA</h3>
+    <h3>Top 25 Pitchers by Aggregate WPA</h3>
     <p>
-      The SP list is predictable &mdash; aces with years of dominance. The RP list is more revealing:
-      these are relievers who sustained elite WPA production over multiple seasons, proving that
-      high-leverage relief value is not a single-season fluke but a repeatable, durable skill.
+      A single leaderboard combining SPs and high-leverage RPs, sorted by total WPA.
+      The number of relievers that appear on this list &mdash; competing directly with aces
+      who threw five times as many innings &mdash; speaks for itself.
     </p>
-    <div class="top20-grid">
-      {table_sp_html}
-      {table_rp_html}
-    </div>
+    {table_combined_html}
   </div>
 </section>
 
