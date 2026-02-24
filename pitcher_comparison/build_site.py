@@ -76,6 +76,55 @@ cluster_labels = {
     cluster_order[2]: 'High Leverage',
 }
 
+# ── Chart 0: Violin plots (SP vs RP distributions) ──────────────────
+from plotly.subplots import make_subplots
+
+violin_df = df[['Pitcher_Type', 'IP', 'LI']].dropna().copy()
+
+fig0 = make_subplots(rows=1, cols=2, subplot_titles=['Innings Pitched (IP)', 'Average Leverage Index (pLI)'])
+
+for pt, color in [('SP', '#1B9E77'), ('RP', '#D95F02')]:
+    sub = violin_df[violin_df['Pitcher_Type'] == pt]
+    fig0.add_trace(go.Violin(
+        y=sub['IP'], name=pt, legendgroup=pt, showlegend=True,
+        line_color=color, fillcolor=color, opacity=0.55,
+        meanline_visible=True, box_visible=True,
+        hoveron='violins', hoverinfo='y',
+    ), row=1, col=1)
+    fig0.add_trace(go.Violin(
+        y=sub['LI'], name=pt, legendgroup=pt, showlegend=False,
+        line_color=color, fillcolor=color, opacity=0.55,
+        meanline_visible=True, box_visible=True,
+        hoveron='violins', hoverinfo='y',
+    ), row=1, col=2)
+
+fig0.update_layout(
+    title=dict(
+        text=f'SP vs RP Distributions: Innings Pitched & pLI<br><sup>Individual Pitcher-Seasons, {START_YEAR}\u2013{END_YEAR}</sup>',
+        x=0.5, font=dict(size=20, family='Georgia', color='#333')
+    ),
+    font_family='Georgia, Times New Roman, serif',
+    height=550,
+    violinmode='group',
+    hoverlabel=dict(font_family='Georgia, Times New Roman, serif'),
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='#f9f9f9',
+    margin=dict(l=60, r=30, t=80, b=60),
+)
+fig0.update_yaxes(title_text='IP', row=1, col=1)
+fig0.update_yaxes(title_text='pLI', row=1, col=2)
+
+# Style subplot titles
+for ann in fig0.layout.annotations:
+    ann.font = dict(size=15, family='Georgia', color='#444444')
+
+chart0_html = fig0.to_html(full_html=False, include_plotlyjs=False, config={'responsive': True})
+
+sp_median_ip = violin_df[violin_df['Pitcher_Type'] == 'SP']['IP'].median()
+rp_median_ip = violin_df[violin_df['Pitcher_Type'] == 'RP']['IP'].median()
+sp_median_li = violin_df[violin_df['Pitcher_Type'] == 'SP']['LI'].median()
+rp_median_li = violin_df[violin_df['Pitcher_Type'] == 'RP']['LI'].median()
+
 # ── Chart 1: Cluster scatter ─────────────────────────────────────────
 rp_df['Cluster_Label'] = rp_df['Leverage_Cluster'].map(cluster_labels)
 fig1 = px.scatter(
@@ -89,10 +138,10 @@ fig1 = px.scatter(
     hover_data=['Player', 'ERA', 'WAR', 'LI', 'IP', 'Seasons'],
     labels={
         'IP': 'Innings Pitched (IP)',
-        'LI': 'Average Leverage Index (LI)',
+        'LI': 'Average Leverage Index (pLI)',
         'Cluster_Label': 'Cluster',
     },
-    title=f'K-Means Clustering of Relievers by Leverage Index<br><sup>k = 3, {START_YEAR}\u2013{END_YEAR}</sup>',
+    title=f'K-Means Clustering of Relievers by pLI<br><sup>k = 3, {START_YEAR}\u2013{END_YEAR}</sup>',
 )
 fig1.update_traces(marker=dict(size=8, opacity=0.4))
 fig1.update_layout(
@@ -206,6 +255,7 @@ fig3 = px.scatter(
     labels={
         'WAR': 'Wins Above Replacement (WAR)',
         'WPA': 'Win Probability Added (WPA)',
+        'LI': 'pLI',
     },
     title=f'WPA vs WAR: Starting Pitchers vs High-Leverage Relievers<br><sup>Individual Pitcher-Seasons, {START_YEAR}\u2013{END_YEAR}</sup>',
     color_discrete_map={'SP': '#1B9E77', 'RP (High Lev)': '#D95F02'},
@@ -234,7 +284,7 @@ for cid in cluster_order:
     label = cluster_labels[cid]
     n = (rp_df['Leverage_Cluster'] == cid).sum()
     avg = rp_df[rp_df['Leverage_Cluster'] == cid]['LI'].mean()
-    cluster_stats.append(f'{label}: {n} pitchers (avg LI: {avg:.2f})')
+    cluster_stats.append(f'{label}: {n} pitchers (avg pLI: {avg:.2f})')
 
 wpa_ratio = (rp_total_wpa / sp_total_wpa) * 100
 war_ratio = (rp_total_war / sp_total_war) * 100
@@ -510,8 +560,8 @@ html = f"""<!DOCTYPE html>
         <p>Measures actual impact on win probability, fully incorporating timing and context. But it absorbs <em>managerial usage, sequencing luck, and situational noise</em> the pitcher doesn't control.</p>
       </div>
       <div class="metric-card">
-        <strong>LI</strong> &mdash; Leverage Index
-        <p>Quantifies the importance of the game situation when a pitcher enters. Leverage is determined by game flow and managerial deployment &mdash; not by the reliever himself.</p>
+        <strong>pLI</strong> &mdash; Average Leverage Index
+        <p>Quantifies the average importance of the game situations in which a pitcher is used. Leverage is determined by game flow and managerial deployment &mdash; not by the reliever himself.</p>
       </div>
     </div>
 
@@ -525,47 +575,55 @@ html = f"""<!DOCTYPE html>
 <section>
   <div class="container">
     <h2>Data &amp; Methodology</h2>
+    <ul style="list-style: disc; padding-left: 1.4rem; color: var(--muted); font-size: 1.05rem; line-height: 1.8;">
+      <li><strong>Source:</strong> <a href="https://www.fangraphs.com/" style="color: var(--accent);">Fangraphs</a> via <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a>, {START_YEAR}&ndash;{END_YEAR}, minimum {QUAL} IP per season</li>
+      <li><strong>WAR variant:</strong> <strong>fWAR</strong>, which uses FIP (strikeouts, walks, HBP, home runs) rather than runs allowed &mdash; a better measure of repeatable skill, but blind to batted-ball outcomes and BABIP suppression</li>
+      <li><strong>SP definition:</strong> Games Started &ge; 5 and IP &ge; 20 in a season</li>
+      <li><strong>RP definition:</strong> Games &ge; 5 and Games Started &lt; 3 in a season (pitchers meeting neither definition are excluded)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── SP/RP Divide ──────────────────────────────────────────────── -->
+<section>
+  <div class="container">
+    <h2>The SP/RP Divide: Innings and pLI</h2>
     <p>
-      All data is sourced from <strong>Fangraphs</strong> via the
-      <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a>
-      Python library, covering MLB seasons from <strong>{START_YEAR}&ndash;{END_YEAR}</strong>.
-      A minimum threshold of <strong>{QUAL} innings pitched</strong> per season is applied to filter out
-      position-player pitching appearances and other negligible outings.
+      Before identifying high-leverage relievers, it&rsquo;s worth seeing just how differently
+      starters and relievers are deployed. The violin plots below show the distributions of
+      <strong>Innings Pitched</strong> and <strong>pLI</strong> across all individual
+      pitcher-seasons &mdash; not aggregated careers, but each season as its own data point.
     </p>
 
-    <h3>WAR Variant: fWAR</h3>
-    <p>
-      The WAR values used throughout this analysis are <strong>fWAR</strong> (Fangraphs Wins Above Replacement).
-      Unlike Baseball-Reference&rsquo;s bWAR, which is built on RA9 (runs allowed per 9 innings),
-      fWAR uses <strong>FIP</strong> (Fielding Independent Pitching) as its core performance component.
-      FIP isolates strikeouts, walks, hit-by-pitches, and home runs &mdash; outcomes the pitcher directly controls &mdash;
-      stripping out batted-ball luck and defensive quality. This makes fWAR a better measure of repeatable
-      pitcher skill, but it also means that any value derived from inducing weak contact or suppressing
-      BABIP is not captured.
-    </p>
-
-    <h3>Pitcher Classification</h3>
-    <div class="metrics">
-      <div class="metric-card">
-        <strong>Starting Pitcher (SP)</strong>
-        <p>Games Started &ge; 5 <em>and</em> Innings Pitched &ge; 20 in a season. This captures pitchers with a meaningful starting workload while excluding openers and spot starters with minimal usage.</p>
+    <div class="stat-row">
+      <div class="stat">
+        <span class="number">{sp_median_ip:.0f}</span>
+        <span class="label">SP Median IP</span>
       </div>
-      <div class="metric-card">
-        <strong>Relief Pitcher (RP)</strong>
-        <p>Games &ge; 5 <em>and</em> Games Started &lt; 3 in a season. The low GS ceiling excludes swingmen and spot starters, isolating pitchers used primarily in relief. Pitchers who don&rsquo;t meet either definition are excluded.</p>
+      <div class="stat">
+        <span class="number">{rp_median_ip:.0f}</span>
+        <span class="label">RP Median IP</span>
+      </div>
+      <div class="stat">
+        <span class="number">{sp_median_li:.2f}</span>
+        <span class="label">SP Median pLI</span>
+      </div>
+      <div class="stat">
+        <span class="number">{rp_median_li:.2f}</span>
+        <span class="label">RP Median pLI</span>
       </div>
     </div>
 
-    <h3>Leverage Clustering</h3>
-    <p>
-      After aggregating each pitcher&rsquo;s career totals across all seasons in the dataset,
-      relievers are separated into three tiers using <strong>k-means clustering</strong> (k&nbsp;=&nbsp;3)
-      on their average <strong>Leverage Index (pLI)</strong>. pLI measures the average importance of
-      the game situations in which a pitcher is used &mdash; an LI of 1.0 is league-average,
-      while values above ~1.1 indicate consistent high-leverage deployment. The clustering
-      is unsupervised: the algorithm finds natural groupings without prior assumptions about
-      where the tier boundaries should fall.
-    </p>
+    <div class="chart-wrap">{chart0_html}</div>
+
+    <div class="callout">
+      <p>Consider the asymmetry: a starter throwing six strong innings in a comfortable lead
+      may shift win probability by only a few percentage points. A reliever striking out two
+      batters with the tying run on third in the eighth inning can swing win probability by
+      30&ndash;40% in two minutes. Both performances require real skill &mdash; but WPA rewards
+      the reliever&rsquo;s two minutes far more than the starter&rsquo;s six innings, not because
+      the reliever is better, but because the <em>situation</em> carried more weight.</p>
+    </div>
   </div>
 </section>
 
@@ -575,7 +633,7 @@ html = f"""<!DOCTYPE html>
     <h2>Identifying High-Leverage Relievers</h2>
     <p>
       We aggregate each pitcher's career totals across all seasons, then use k-means clustering (k&nbsp;=&nbsp;3)
-      on average Leverage Index to separate relievers into three tiers.
+      on average pLI to separate relievers into three tiers.
     </p>
 
     <div class="stat-row">
@@ -593,7 +651,7 @@ html = f"""<!DOCTYPE html>
       </div>
       <div class="stat">
         <span class="number">{avg_hl_li:.2f}</span>
-        <span class="label">Avg LI (High-Lev)</span>
+        <span class="label">Avg pLI (High-Lev)</span>
       </div>
     </div>
 
