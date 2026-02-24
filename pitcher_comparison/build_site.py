@@ -681,12 +681,10 @@ html = f"""<!DOCTYPE html>
       </div>
     </div>
 
-    <p style="margin-top:1.5rem;color:var(--muted);font-size:0.92rem;">
-      All WAR values are <strong>fWAR</strong> (FIP-based). Data from
-      <a href="https://www.fangraphs.com/" style="color: var(--accent);">Fangraphs</a> via
-      <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a>,
-      {START_YEAR}&ndash;{END_YEAR}, minimum {QUAL} IP per season.
-    </p>
+    <ul style="margin-top:1.5rem;color:var(--muted);font-size:0.92rem;padding-left:1.2rem;">
+      <li>All WAR values are <strong>fWAR</strong> (Fangraphs WAR), which uses FIP&mdash;strikeouts, walks, HBP, and home runs&mdash;rather than runs allowed, isolating repeatable pitching skill from fielding and sequencing.</li>
+      <li style="margin-top:0.4rem;">Data from <a href="https://www.fangraphs.com/" style="color: var(--accent);">Fangraphs</a> via <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a>, {START_YEAR}&ndash;{END_YEAR}, minimum {QUAL} IP per season.</li>
+    </ul>
   </div>
 </section>
 
