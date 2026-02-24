@@ -174,7 +174,7 @@ fig1 = px.scatter(
     color_discrete_map={
         'Low Leverage': '#66A61E',
         'Mid-Leverage': '#7570B3',
-        'High Leverage': '#E7298A',
+        'High Leverage': '#D64541',
     },
     category_orders={'Cluster_Label': ['High Leverage', 'Mid-Leverage', 'Low Leverage']},
     hover_data=['Player', 'ERA', 'WAR', 'LI', 'IP', 'Seasons'],
@@ -183,7 +183,7 @@ fig1 = px.scatter(
         'LI': 'Average Leverage Index (pLI)',
         'Cluster_Label': 'Cluster',
     },
-    title=f'K-Means Clustering of Relievers by pLI<br><sup>k = 3, {START_YEAR}\u2013{END_YEAR}</sup>',
+    title=f'What Constitutes a High-Leverage Reliever?<br><sup>K-Means Clustering by pLI (k = 3), {START_YEAR}\u2013{END_YEAR}</sup>',
 )
 fig1.update_traces(marker=dict(size=8, opacity=0.4))
 fig1.update_layout(
@@ -197,7 +197,7 @@ fig1.update_layout(
     plot_bgcolor='#f9f9f9',
     margin=dict(l=60, r=30, t=80, b=60),
 )
-_hover_bg1 = {'Low Leverage': '#E8F5E0', 'Mid-Leverage': '#ECEAF5', 'High Leverage': '#FCE4F0'}
+_hover_bg1 = {'Low Leverage': '#E8F5E0', 'Mid-Leverage': '#ECEAF5', 'High Leverage': '#FDEAE9'}
 fig1.for_each_trace(lambda t: t.update(
     hoverlabel=dict(bgcolor=_hover_bg1.get(t.name, '#fff'), font_color='#333'),
     hovertemplate=t.hovertemplate.replace('=', ' = ') if t.hovertemplate else t.hovertemplate
@@ -534,7 +534,7 @@ html = f"""<!DOCTYPE html>
     font-weight: 600;
     color: #fff;
   }}
-  .cluster-tag.high {{ background: #E7298A; }}
+  .cluster-tag.high {{ background: #D64541; }}
   .cluster-tag.med  {{ background: #7570B3; }}
   .cluster-tag.low  {{ background: #66A61E; }}
 
@@ -561,17 +561,19 @@ html = f"""<!DOCTYPE html>
   }}
 
   .takeaway {{
-    background: linear-gradient(135deg, #1a1a2e, #0f3460);
-    color: #e8e8e8;
-    padding: 2rem;
-    border-radius: 10px;
+    background: #f4f7fa;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    color: var(--text);
+    padding: 1.8rem 2rem;
+    border-radius: 0 8px 8px 0;
     margin-top: 1.5rem;
-    text-align: center;
-    font-size: 1.1rem;
-    line-height: 1.6;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    font-style: italic;
   }}
   .takeaway strong {{
-    color: #fff;
+    font-style: normal;
   }}
 
   /* ── Top 25 Table ─────────────────────────────── */
@@ -691,7 +693,7 @@ html = f"""<!DOCTYPE html>
 <!-- ── SP/RP Divide ──────────────────────────────────────────────── -->
 <section>
   <div class="container">
-    <h2>The SP/RP Divide: Innings and pLI</h2>
+    <h2>SPs &amp; RPs by Volume and Leverage</h2>
     <p>
       Before identifying high-leverage relievers, it&rsquo;s worth seeing just how differently
       starters and relievers are deployed. The violin plots below show the distributions of
@@ -736,10 +738,14 @@ html = f"""<!DOCTYPE html>
 <!-- ── Clustering ────────────────────────────────────────────────── -->
 <section>
   <div class="container">
-    <h2>Identifying High-Leverage Relievers</h2>
+    <h2>What Constitutes a High-Leverage Reliever?</h2>
     <p>
-      We aggregate each pitcher's career totals across all seasons, then use k-means clustering (k&nbsp;=&nbsp;3)
-      on average pLI to separate relievers into three tiers.
+      To move beyond per-season snapshots, we aggregate each pitcher&rsquo;s career totals across
+      all seasons in the dataset, then apply k-means clustering (k&nbsp;=&nbsp;3) on career-average pLI
+      to separate relievers into three distinct tiers. Because pLI captures how often a pitcher
+      is deployed in high-stakes situations, this clustering effectively identifies the
+      subset of relievers whose managers trust them with the game on the line &mdash;
+      the closers, setup men, and firemen who anchor a bullpen.
     </p>
 
     <div class="stat-row">
@@ -771,27 +777,7 @@ html = f"""<!DOCTYPE html>
   </div>
 </section>
 
-<!-- ── Individual Seasons ────────────────────────────────────────── -->
-<section>
-  <div class="container">
-    <h2>Individual Seasons: WPA vs WAR</h2>
-    <p>
-      Each dot is a single pitcher-season. SPs spread horizontally (high WAR, moderate WPA) &mdash;
-      their volume drives skill-based value but dilutes game-context impact.
-      High-leverage RPs spread vertically (low WAR, wide WPA range) &mdash;
-      their value is concentrated in high-stakes moments but inflated by
-      sequencing and managerial deployment.
-    </p>
-    <p>
-      The gap between the two clusters is the valuation no-man&rsquo;s-land where
-      neither metric tells the full story.
-    </p>
-
-    <div class="chart-wrap">{chart3_html}</div>
-  </div>
-</section>
-
-<!-- ── The Divergence ────────────────────────────────────────────── -->
+<!-- ── Two Metrics, Two Stories ───────────────────────────────────── -->
 <section>
   <div class="container">
     <h2>Two Metrics, Two Stories</h2>
@@ -810,6 +796,26 @@ html = f"""<!DOCTYPE html>
       the reliever&rsquo;s two minutes far more than the starter&rsquo;s six innings, not because
       the reliever is better, but because the <em>situation</em> carried more weight.</p>
     </div>
+
+    <h3>Season-Level View</h3>
+    <p>
+      Each dot below is a single pitcher-season. SPs spread horizontally (high WAR, moderate WPA) &mdash;
+      their volume drives skill-based value but dilutes game-context impact.
+      High-leverage RPs spread vertically (low WAR, wide WPA range) &mdash;
+      their value is concentrated in high-stakes moments but inflated by
+      sequencing and managerial deployment.
+      The gap between the two clusters is the valuation no-man&rsquo;s-land where
+      neither metric tells the full story.
+    </p>
+
+    <div class="chart-wrap">{chart3_html}</div>
+
+    <h3>Cumulative Value: {START_YEAR}&ndash;{END_YEAR}</h3>
+    <p>
+      Zooming out from individual seasons to aggregate totals over the full decade
+      sharpens the contrast. The bar chart and leaderboard below show cumulative
+      WAR and WPA for all SPs vs. the high-leverage reliever tier identified above.
+    </p>
 
     <div class="stat-row">
       <div class="stat">
