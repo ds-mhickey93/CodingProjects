@@ -217,7 +217,7 @@ fig_bar, axes_bar = plt.subplots(2, 1, figsize=(14, 9.5))
 categories_bar = ['Starting Pitchers', 'High-Leverage Relievers']
 colors_bar = [sp_color, rp_color_v]
 bar_h = 0.35
-y_pos_bar = [0, bar_h * 2]
+y_pos_bar = [0, bar_h * 1.4]
 
 fig_bar.suptitle(f'Two Metrics, Two Stories\nHow WAR and WPA See High-Leverage Relievers ({START_YEAR}\u2013{END_YEAR})',
                  fontsize=20, fontweight='bold', fontname='Georgia', color='#333333', y=1.02)
@@ -236,14 +236,14 @@ ax_wpa.set_yticks(y_pos_bar)
 ax_wpa.set_yticklabels(categories_bar, fontsize=12, fontname='Georgia')
 for b, val in zip(bars_wpa, wpa_values):
     ax_wpa.text(b.get_width() + 8, b.get_y() + b.get_height()/2,
-                f'{val:.1f}\nWins Added', va='center', ha='left', fontsize=11, fontname='serif', linespacing=1.2)
+                f'{val:.1f}\nWins Added', va='center', ha='left', fontsize=13, fontname='serif', linespacing=1.2)
 ax_wpa.set_title('Win Probability Added (WPA)', fontsize=15, fontname='Georgia', color='#444', pad=2)
 ax_wpa.xaxis.set_major_locator(mticker.AutoLocator())
 ax_wpa.yaxis.grid(False); ax_wpa.xaxis.grid(False)
 ax_wpa.tick_params(axis='x', length=0); ax_wpa.tick_params(axis='y', length=0)
 for spine in ax_wpa.spines.values(): spine.set_visible(False)
 ax_wpa.set_xlim(0, max(wpa_values) * 1.45)
-ax_wpa.set_ylim(-bar_h, y_pos_bar[-1] + bar_h * 1.2)
+ax_wpa.set_ylim(-bar_h * 0.6, y_pos_bar[-1] + bar_h * 0.9)
 draw_white_gridlines(ax_wpa)
 
 # WAR subplot
@@ -254,14 +254,14 @@ ax_war.set_yticks(y_pos_bar)
 ax_war.set_yticklabels(categories_bar, fontsize=12, fontname='Georgia')
 for b, val in zip(bars_war, war_values):
     ax_war.text(b.get_width() + 40, b.get_y() + b.get_height()/2,
-                f'{val:.1f}\nWins Above Replacement', va='center', ha='left', fontsize=11, fontname='serif', linespacing=1.2)
+                f'{val:.1f}\nWins Above Replacement', va='center', ha='left', fontsize=13, fontname='serif', linespacing=1.2)
 ax_war.set_title('Wins Above Replacement (WAR)', fontsize=15, fontname='Georgia', color='#444', pad=2)
 ax_war.xaxis.set_major_locator(mticker.AutoLocator())
 ax_war.yaxis.grid(False); ax_war.xaxis.grid(False)
 ax_war.tick_params(axis='x', length=0); ax_war.tick_params(axis='y', length=0)
 for spine in ax_war.spines.values(): spine.set_visible(False)
 ax_war.set_xlim(0, max(war_values) * 1.55)
-ax_war.set_ylim(-bar_h, y_pos_bar[-1] + bar_h * 1.2)
+ax_war.set_ylim(-bar_h * 0.6, y_pos_bar[-1] + bar_h * 0.9)
 draw_white_gridlines(ax_war)
 
 plt.tight_layout(h_pad=10)
@@ -577,8 +577,13 @@ html = f"""<!DOCTYPE html>
   }}
 
   /* ── Top 25 Table ─────────────────────────────── */
+  .top20-table {{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }}
   .top20-table table {{
     width: 100%;
+    min-width: 520px;
     border-collapse: collapse;
     font-size: 0.88rem;
   }}
@@ -833,6 +838,11 @@ html = f"""<!DOCTYPE html>
       By WAR, they&rsquo;re worth a fraction. Neither extreme reflects reality &mdash;
       WAR ignores that these innings matter more, while WPA inflates them with
       sequencing and managerial context the pitcher doesn&rsquo;t control.
+    </p>
+    <p style="font-style:italic;color:var(--muted);font-size:0.93rem;margin-top:0.3rem;">
+      WAR and WPA both measure value, but they rest on different baselines, making
+      direct scalar comparison invalid. Still, contrasting the stories they tell
+      reveals important structural insights.
     </p>
 
     <div class="callout">
