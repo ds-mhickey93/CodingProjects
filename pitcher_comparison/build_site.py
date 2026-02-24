@@ -118,9 +118,9 @@ draw_violin_with_box(ax_ip,
     [sp_data['IP'].values, rp_data['IP'].values],
     [1, 2], [sp_color, rp_color_v], [sp_pale, rp_pale])
 ax_ip.set_xticks([1, 2])
-ax_ip.set_xticklabels(['SP', 'RP'], fontsize=12)
-ax_ip.set_ylabel('IP', fontsize=12, fontname='Georgia')
-ax_ip.set_title('Innings Pitched (IP)', fontsize=14, fontname='Georgia', pad=8)
+ax_ip.set_xticklabels(['SP', 'RP'], fontsize=13)
+ax_ip.set_ylabel('IP', fontsize=13, fontname='Georgia')
+ax_ip.set_title('Innings Pitched (IP)', fontsize=16, fontname='Georgia', pad=8)
 for spine in ax_ip.spines.values(): spine.set_visible(False)
 ax_ip.tick_params(length=0)
 ax_ip.yaxis.grid(True, color='#ddd', linewidth=0.5)
@@ -131,19 +131,16 @@ draw_violin_with_box(ax_li,
     [sp_data['LI'].values, rp_data['LI'].values],
     [1, 2], [sp_color, rp_color_v], [sp_pale, rp_pale])
 ax_li.set_xticks([1, 2])
-ax_li.set_xticklabels(['SP', 'RP'], fontsize=12)
-ax_li.set_ylabel('pLI', fontsize=12, fontname='Georgia')
-ax_li.set_title('Average Leverage Index (pLI)', fontsize=14, fontname='Georgia', pad=8)
+ax_li.set_xticklabels(['SP', 'RP'], fontsize=13)
+ax_li.set_ylabel('pLI', fontsize=13, fontname='Georgia')
+ax_li.set_title('Average Leverage Index (pLI)', fontsize=16, fontname='Georgia', pad=8)
 for spine in ax_li.spines.values(): spine.set_visible(False)
 ax_li.tick_params(length=0)
 ax_li.yaxis.grid(True, color='#ddd', linewidth=0.5)
 ax_li.set_axisbelow(True)
 
 fig_v.suptitle(f'SP vs RP Distributions: Innings Pitched & pLI\nIndividual Pitcher-Seasons, {START_YEAR}\u2013{END_YEAR}',
-               fontsize=18, fontweight='bold', fontname='Georgia', color='#333', y=1.02)
-legend_elements = [Patch(facecolor=sp_pale, edgecolor=sp_color, alpha=0.45, label='SP'),
-                   Patch(facecolor=rp_pale, edgecolor=rp_color_v, alpha=0.45, label='RP')]
-fig_v.legend(handles=legend_elements, loc='upper right', fontsize=11, frameon=False)
+               fontsize=20, fontweight='bold', fontname='Georgia', color='#333', y=1.02)
 plt.tight_layout()
 plt.subplots_adjust(top=0.85)
 
@@ -585,6 +582,17 @@ html = f"""<!DOCTYPE html>
       <strong>WPA systematically overvalues</strong> them &mdash; and the truth lies somewhere in between.
     </p>
 
+    <div class="callout">
+      <p><strong>The Core Tension:</strong> WAR says high-leverage relievers are barely worth noticing. WPA says they're the most impactful pitchers in baseball. Neither is fully right. Every team generates a large number of high-leverage moments over a season, and elite relief skill reliably converts those moments into real wins &mdash; but raw WPA overstates the pitcher's individual contribution by conflating skill with opportunity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Data & Methodology ───────────────────────────────────────── -->
+<section>
+  <div class="container">
+    <h2>Data &amp; Methodology</h2>
+
     <div class="metrics">
       <div class="metric-card">
         <strong>WAR</strong> &mdash; Wins Above Replacement
@@ -600,33 +608,20 @@ html = f"""<!DOCTYPE html>
       </div>
     </div>
 
-    <div class="callout">
-      <p><strong>The Core Tension:</strong> WAR says high-leverage relievers are barely worth noticing. WPA says they're the most impactful pitchers in baseball. Neither is fully right.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── Data & Methodology ───────────────────────────────────────── -->
-<section>
-  <div class="container">
-    <h2>Data &amp; Methodology</h2>
-    <p>
-      All data is sourced from <strong>Fangraphs</strong> via the
-      <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a>
-      Python library, covering MLB seasons from <strong>{START_YEAR}&ndash;{END_YEAR}</strong>.
-      A minimum threshold of <strong>{QUAL} innings pitched</strong> per season is applied to filter out
-      position-player pitching appearances and other negligible outings.
-    </p>
-
     <h3>WAR Variant: fWAR</h3>
     <p>
-      The WAR values used throughout this analysis are <strong>fWAR</strong> (Fangraphs Wins Above Replacement).
-      Unlike Baseball-Reference&rsquo;s bWAR, which is built on RA9 (runs allowed per 9 innings),
-      fWAR uses <strong>FIP</strong> (Fielding Independent Pitching) as its core performance component.
-      FIP isolates strikeouts, walks, hit-by-pitches, and home runs &mdash; outcomes the pitcher directly controls &mdash;
-      stripping out batted-ball luck and defensive quality. This makes fWAR a better measure of repeatable
-      pitcher skill, but it also means that any value derived from inducing weak contact or suppressing
-      BABIP is not captured.
+      This analysis uses <strong>fWAR</strong> (Fangraphs Wins Above Replacement), built on
+      <strong>FIP</strong> rather than runs allowed. FIP isolates outcomes the pitcher directly
+      controls &mdash; strikeouts, walks, HBP, and home runs &mdash; making fWAR a better measure
+      of repeatable skill, though it doesn&rsquo;t capture value from weak contact or
+      BABIP suppression.
+    </p>
+
+    <p>
+      All data is sourced from <strong>Fangraphs</strong> via
+      <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a>,
+      covering MLB seasons <strong>{START_YEAR}&ndash;{END_YEAR}</strong> with a minimum
+      threshold of <strong>{QUAL} innings pitched</strong> per season.
     </p>
 
     <h3>Pitcher Classification</h3>
@@ -689,15 +684,6 @@ html = f"""<!DOCTYPE html>
       enormous variance. A substantial group of relievers consistently operate well above that
       baseline &mdash; these are the high-leverage arms deployed in the highest-stakes situations.
     </p>
-
-    <div class="callout">
-      <p>Consider the asymmetry: a starter throwing six strong innings in a comfortable lead
-      may shift win probability by only a few percentage points. A reliever striking out two
-      batters with the tying run on third in the eighth inning can swing win probability by
-      30&ndash;40% in two minutes. Both performances require real skill &mdash; but WPA rewards
-      the reliever&rsquo;s two minutes far more than the starter&rsquo;s six innings, not because
-      the reliever is better, but because the <em>situation</em> carried more weight.</p>
-    </div>
   </div>
 </section>
 
@@ -749,6 +735,15 @@ html = f"""<!DOCTYPE html>
       WAR ignores that these innings matter more, while WPA inflates them with
       sequencing and managerial context the pitcher doesn't control.
     </p>
+
+    <div class="callout">
+      <p>Consider the asymmetry: a starter throwing six strong innings in a comfortable lead
+      may shift win probability by only a few percentage points. A reliever striking out two
+      batters with the tying run on third in the eighth inning can swing win probability by
+      30&ndash;40% in two minutes. Both performances require real skill &mdash; but WPA rewards
+      the reliever&rsquo;s two minutes far more than the starter&rsquo;s six innings, not because
+      the reliever is better, but because the <em>situation</em> carried more weight.</p>
+    </div>
 
     <div class="stat-row">
       <div class="stat">
@@ -808,10 +803,13 @@ html = f"""<!DOCTYPE html>
     </ul>
 
     <div class="takeaway">
-      The true value of high-leverage relievers lies <strong>between the implications of WAR and WPA</strong>:
-      higher than WAR suggests, but substantially lower than raw WPA implies.
-      They play an outsized role in converting win probability into actual victories &mdash;
-      without overstating their underlying contribution to total run prevention.
+      Starters and offenses generate win probability; high-leverage relievers resolve it.
+      By controlling the final allocation of wins, elite relievers occupy a structurally
+      distinct role that makes their true value meaningfully larger than WAR suggests,
+      even if the exact magnitude remains debatable. Leverage itself is not controlled by
+      relievers &mdash; it is determined by game flow and managerial deployment &mdash; yet every
+      team generates a large number of high-leverage moments over a season, meaning elite
+      relief skill reliably translates into real wins.
     </div>
   </div>
 </section>
