@@ -183,7 +183,7 @@ fig1 = px.scatter(
         'LI': 'Average Leverage Index (pLI)',
         'Cluster_Label': 'Cluster',
     },
-    title=f'The Giovanni Gallegos Line<br><sup>K-Means Clustering by pLI (k = 3), {START_YEAR}\u2013{END_YEAR}</sup>',
+    title=f'Relief Pitcher Leverage Tiers<br><sup>K-Means Clustering by pLI (k = 3), {START_YEAR}\u2013{END_YEAR}</sup>',
 )
 fig1.update_traces(marker=dict(size=8, opacity=0.4))
 fig1.update_layout(
