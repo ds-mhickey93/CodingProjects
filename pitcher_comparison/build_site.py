@@ -92,16 +92,31 @@ sp_data = violin_df[violin_df['Pitcher_Type'] == 'SP']
 rp_data = violin_df[violin_df['Pitcher_Type'] == 'RP']
 
 sp_color, rp_color_v = '#1B9E77', '#D95F02'
+sp_pale, rp_pale = '#A3DFD0', '#F5C49A'
 
 fig_v, (ax_ip, ax_li) = plt.subplots(1, 2, figsize=(14, 6))
 
+def draw_violin_with_box(ax, datasets, positions, colors, pale_colors):
+    parts = ax.violinplot(datasets, positions=positions, showmeans=False, showmedians=False, showextrema=False)
+    for i, pc in enumerate(parts['bodies']):
+        pc.set_facecolor(pale_colors[i])
+        pc.set_edgecolor(colors[i])
+        pc.set_alpha(0.45)
+        pc.set_linewidth(0.8)
+    box_width = 0.08
+    for i, (data, pos) in enumerate(zip(datasets, positions)):
+        q1 = np.percentile(data, 25)
+        q3 = np.percentile(data, 75)
+        median = np.median(data)
+        ax.bar(pos, q3 - q1, bottom=q1, width=box_width,
+               color='white', alpha=0.6, edgecolor='#555', linewidth=0.8, zorder=3)
+        ax.hlines(median, pos - box_width / 2, pos + box_width / 2,
+                  color='#333', linewidth=1.5, zorder=4)
+
 # IP violin
-parts_ip = ax_ip.violinplot([sp_data['IP'].values, rp_data['IP'].values], positions=[1, 2], showmeans=True, showmedians=True)
-for i, color in enumerate([sp_color, rp_color_v]):
-    parts_ip['bodies'][i].set_facecolor(color)
-    parts_ip['bodies'][i].set_alpha(0.55)
-for key in ['cmeans', 'cmedians', 'cbars', 'cmins', 'cmaxes']:
-    parts_ip[key].set_color('#333')
+draw_violin_with_box(ax_ip,
+    [sp_data['IP'].values, rp_data['IP'].values],
+    [1, 2], [sp_color, rp_color_v], [sp_pale, rp_pale])
 ax_ip.set_xticks([1, 2])
 ax_ip.set_xticklabels(['SP', 'RP'], fontsize=12)
 ax_ip.set_ylabel('IP', fontsize=12, fontname='Georgia')
@@ -112,12 +127,9 @@ ax_ip.yaxis.grid(True, color='#ddd', linewidth=0.5)
 ax_ip.set_axisbelow(True)
 
 # pLI violin
-parts_li = ax_li.violinplot([sp_data['LI'].values, rp_data['LI'].values], positions=[1, 2], showmeans=True, showmedians=True)
-for i, color in enumerate([sp_color, rp_color_v]):
-    parts_li['bodies'][i].set_facecolor(color)
-    parts_li['bodies'][i].set_alpha(0.55)
-for key in ['cmeans', 'cmedians', 'cbars', 'cmins', 'cmaxes']:
-    parts_li[key].set_color('#333')
+draw_violin_with_box(ax_li,
+    [sp_data['LI'].values, rp_data['LI'].values],
+    [1, 2], [sp_color, rp_color_v], [sp_pale, rp_pale])
 ax_li.set_xticks([1, 2])
 ax_li.set_xticklabels(['SP', 'RP'], fontsize=12)
 ax_li.set_ylabel('pLI', fontsize=12, fontname='Georgia')
@@ -129,8 +141,8 @@ ax_li.set_axisbelow(True)
 
 fig_v.suptitle(f'SP vs RP Distributions: Innings Pitched & pLI\nIndividual Pitcher-Seasons, {START_YEAR}\u2013{END_YEAR}',
                fontsize=18, fontweight='bold', fontname='Georgia', color='#333', y=1.02)
-legend_elements = [Patch(facecolor=sp_color, alpha=0.55, label='SP'),
-                   Patch(facecolor=rp_color_v, alpha=0.55, label='RP')]
+legend_elements = [Patch(facecolor=sp_pale, edgecolor=sp_color, alpha=0.45, label='SP'),
+                   Patch(facecolor=rp_pale, edgecolor=rp_color_v, alpha=0.45, label='RP')]
 fig_v.legend(handles=legend_elements, loc='upper right', fontsize=11, frameon=False)
 plt.tight_layout()
 plt.subplots_adjust(top=0.85)
@@ -598,12 +610,36 @@ html = f"""<!DOCTYPE html>
 <section>
   <div class="container">
     <h2>Data &amp; Methodology</h2>
-    <ul style="list-style: disc; padding-left: 1.4rem; color: var(--muted); font-size: 1.05rem; line-height: 1.8;">
-      <li><strong>Source:</strong> <a href="https://www.fangraphs.com/" style="color: var(--accent);">Fangraphs</a> via <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a>, {START_YEAR}&ndash;{END_YEAR}, minimum {QUAL} IP per season</li>
-      <li><strong>WAR variant:</strong> <strong>fWAR</strong>, which uses FIP (strikeouts, walks, HBP, home runs) rather than runs allowed &mdash; a better measure of repeatable skill, but blind to batted-ball outcomes and BABIP suppression</li>
-      <li><strong>SP definition:</strong> Games Started &ge; 5 and IP &ge; 20 in a season</li>
-      <li><strong>RP definition:</strong> Games &ge; 5 and Games Started &lt; 3 in a season (pitchers meeting neither definition are excluded)</li>
-    </ul>
+    <p>
+      All data is sourced from <strong>Fangraphs</strong> via the
+      <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a>
+      Python library, covering MLB seasons from <strong>{START_YEAR}&ndash;{END_YEAR}</strong>.
+      A minimum threshold of <strong>{QUAL} innings pitched</strong> per season is applied to filter out
+      position-player pitching appearances and other negligible outings.
+    </p>
+
+    <h3>WAR Variant: fWAR</h3>
+    <p>
+      The WAR values used throughout this analysis are <strong>fWAR</strong> (Fangraphs Wins Above Replacement).
+      Unlike Baseball-Reference&rsquo;s bWAR, which is built on RA9 (runs allowed per 9 innings),
+      fWAR uses <strong>FIP</strong> (Fielding Independent Pitching) as its core performance component.
+      FIP isolates strikeouts, walks, hit-by-pitches, and home runs &mdash; outcomes the pitcher directly controls &mdash;
+      stripping out batted-ball luck and defensive quality. This makes fWAR a better measure of repeatable
+      pitcher skill, but it also means that any value derived from inducing weak contact or suppressing
+      BABIP is not captured.
+    </p>
+
+    <h3>Pitcher Classification</h3>
+    <div class="metrics">
+      <div class="metric-card">
+        <strong>Starting Pitcher (SP)</strong>
+        <p>Games Started &ge; 5 <em>and</em> Innings Pitched &ge; 20 in a season. This captures pitchers with a meaningful starting workload while excluding openers and spot starters with minimal usage.</p>
+      </div>
+      <div class="metric-card">
+        <strong>Relief Pitcher (RP)</strong>
+        <p>Games &ge; 5 <em>and</em> Games Started &lt; 3 in a season. The low GS ceiling excludes swingmen and spot starters, isolating pitchers used primarily in relief. Pitchers who don&rsquo;t meet either definition are excluded.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -638,6 +674,21 @@ html = f"""<!DOCTYPE html>
     </div>
 
     <div class="chart-wrap">{chart0_html}</div>
+
+    <h3>Volume vs. Leverage</h3>
+    <p>
+      Starting pitchers dominate the workload side of the equation &mdash; their IP distribution
+      stretches far above anything relievers produce, reflecting the fundamental design of the role.
+      A typical SP season covers three to four times the innings of a typical RP season, which is
+      precisely why WAR favors them so heavily.
+    </p>
+
+    <h3>Leverage Concentration</h3>
+    <p>
+      While starting pitchers cluster tightly around a league-average pLI (~1.0), relievers show
+      enormous variance. A substantial group of relievers consistently operate well above that
+      baseline &mdash; these are the high-leverage arms deployed in the highest-stakes situations.
+    </p>
 
     <div class="callout">
       <p>Consider the asymmetry: a starter throwing six strong innings in a comfortable lead
