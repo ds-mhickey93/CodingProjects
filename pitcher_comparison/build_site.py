@@ -365,7 +365,7 @@ html = f"""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reframing Bullpen Value: WAR, WPA, and the Leverage Gap</title>
+<title>The Leverage Paradox: Rethinking the Value of Elite Relievers</title>
 <script src="https://cdn.plot.ly/plotly-2.35.0.min.js"></script>
 <style>
   :root {{
@@ -628,10 +628,11 @@ html = f"""<!DOCTYPE html>
 <!-- ── Hero ──────────────────────────────────────────────────────── -->
 <header class="hero">
   <div class="container">
-    <h1>Reframing Bullpen Value</h1>
+    <h1>The Leverage Paradox</h1>
     <p class="subtitle">
-      WAR, WPA, and the Leverage Gap<br>
-      An analysis of {n_total:,} pitcher-seasons from {START_YEAR}&ndash;{END_YEAR}
+      Rethinking the Value of Elite Relievers<br>
+      WAR, WPA and the hidden value of leverage<br>
+      An analysis of {n_total:,} pitcher-seasons from the past decade
     </p>
   </div>
 </header>
@@ -685,7 +686,9 @@ html = f"""<!DOCTYPE html>
 
     <ul style="margin-top:1.5rem;color:var(--muted);font-size:0.92rem;padding-left:1.2rem;">
       <li>All WAR values are <strong>fWAR</strong> (Fangraphs WAR), which uses FIP&mdash;strikeouts, walks, HBP, and home runs&mdash;rather than runs allowed, isolating repeatable pitching skill from fielding and sequencing.</li>
-      <li style="margin-top:0.4rem;">Data from <a href="https://www.fangraphs.com/" style="color: var(--accent);">Fangraphs</a> via <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a>, {START_YEAR}&ndash;{END_YEAR}, minimum {QUAL} IP per season.</li>
+      <li style="margin-top:0.4rem;">Scope: 10 MLB seasons [{START_YEAR}&ndash;{END_YEAR}]</li>
+      <li style="margin-top:0.4rem;">Minimum {QUAL} IP per season</li>
+      <li style="margin-top:0.4rem;">All data from <a href="https://www.fangraphs.com/" style="color: var(--accent);">Fangraphs</a> via <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a></li>
     </ul>
   </div>
 </section>
