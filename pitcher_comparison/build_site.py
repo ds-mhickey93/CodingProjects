@@ -391,7 +391,7 @@ html = f"""<!DOCTYPE html>
   /* ── Hero ─────────────────────────────────────── */
   .hero {{
     background: linear-gradient(135deg, rgba(26,26,46,0.88) 0%, rgba(22,33,62,0.88) 50%, rgba(15,52,96,0.88) 100%),
-               url('https://images.pexels.com/photos/89699/pexels-photo-89699.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
+               url('hero-stadium.jpg') center/cover no-repeat;
     color: #f0f0f0;
     padding: 5rem 2rem 4rem;
     text-align: center;
@@ -604,6 +604,48 @@ html = f"""<!DOCTYPE html>
   }}
 
   /* ── Footer ───────────────────────────────────── */
+  .method-details {{
+    margin-top: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }}
+  .method-details summary {{
+    padding: 0.8rem 1.2rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--muted);
+    background: #f9f9f9;
+    list-style: none;
+  }}
+  .method-details summary::-webkit-details-marker {{ display: none; }}
+  .method-details summary::before {{
+    content: '\25B6';
+    display: inline-block;
+    margin-right: 0.6rem;
+    font-size: 0.7rem;
+    transition: transform 0.2s;
+  }}
+  .method-details[open] summary::before {{
+    transform: rotate(90deg);
+  }}
+  .method-details[open] summary {{
+    border-bottom: 1px solid var(--border);
+  }}
+  .method-details > :not(summary) {{
+    padding: 0 1.2rem;
+  }}
+  .method-details > .metrics {{
+    padding: 0 1.2rem;
+    margin-top: 1rem;
+  }}
+  .method-details > ul {{
+    padding-left: 2.4rem;
+    padding-right: 1.2rem;
+    padding-bottom: 1.2rem;
+  }}
+
   footer {{
     text-align: center;
     padding: 2rem;
@@ -670,24 +712,28 @@ html = f"""<!DOCTYPE html>
       </div>
     </div>
 
-    <h3>Pitcher Classification</h3>
-    <div class="metrics">
-      <div class="metric-card">
-        <strong>Starting Pitcher (SP)</strong>
-        <p>Games Started &ge; 5 <em>and</em> Innings Pitched &ge; 20 in a season.</p>
-      </div>
-      <div class="metric-card">
-        <strong>Relief Pitcher (RP)</strong>
-        <p>Games &ge; 5 <em>and</em> Games Started &lt; 3. Pitchers meeting neither definition are excluded.</p>
-      </div>
-    </div>
+    <details class="method-details">
+      <summary>Classification, data sources &amp; notes</summary>
 
-    <ul style="margin-top:1.5rem;color:var(--muted);font-size:0.92rem;padding-left:1.2rem;">
-      <li>All WAR values are <strong>fWAR</strong> (Fangraphs WAR), which uses FIP&mdash;strikeouts, walks, HBP, and home runs&mdash;rather than runs allowed, isolating repeatable pitching skill from fielding and sequencing.</li>
-      <li style="margin-top:0.4rem;">Scope: 10 MLB seasons [{START_YEAR}&ndash;{END_YEAR}]</li>
-      <li style="margin-top:0.4rem;">Minimum {QUAL} IP per season</li>
-      <li style="margin-top:0.4rem;">All data from <a href="https://www.fangraphs.com/" style="color: var(--accent);">Fangraphs</a> via <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a></li>
-    </ul>
+      <h3 style="margin-top:1.2rem;">Pitcher Classification</h3>
+      <div class="metrics">
+        <div class="metric-card">
+          <strong>Starting Pitcher (SP)</strong>
+          <p>Games Started &ge; 5 <em>and</em> Innings Pitched &ge; 20 in a season.</p>
+        </div>
+        <div class="metric-card">
+          <strong>Relief Pitcher (RP)</strong>
+          <p>Games &ge; 5 <em>and</em> Games Started &lt; 3. Pitchers meeting neither definition are excluded.</p>
+        </div>
+      </div>
+
+      <ul style="margin-top:1.5rem;color:var(--muted);font-size:0.92rem;padding-left:1.2rem;">
+        <li>All WAR values are <strong>fWAR</strong> (Fangraphs WAR), which uses FIP&mdash;strikeouts, walks, HBP, and home runs&mdash;rather than runs allowed, isolating repeatable pitching skill from fielding and sequencing.</li>
+        <li style="margin-top:0.4rem;">Scope: 10 MLB seasons [{START_YEAR}&ndash;{END_YEAR}]</li>
+        <li style="margin-top:0.4rem;">Minimum {QUAL} IP per season</li>
+        <li style="margin-top:0.4rem;">All data from <a href="https://www.fangraphs.com/" style="color: var(--accent);">Fangraphs</a> via <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a></li>
+      </ul>
+    </details>
   </div>
 </section>
 
@@ -790,12 +836,12 @@ html = f"""<!DOCTYPE html>
     </p>
 
     <div class="callout">
-      <p>Consider the asymmetry: a starter throwing six strong innings in a comfortable lead
-      may shift win probability by only a few percentage points. A reliever striking out two
-      batters with the tying run on third in the eighth inning can swing win probability by
+      <p>Consider the asymmetry: Zach Wheeler throws six strong innings in a comfortable lead
+      and shifts win probability by only a few percentage points. Andr&eacute;s Mu&ntilde;oz enters
+      in the eighth with the tying run on third, strikes out two batters, and swings win probability by
       30&ndash;40% in two minutes. Both performances require real skill &mdash; but WPA rewards
-      the reliever&rsquo;s two minutes far more than the starter&rsquo;s six innings, not because
-      the reliever is better, but because the <em>situation</em> carried more weight.</p>
+      Mu&ntilde;oz&rsquo;s two minutes far more than Wheeler&rsquo;s six innings, not because
+      Mu&ntilde;oz is better, but because the <em>situation</em> carried more weight.</p>
     </div>
 
     <h3>Season-Level View</h3>
