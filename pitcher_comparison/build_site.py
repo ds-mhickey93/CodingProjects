@@ -750,7 +750,7 @@ html = f"""<!DOCTYPE html>
 <!-- ── SP/RP Divide ──────────────────────────────────────────────── -->
 <section>
   <div class="container">
-    <h2>SPs &amp; RPs by Volume and Leverage</h2>
+    <h2>Volume and Leverage</h2>
     <p>
       Before identifying high-leverage relievers, it&rsquo;s worth seeing just how differently
       starters and relievers are deployed. The violin plots below show the distributions of
