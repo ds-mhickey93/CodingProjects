@@ -795,8 +795,8 @@ html = f"""<!DOCTYPE html>
 <!-- ── Clustering ────────────────────────────────────────────────── -->
 <section>
   <div class="container">
-    <h2>The Giovanni Gallegos Line</h2>
-    <h3 style="margin-top:0.2rem;">What Constitutes a High-Leverage Reliever?</h3>
+    <h2>What Constitutes a High-Leverage Reliever?</h2>
+    <h3 style="margin-top:0.2rem;">The Giovanni Gallegos Line</h3>
     <p>
       To move beyond per-season snapshots, we aggregate each pitcher&rsquo;s career totals across
       all seasons in the dataset, then apply k-means clustering (k&nbsp;=&nbsp;3) on career-average pLI
