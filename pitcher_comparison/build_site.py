@@ -404,7 +404,7 @@ html = f"""<!DOCTYPE html>
     line-height: 1.2;
   }}
   .hero .subtitle {{
-    font-size: 1.15rem;
+    font-size: 1.3rem;
     color: #bbb;
     max-width: 720px;
     margin: 0 auto;
@@ -628,7 +628,7 @@ html = f"""<!DOCTYPE html>
 <!-- ── Hero ──────────────────────────────────────────────────────── -->
 <header class="hero">
   <div class="container">
-    <h1>The Leverage Paradox: Rethinking the Value of Elite Relievers</h1>
+    <h1>The Leverage Paradox<br>Rethinking the Value of Elite Relievers</h1>
     <p class="subtitle">
       An analysis of {n_total:,} pitcher-seasons from the past decade
     </p>
