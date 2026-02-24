@@ -390,10 +390,10 @@ html = f"""<!DOCTYPE html>
 
   /* ── Hero ─────────────────────────────────────── */
   .hero {{
-    background: linear-gradient(135deg, rgba(26,26,46,0.88) 0%, rgba(22,33,62,0.88) 50%, rgba(15,52,96,0.88) 100%),
+    background: linear-gradient(135deg, rgba(26,26,46,0.75) 0%, rgba(22,33,62,0.75) 50%, rgba(15,52,96,0.75) 100%),
                url('hero-stadium.jpg') center/cover no-repeat;
     color: #f0f0f0;
-    padding: 5rem 2rem 4rem;
+    padding: 6rem 2rem 5rem;
     text-align: center;
   }}
   .hero h1 {{
@@ -657,7 +657,7 @@ html = f"""<!DOCTYPE html>
   /* ── Responsive ───────────────────────────────── */
   @media (max-width: 640px) {{
     .hero h1 {{ font-size: 2rem; }}
-    .hero {{ padding: 3rem 1.5rem 2.5rem; }}
+    .hero {{ padding: 4rem 1.5rem 3.5rem; }}
     .container {{ padding: 0 1.2rem; }}
     .stat .number {{ font-size: 1.7rem; }}
     h2 {{ font-size: 1.5rem; }}
@@ -731,7 +731,7 @@ html = f"""<!DOCTYPE html>
         <li>All WAR values are <strong>fWAR</strong> (Fangraphs WAR), which uses FIP&mdash;strikeouts, walks, HBP, and home runs&mdash;rather than runs allowed, isolating repeatable pitching skill from fielding and sequencing.</li>
         <li style="margin-top:0.4rem;">Scope: 10 MLB seasons [{START_YEAR}&ndash;{END_YEAR}]</li>
         <li style="margin-top:0.4rem;">Minimum {QUAL} IP per season</li>
-        <li style="margin-top:0.4rem;">All data from <a href="https://www.fangraphs.com/" style="color: var(--accent);">Fangraphs</a> via <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a></li>
+        <li style="margin-top:0.4rem;">All data from <a href="https://www.fangraphs.com/" style="color: var(--accent);">Fangraphs</a> via <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a> &mdash; see the <a href="https://blogs.fangraphs.com/glossary/" style="color: var(--accent);">Fangraphs Glossary</a> for stat definitions</li>
       </ul>
     </details>
   </div>
