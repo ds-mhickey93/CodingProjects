@@ -631,7 +631,7 @@ html = f"""<!DOCTYPE html>
   }}
   .method-details summary::-webkit-details-marker {{ display: none; }}
   .method-details summary::before {{
-    content: '\25B6';
+    content: '\\25B6';
     display: inline-block;
     margin-right: 0.6rem;
     font-size: 0.7rem;
