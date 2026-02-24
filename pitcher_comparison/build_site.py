@@ -76,57 +76,80 @@ cluster_labels = {
     cluster_order[2]: 'High Leverage',
 }
 
-# ── Chart 0: Violin plots (SP vs RP distributions) ──────────────────
-from plotly.subplots import make_subplots
+# ── Chart 0: Violin plots (SP vs RP distributions) — static matplotlib ───
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
+from matplotlib.patches import Patch
+import base64, io
+
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['font.serif'] = ['Times New Roman', 'Georgia', 'Cambria']
 
 violin_df = df[['Pitcher_Type', 'IP', 'LI']].dropna().copy()
+sp_data = violin_df[violin_df['Pitcher_Type'] == 'SP']
+rp_data = violin_df[violin_df['Pitcher_Type'] == 'RP']
 
-fig0 = make_subplots(rows=1, cols=2, subplot_titles=['Innings Pitched (IP)', 'Average Leverage Index (pLI)'])
+sp_color, rp_color_v = '#1B9E77', '#D95F02'
 
-for pt, color in [('SP', '#1B9E77'), ('RP', '#D95F02')]:
-    sub = violin_df[violin_df['Pitcher_Type'] == pt]
-    fig0.add_trace(go.Violin(
-        y=sub['IP'], name=pt, legendgroup=pt, showlegend=True,
-        line_color=color, fillcolor=color, opacity=0.55,
-        meanline_visible=True, box_visible=True,
-        hoveron='violins', hoverinfo='y',
-    ), row=1, col=1)
-    fig0.add_trace(go.Violin(
-        y=sub['LI'], name=pt, legendgroup=pt, showlegend=False,
-        line_color=color, fillcolor=color, opacity=0.55,
-        meanline_visible=True, box_visible=True,
-        hoveron='violins', hoverinfo='y',
-    ), row=1, col=2)
+fig_v, (ax_ip, ax_li) = plt.subplots(1, 2, figsize=(14, 6))
 
-fig0.update_layout(
-    title=dict(
-        text=f'SP vs RP Distributions: Innings Pitched & pLI<br><sup>Individual Pitcher-Seasons, {START_YEAR}\u2013{END_YEAR}</sup>',
-        x=0.5, font=dict(size=20, family='Georgia', color='#333')
-    ),
-    font_family='Georgia, Times New Roman, serif',
-    height=550,
-    violinmode='group',
-    hoverlabel=dict(font_family='Georgia, Times New Roman, serif'),
-    paper_bgcolor='rgba(0,0,0,0)',
-    plot_bgcolor='#f9f9f9',
-    margin=dict(l=60, r=30, t=80, b=60),
-)
-fig0.update_yaxes(title_text='IP', row=1, col=1)
-fig0.update_yaxes(title_text='pLI', row=1, col=2)
+# IP violin
+parts_ip = ax_ip.violinplot([sp_data['IP'].values, rp_data['IP'].values], positions=[1, 2], showmeans=True, showmedians=True)
+for i, color in enumerate([sp_color, rp_color_v]):
+    parts_ip['bodies'][i].set_facecolor(color)
+    parts_ip['bodies'][i].set_alpha(0.55)
+for key in ['cmeans', 'cmedians', 'cbars', 'cmins', 'cmaxes']:
+    parts_ip[key].set_color('#333')
+ax_ip.set_xticks([1, 2])
+ax_ip.set_xticklabels(['SP', 'RP'], fontsize=12)
+ax_ip.set_ylabel('IP', fontsize=12, fontname='Georgia')
+ax_ip.set_title('Innings Pitched (IP)', fontsize=14, fontname='Georgia', pad=8)
+for spine in ax_ip.spines.values(): spine.set_visible(False)
+ax_ip.tick_params(length=0)
+ax_ip.yaxis.grid(True, color='#ddd', linewidth=0.5)
+ax_ip.set_axisbelow(True)
 
-# Style subplot titles
-for ann in fig0.layout.annotations:
-    ann.font = dict(size=15, family='Georgia', color='#444444')
+# pLI violin
+parts_li = ax_li.violinplot([sp_data['LI'].values, rp_data['LI'].values], positions=[1, 2], showmeans=True, showmedians=True)
+for i, color in enumerate([sp_color, rp_color_v]):
+    parts_li['bodies'][i].set_facecolor(color)
+    parts_li['bodies'][i].set_alpha(0.55)
+for key in ['cmeans', 'cmedians', 'cbars', 'cmins', 'cmaxes']:
+    parts_li[key].set_color('#333')
+ax_li.set_xticks([1, 2])
+ax_li.set_xticklabels(['SP', 'RP'], fontsize=12)
+ax_li.set_ylabel('pLI', fontsize=12, fontname='Georgia')
+ax_li.set_title('Average Leverage Index (pLI)', fontsize=14, fontname='Georgia', pad=8)
+for spine in ax_li.spines.values(): spine.set_visible(False)
+ax_li.tick_params(length=0)
+ax_li.yaxis.grid(True, color='#ddd', linewidth=0.5)
+ax_li.set_axisbelow(True)
 
-chart0_html = fig0.to_html(full_html=False, include_plotlyjs=False, config={'responsive': True})
+fig_v.suptitle(f'SP vs RP Distributions: Innings Pitched & pLI\nIndividual Pitcher-Seasons, {START_YEAR}\u2013{END_YEAR}',
+               fontsize=18, fontweight='bold', fontname='Georgia', color='#333', y=1.02)
+legend_elements = [Patch(facecolor=sp_color, alpha=0.55, label='SP'),
+                   Patch(facecolor=rp_color_v, alpha=0.55, label='RP')]
+fig_v.legend(handles=legend_elements, loc='upper right', fontsize=11, frameon=False)
+plt.tight_layout()
+plt.subplots_adjust(top=0.85)
 
-sp_median_ip = violin_df[violin_df['Pitcher_Type'] == 'SP']['IP'].median()
-rp_median_ip = violin_df[violin_df['Pitcher_Type'] == 'RP']['IP'].median()
-sp_median_li = violin_df[violin_df['Pitcher_Type'] == 'SP']['LI'].median()
-rp_median_li = violin_df[violin_df['Pitcher_Type'] == 'RP']['LI'].median()
+buf = io.BytesIO()
+fig_v.savefig(buf, format='png', dpi=150, bbox_inches='tight', facecolor='white')
+plt.close(fig_v)
+buf.seek(0)
+chart0_b64 = base64.b64encode(buf.read()).decode('utf-8')
+chart0_html = f'<img src="data:image/png;base64,{chart0_b64}" alt="SP vs RP Violin Plots" style="width:100%;max-width:900px;display:block;margin:0 auto;">'
+
+sp_median_ip = sp_data['IP'].median()
+rp_median_ip = rp_data['IP'].median()
+sp_median_li = sp_data['LI'].median()
+rp_median_li = rp_data['LI'].median()
 
 # ── Chart 1: Cluster scatter ─────────────────────────────────────────
 rp_df['Cluster_Label'] = rp_df['Leverage_Cluster'].map(cluster_labels)
+rp_df['ERA'] = rp_df['ERA'].round(2)
 fig1 = px.scatter(
     rp_df, x='IP', y='LI',
     color='Cluster_Label',
