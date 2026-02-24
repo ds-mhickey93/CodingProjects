@@ -72,7 +72,7 @@ cluster_li = rp_df.groupby('Leverage_Cluster')['LI'].mean().sort_values()
 cluster_order = list(cluster_li.index)
 cluster_labels = {
     cluster_order[0]: 'Low Leverage',
-    cluster_order[1]: 'Medium Leverage',
+    cluster_order[1]: 'Mid-Leverage',
     cluster_order[2]: 'High Leverage',
 }
 
@@ -173,9 +173,10 @@ fig1 = px.scatter(
     color='Cluster_Label',
     color_discrete_map={
         'Low Leverage': '#66A61E',
-        'Medium Leverage': '#7570B3',
+        'Mid-Leverage': '#7570B3',
         'High Leverage': '#E7298A',
     },
+    category_orders={'Cluster_Label': ['High Leverage', 'Mid-Leverage', 'Low Leverage']},
     hover_data=['Player', 'ERA', 'WAR', 'LI', 'IP', 'Seasons'],
     labels={
         'IP': 'Innings Pitched (IP)',
@@ -196,14 +197,14 @@ fig1.update_layout(
     plot_bgcolor='#f9f9f9',
     margin=dict(l=60, r=30, t=80, b=60),
 )
-_hover_bg1 = {'Low Leverage': '#E8F5E0', 'Medium Leverage': '#ECEAF5', 'High Leverage': '#FCE4F0'}
+_hover_bg1 = {'Low Leverage': '#E8F5E0', 'Mid-Leverage': '#ECEAF5', 'High Leverage': '#FCE4F0'}
 fig1.for_each_trace(lambda t: t.update(
     hoverlabel=dict(bgcolor=_hover_bg1.get(t.name, '#fff'), font_color='#333'),
     hovertemplate=t.hovertemplate.replace('=', ' = ') if t.hovertemplate else t.hovertemplate
 ))
 chart1_html = fig1.to_html(full_html=False, include_plotlyjs=False, config={'responsive': True})
 
-# ── Chart 2: Bar chart (recreated in Plotly) ──────────────────────────
+# ── Chart 2: Bar chart — static matplotlib ────────────────────────────
 comparison_wpa = comparison_df.dropna(subset=['WPA'])
 comparison_war = comparison_df.dropna(subset=['WAR'])
 
@@ -212,70 +213,65 @@ rp_total_wpa = comparison_wpa[comparison_wpa['Pitcher_Type'] == 'RP (High Lev)']
 sp_total_war = comparison_war[comparison_war['Pitcher_Type'] == 'SP']['WAR'].sum()
 rp_total_war = comparison_war[comparison_war['Pitcher_Type'] == 'RP (High Lev)']['WAR'].sum()
 
-from plotly.subplots import make_subplots
+fig_bar, axes_bar = plt.subplots(2, 1, figsize=(14, 9.5))
+categories_bar = ['Starting Pitchers', 'High-Leverage Relievers']
+colors_bar = [sp_color, rp_color_v]
+bar_h = 0.35
+y_pos_bar = [0, bar_h * 2]
 
-fig2 = make_subplots(
-    rows=2, cols=1,
-    subplot_titles=['Win Probability Added (WPA)', 'Wins Above Replacement (WAR)'],
-    vertical_spacing=0.22,
-)
+fig_bar.suptitle(f'Two Metrics, Two Stories\nHow WAR and WPA See High-Leverage Relievers ({START_YEAR}\u2013{END_YEAR})',
+                 fontsize=20, fontweight='bold', fontname='Georgia', color='#333333', y=1.02)
 
-categories = ['Starting Pitchers', 'High-Leverage Relievers']
-sp_color, rp_color = '#1B9E77', '#D95F02'
+def draw_white_gridlines(ax):
+    ticks = ax.xaxis.get_major_locator().tick_values(*ax.get_xlim())
+    for t in ticks:
+        if t > 0:
+            ax.axvline(t, color='white', linewidth=0.8, zorder=10)
 
-# WPA bars
-fig2.add_trace(go.Bar(
-    y=categories, x=[sp_total_wpa, rp_total_wpa],
-    orientation='h',
-    marker_color=[sp_color, rp_color],
-    opacity=0.85,
-    text=[f'{sp_total_wpa:.1f}', f'{rp_total_wpa:.1f}'],
-    textposition='outside',
-    textfont=dict(size=13, family='Georgia'),
-    hovertemplate='%{y}: %{x:.1f} Wins Added<extra></extra>',
-    showlegend=False,
-    width=0.45,
-), row=1, col=1)
+# WPA subplot
+ax_wpa = axes_bar[0]
+wpa_values = [sp_total_wpa, rp_total_wpa]
+bars_wpa = ax_wpa.barh(y_pos_bar, wpa_values, color=colors_bar, alpha=0.85, height=bar_h, zorder=2)
+ax_wpa.set_yticks(y_pos_bar)
+ax_wpa.set_yticklabels(categories_bar, fontsize=12, fontname='Georgia')
+for b, val in zip(bars_wpa, wpa_values):
+    ax_wpa.text(b.get_width() + 8, b.get_y() + b.get_height()/2,
+                f'{val:.1f}\nWins Added', va='center', ha='left', fontsize=11, fontname='serif', linespacing=1.2)
+ax_wpa.set_title('Win Probability Added (WPA)', fontsize=15, fontname='Georgia', color='#444', pad=2)
+ax_wpa.xaxis.set_major_locator(mticker.AutoLocator())
+ax_wpa.yaxis.grid(False); ax_wpa.xaxis.grid(False)
+ax_wpa.tick_params(axis='x', length=0); ax_wpa.tick_params(axis='y', length=0)
+for spine in ax_wpa.spines.values(): spine.set_visible(False)
+ax_wpa.set_xlim(0, max(wpa_values) * 1.45)
+ax_wpa.set_ylim(-bar_h, y_pos_bar[-1] + bar_h * 1.2)
+draw_white_gridlines(ax_wpa)
 
-# WAR bars
-fig2.add_trace(go.Bar(
-    y=categories, x=[sp_total_war, rp_total_war],
-    orientation='h',
-    marker_color=[sp_color, rp_color],
-    opacity=0.85,
-    text=[f'{sp_total_war:.1f}', f'{rp_total_war:.1f}'],
-    textposition='outside',
-    textfont=dict(size=13, family='Georgia'),
-    hovertemplate='%{y}: %{x:.1f} WAR<extra></extra>',
-    showlegend=False,
-    width=0.45,
-), row=2, col=1)
+# WAR subplot
+ax_war = axes_bar[1]
+war_values = [sp_total_war, rp_total_war]
+bars_war = ax_war.barh(y_pos_bar, war_values, color=colors_bar, alpha=0.85, height=bar_h, zorder=2)
+ax_war.set_yticks(y_pos_bar)
+ax_war.set_yticklabels(categories_bar, fontsize=12, fontname='Georgia')
+for b, val in zip(bars_war, war_values):
+    ax_war.text(b.get_width() + 40, b.get_y() + b.get_height()/2,
+                f'{val:.1f}\nWins Above Replacement', va='center', ha='left', fontsize=11, fontname='serif', linespacing=1.2)
+ax_war.set_title('Wins Above Replacement (WAR)', fontsize=15, fontname='Georgia', color='#444', pad=2)
+ax_war.xaxis.set_major_locator(mticker.AutoLocator())
+ax_war.yaxis.grid(False); ax_war.xaxis.grid(False)
+ax_war.tick_params(axis='x', length=0); ax_war.tick_params(axis='y', length=0)
+for spine in ax_war.spines.values(): spine.set_visible(False)
+ax_war.set_xlim(0, max(war_values) * 1.55)
+ax_war.set_ylim(-bar_h, y_pos_bar[-1] + bar_h * 1.2)
+draw_white_gridlines(ax_war)
 
-fig2.update_layout(
-    title=dict(
-        text=f'Two Metrics, Two Stories<br><sup>How WAR and WPA See High-Leverage Relievers ({START_YEAR}\u2013{END_YEAR})</sup>',
-        font=dict(size=22, family='Georgia', color='#333333'),
-        x=0.5,
-    ),
-    font_family='Georgia, Times New Roman, serif',
-    height=700,
-    paper_bgcolor='rgba(0,0,0,0)',
-    plot_bgcolor='#f9f9f9',
-    margin=dict(l=180, r=100, t=120, b=40),
-)
-
-# Style subplot titles
-for ann in fig2.layout.annotations:
-    ann.font = dict(size=15, family='Georgia', color='#444444')
-
-fig2.update_xaxes(showgrid=True, gridcolor='white', gridwidth=1, zeroline=False, layer='above traces', row=1, col=1)
-fig2.update_xaxes(showgrid=True, gridcolor='white', gridwidth=1, zeroline=False, layer='above traces', row=2, col=1)
-fig2.update_yaxes(showgrid=False, row=1, col=1)
-fig2.update_yaxes(showgrid=False, row=2, col=1)
-fig2.update_xaxes(range=[0, max(sp_total_wpa, rp_total_wpa) * 1.35], row=1, col=1)
-fig2.update_xaxes(range=[0, sp_total_war * 1.45], row=2, col=1)
-
-chart2_html = fig2.to_html(full_html=False, include_plotlyjs=False, config={'staticPlot': True, 'responsive': True})
+plt.tight_layout(h_pad=10)
+plt.subplots_adjust(top=0.90)
+buf2 = io.BytesIO()
+fig_bar.savefig(buf2, format='png', dpi=150, bbox_inches='tight', facecolor='white')
+plt.close(fig_bar)
+buf2.seek(0)
+chart2_b64 = base64.b64encode(buf2.read()).decode('utf-8')
+chart2_html = f'<img src="data:image/png;base64,{chart2_b64}" alt="WPA vs WAR Bar Chart" style="width:100%;max-width:900px;display:block;margin:0 auto;">'
 
 # ── Chart 3: WPA vs WAR scatter ───────────────────────────────────────
 hl_rp_names = high_lev_rp_df['Player'].unique()
@@ -394,7 +390,8 @@ html = f"""<!DOCTYPE html>
 
   /* ── Hero ─────────────────────────────────────── */
   .hero {{
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    background: linear-gradient(135deg, rgba(26,26,46,0.88) 0%, rgba(22,33,62,0.88) 50%, rgba(15,52,96,0.88) 100%),
+               url('https://images.pexels.com/photos/89699/pexels-photo-89699.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
     color: #f0f0f0;
     padding: 5rem 2rem 4rem;
     text-align: center;
@@ -672,12 +669,6 @@ html = f"""<!DOCTYPE html>
       </div>
     </div>
 
-    <h3>WAR Variant: fWAR</h3>
-    <p>
-      All WAR values are <strong>fWAR</strong>, built on FIP (strikeouts, walks, HBP, home runs)
-      rather than runs allowed &mdash; a better measure of repeatable skill.
-    </p>
-
     <h3>Pitcher Classification</h3>
     <div class="metrics">
       <div class="metric-card">
@@ -690,8 +681,9 @@ html = f"""<!DOCTYPE html>
       </div>
     </div>
 
-    <p style="margin-top:1.5rem;color:var(--muted);font-size:0.95rem;">
-      All data from <strong>Fangraphs</strong> via
+    <p style="margin-top:1.5rem;color:var(--muted);font-size:0.92rem;">
+      All WAR values are <strong>fWAR</strong> (FIP-based). Data from
+      <a href="https://www.fangraphs.com/" style="color: var(--accent);">Fangraphs</a> via
       <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a>,
       {START_YEAR}&ndash;{END_YEAR}, minimum {QUAL} IP per season.
     </p>
@@ -730,20 +722,16 @@ html = f"""<!DOCTYPE html>
 
     <div class="chart-wrap">{chart0_html}</div>
 
-    <h3>Volume vs. Leverage</h3>
-    <p>
-      Starting pitchers dominate the workload side of the equation &mdash; their IP distribution
-      stretches far above anything relievers produce, reflecting the fundamental design of the role.
-      A typical SP season covers three to four times the innings of a typical RP season, which is
-      precisely why WAR favors them so heavily.
-    </p>
-
-    <h3>Leverage Concentration</h3>
-    <p>
-      While starting pitchers cluster tightly around a league-average pLI (~1.0), relievers show
-      enormous variance. A substantial group of relievers consistently operate well above that
-      baseline &mdash; these are the high-leverage arms deployed in the highest-stakes situations.
-    </p>
+    <div class="metrics" style="margin-top:1.5rem;">
+      <div class="metric-card">
+        <strong>Volume vs. Leverage</strong>
+        <p>SPs dominate the workload &mdash; a typical SP season covers 3&ndash;4&times; the innings of a typical RP season, which is precisely why WAR favors them so heavily.</p>
+      </div>
+      <div class="metric-card">
+        <strong>Leverage Concentration</strong>
+        <p>SPs cluster around league-average pLI (~1.0), but RPs show enormous variance. A substantial group consistently operates well above that baseline &mdash; the high-leverage arms deployed in the highest-stakes situations.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -785,15 +773,35 @@ html = f"""<!DOCTYPE html>
   </div>
 </section>
 
+<!-- ── Individual Seasons ────────────────────────────────────────── -->
+<section>
+  <div class="container">
+    <h2>Individual Seasons: WPA vs WAR</h2>
+    <p>
+      Each dot is a single pitcher-season. SPs spread horizontally (high WAR, moderate WPA) &mdash;
+      their volume drives skill-based value but dilutes game-context impact.
+      High-leverage RPs spread vertically (low WAR, wide WPA range) &mdash;
+      their value is concentrated in high-stakes moments but inflated by
+      sequencing and managerial deployment.
+    </p>
+    <p>
+      The gap between the two clusters is the valuation no-man&rsquo;s-land where
+      neither metric tells the full story.
+    </p>
+
+    <div class="chart-wrap">{chart3_html}</div>
+  </div>
+</section>
+
 <!-- ── The Divergence ────────────────────────────────────────────── -->
 <section>
   <div class="container">
     <h2>Two Metrics, Two Stories</h2>
     <p>
       By WPA, high-leverage relievers outproduce all starting pitchers combined.
-      By WAR, they're worth a fraction. Neither extreme reflects reality &mdash;
+      By WAR, they&rsquo;re worth a fraction. Neither extreme reflects reality &mdash;
       WAR ignores that these innings matter more, while WPA inflates them with
-      sequencing and managerial context the pitcher doesn't control.
+      sequencing and managerial context the pitcher doesn&rsquo;t control.
     </p>
 
     <div class="callout">
@@ -817,26 +825,6 @@ html = f"""<!DOCTYPE html>
     </div>
 
     <div class="chart-wrap">{chart2_html}</div>
-  </div>
-</section>
-
-<!-- ── Scatter ───────────────────────────────────────────────────── -->
-<section>
-  <div class="container">
-    <h2>Individual Seasons: WPA vs WAR</h2>
-    <p>
-      Each dot is a single pitcher-season. SPs spread horizontally (high WAR, moderate WPA) &mdash;
-      their volume drives skill-based value but dilutes game-context impact.
-      High-leverage RPs spread vertically (low WAR, wide WPA range) &mdash;
-      their value is concentrated in high-stakes moments but inflated by
-      sequencing and managerial deployment.
-    </p>
-    <p>
-      The gap between the two clusters is the valuation no-man's-land where
-      neither metric tells the full story.
-    </p>
-
-    <div class="chart-wrap">{chart3_html}</div>
 
     <h3>Top 25 Pitchers by Aggregate WPA</h3>
     <p>
@@ -854,30 +842,31 @@ html = f"""<!DOCTYPE html>
     <h2>Conclusion</h2>
     <ul>
       <li>
-        <strong>WAR</strong> is designed to credit total volume of performance and isolate underlying skill.
-        This leads it to systematically <strong>undervalue</strong> relievers by treating all innings as equally
-        important and ignoring leverage.
+        <strong>WAR</strong> is designed to credit total volume of performance and isolate underlying skill,
+        by treating all innings as equally important and ignoring leverage. This leads to systematic
+        undervaluation of relievers.
       </li>
       <li>
-        <strong>WPA</strong> measures who actually swings game outcomes, fully incorporating timing and context.
-        This causes it to systematically <strong>overvalue</strong> relievers by absorbing managerial usage,
-        sequencing, and luck.
-      </li>
-      <li>
-        <strong>Leverage</strong> itself is not controlled by relievers &mdash; it is determined by game flow and
-        managerial deployment. Yet every team generates a large number of high-leverage moments over a season,
-        meaning elite relief skill reliably translates into real wins.
+        <strong>WPA</strong> measures who actually swings game outcomes, fully incorporating timing and context,
+        but in doing so systematically discredits the baseline win probability provided by quality starts
+        and in turn overvalues relievers by absorbing managerial usage and sequencing factors.
       </li>
     </ul>
 
+    <p style="margin-top:1rem;color:var(--muted);">
+      Yet if these contextual factors were purely noise, their effects would largely cancel out over
+      large samples. Instead, over a decade of league-wide data, high-leverage relievers consistently
+      dominate aggregate WPA, reflecting a durable structural feature of the game: leverage is
+      systematically concentrated into a small number of bullpen innings. This is made explicit in pLI
+      data, where elite relievers operate at roughly double the average leverage of starters, placing
+      them in the most consequential moments of nearly every game.
+    </p>
+
     <div class="takeaway">
-      Starters and offenses generate win probability; high-leverage relievers resolve it.
-      By controlling the final allocation of wins, elite relievers occupy a structurally
-      distinct role that makes their true value meaningfully larger than WAR suggests,
-      even if the exact magnitude remains debatable. Leverage itself is not controlled by
-      relievers &mdash; it is determined by game flow and managerial deployment &mdash; yet every
-      team generates a large number of high-leverage moments over a season, meaning elite
-      relief skill reliably translates into real wins.
+      Starters and offenses establish win probability baseline; high-leverage relievers resolve it.
+      By controlling the final allocation of wins, elite relievers occupy a structurally distinct
+      role that makes their true value meaningfully larger than WAR suggests, even if the precise
+      magnitude remains debatable.
     </div>
   </div>
 </section>
@@ -885,6 +874,7 @@ html = f"""<!DOCTYPE html>
 <footer>
   <div class="container">
     Data: Fangraphs via pybaseball &middot; {START_YEAR}&ndash;{END_YEAR} &middot; Min {QUAL} IP
+    <br>Hero photo by <a href="https://www.pexels.com/@shawnreza/" style="color:#bbb;">Shawn Reza</a> on <a href="https://www.pexels.com/" style="color:#bbb;">Pexels</a>
   </div>
 </footer>
 
