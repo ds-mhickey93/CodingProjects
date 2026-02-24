@@ -895,8 +895,9 @@ html = f"""<!DOCTYPE html>
     <h3>Top 50 Pitchers by Aggregate WPA</h3>
     <p>
       A single leaderboard combining SPs and high-leverage RPs, sorted by total WPA.
-      The number of relievers that appear on this list &mdash; competing directly with aces
-      who threw five times as many innings &mdash; speaks for itself.
+      It&rsquo;s telling that relievers appear so prominently on this list &mdash; alongside
+      aces who threw roughly five times as many innings. This reinforces that elite
+      high-leverage performance of individual relievers persists well beyond short-term variance.
     </p>
     {table_combined_html}
   </div>
