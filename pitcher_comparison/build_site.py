@@ -159,6 +159,9 @@ rp_median_li = rp_data['LI'].median()
 # ── Chart 1: Cluster scatter ─────────────────────────────────────────
 rp_df['Cluster_Label'] = rp_df['Leverage_Cluster'].map(cluster_labels)
 rp_df['ERA'] = rp_df['ERA'].round(2)
+rp_df['WAR'] = rp_df['WAR'].round(2)
+rp_df['LI'] = rp_df['LI'].round(2)
+rp_df['IP'] = rp_df['IP'].round(1)
 fig1 = px.scatter(
     rp_df, x='IP', y='LI',
     color='Cluster_Label',
@@ -309,6 +312,30 @@ fig3.for_each_trace(lambda t: t.update(
     hovertemplate=t.hovertemplate.replace('=', ' = ') if t.hovertemplate else t.hovertemplate
 ))
 chart3_html = fig3.to_html(full_html=False, include_plotlyjs=False, config={'responsive': True})
+
+# ── Top 20 WPA tables ─────────────────────────────────────────────────
+def build_top20_html(dataframe, title, accent_color):
+    cols = ['Player', 'WPA', 'WAR', 'IP', 'LI', 'Seasons']
+    t = dataframe.nlargest(20, 'WPA')[cols].copy()
+    t['WPA'] = t['WPA'].round(2)
+    t['WAR'] = t['WAR'].round(2)
+    t['IP'] = t['IP'].round(1)
+    t['LI'] = t['LI'].round(2)
+    t = t.reset_index(drop=True)
+    t.index = t.index + 1
+    rows = ''
+    for i, row in t.iterrows():
+        rows += f'<tr><td>{i}</td><td>{row["Player"]}</td><td>{row["WPA"]:.2f}</td><td>{row["WAR"]:.2f}</td><td>{row["IP"]:.1f}</td><td>{row["LI"]:.2f}</td><td>{int(row["Seasons"])}</td></tr>\n'
+    return f'''<div class="top20-table">
+      <h4 style="color:{accent_color};margin-bottom:0.5rem;">{title}</h4>
+      <table>
+        <thead><tr><th>#</th><th>Player</th><th>WPA</th><th>WAR</th><th>IP</th><th>pLI</th><th>Seasons</th></tr></thead>
+        <tbody>{rows}</tbody>
+      </table>
+    </div>'''
+
+table_sp_html = build_top20_html(sp_df, 'Starting Pitchers', '#1B9E77')
+table_rp_html = build_top20_html(high_lev_rp_df, 'High-Leverage Relievers', '#D95F02')
 
 # ── Cluster stats for the text ────────────────────────────────────────
 cluster_stats = []
@@ -541,6 +568,33 @@ html = f"""<!DOCTYPE html>
     color: #fff;
   }}
 
+  /* ── Top 20 Tables ────────────────────────────── */
+  .top20-grid {{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }}
+  .top20-table table {{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }}
+  .top20-table th {{
+    background: #f3f3f3;
+    padding: 0.4rem 0.6rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border);
+  }}
+  .top20-table td {{
+    padding: 0.35rem 0.6rem;
+    border-bottom: 1px solid #eee;
+  }}
+  .top20-table tr:hover td {{
+    background: #fafafa;
+  }}
+
   /* ── Footer ───────────────────────────────────── */
   footer {{
     text-align: center;
@@ -557,6 +611,7 @@ html = f"""<!DOCTYPE html>
     .container {{ padding: 0 1.2rem; }}
     .stat .number {{ font-size: 1.7rem; }}
     h2 {{ font-size: 1.5rem; }}
+    .top20-grid {{ grid-template-columns: 1fr; }}
   }}
 </style>
 </head>
@@ -610,31 +665,27 @@ html = f"""<!DOCTYPE html>
 
     <h3>WAR Variant: fWAR</h3>
     <p>
-      This analysis uses <strong>fWAR</strong> (Fangraphs Wins Above Replacement), built on
-      <strong>FIP</strong> rather than runs allowed. FIP isolates outcomes the pitcher directly
-      controls &mdash; strikeouts, walks, HBP, and home runs &mdash; making fWAR a better measure
-      of repeatable skill, though it doesn&rsquo;t capture value from weak contact or
-      BABIP suppression.
-    </p>
-
-    <p>
-      All data is sourced from <strong>Fangraphs</strong> via
-      <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a>,
-      covering MLB seasons <strong>{START_YEAR}&ndash;{END_YEAR}</strong> with a minimum
-      threshold of <strong>{QUAL} innings pitched</strong> per season.
+      All WAR values are <strong>fWAR</strong>, built on FIP (strikeouts, walks, HBP, home runs)
+      rather than runs allowed &mdash; a better measure of repeatable skill.
     </p>
 
     <h3>Pitcher Classification</h3>
     <div class="metrics">
       <div class="metric-card">
         <strong>Starting Pitcher (SP)</strong>
-        <p>Games Started &ge; 5 <em>and</em> Innings Pitched &ge; 20 in a season. This captures pitchers with a meaningful starting workload while excluding openers and spot starters with minimal usage.</p>
+        <p>Games Started &ge; 5 <em>and</em> Innings Pitched &ge; 20 in a season.</p>
       </div>
       <div class="metric-card">
         <strong>Relief Pitcher (RP)</strong>
-        <p>Games &ge; 5 <em>and</em> Games Started &lt; 3 in a season. The low GS ceiling excludes swingmen and spot starters, isolating pitchers used primarily in relief. Pitchers who don&rsquo;t meet either definition are excluded.</p>
+        <p>Games &ge; 5 <em>and</em> Games Started &lt; 3. Pitchers meeting neither definition are excluded.</p>
       </div>
     </div>
+
+    <p style="margin-top:1.5rem;color:var(--muted);font-size:0.95rem;">
+      All data from <strong>Fangraphs</strong> via
+      <a href="https://github.com/jldbc/pybaseball" style="color: var(--accent);">pybaseball</a>,
+      {START_YEAR}&ndash;{END_YEAR}, minimum {QUAL} IP per season.
+    </p>
   </div>
 </section>
 
@@ -777,6 +828,17 @@ html = f"""<!DOCTYPE html>
     </p>
 
     <div class="chart-wrap">{chart3_html}</div>
+
+    <h3>Top 20 by Aggregate WPA</h3>
+    <p>
+      The SP list is predictable &mdash; aces with years of dominance. The RP list is more revealing:
+      these are relievers who sustained elite WPA production over multiple seasons, proving that
+      high-leverage relief value is not a single-season fluke but a repeatable, durable skill.
+    </p>
+    <div class="top20-grid">
+      {table_sp_html}
+      {table_rp_html}
+    </div>
   </div>
 </section>
 
