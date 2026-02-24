@@ -183,7 +183,7 @@ fig1 = px.scatter(
         'LI': 'Average Leverage Index (pLI)',
         'Cluster_Label': 'Cluster',
     },
-    title=f'What Constitutes a High-Leverage Reliever?<br><sup>K-Means Clustering by pLI (k = 3), {START_YEAR}\u2013{END_YEAR}</sup>',
+    title=f'The Giovanni Gallegos Line<br><sup>K-Means Clustering by pLI (k = 3), {START_YEAR}\u2013{END_YEAR}</sup>',
 )
 fig1.update_traces(marker=dict(size=8, opacity=0.4))
 fig1.update_layout(
@@ -795,7 +795,8 @@ html = f"""<!DOCTYPE html>
 <!-- ── Clustering ────────────────────────────────────────────────── -->
 <section>
   <div class="container">
-    <h2>What Constitutes a High-Leverage Reliever?</h2>
+    <h2>The Giovanni Gallegos Line</h2>
+    <h3 style="margin-top:0.2rem;">What Constitutes a High-Leverage Reliever?</h3>
     <p>
       To move beyond per-season snapshots, we aggregate each pitcher&rsquo;s career totals across
       all seasons in the dataset, then apply k-means clustering (k&nbsp;=&nbsp;3) on career-average pLI
