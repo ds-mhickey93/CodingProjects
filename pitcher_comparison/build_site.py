@@ -315,22 +315,22 @@ fig3.for_each_trace(lambda t: t.update(
 ))
 chart3_html = fig3.to_html(full_html=False, include_plotlyjs=False, config={'responsive': True})
 
-# ── Top 25 WPA table (combined) ────────────────────────────────────────
+# ── Top 50 WPA table (combined) ────────────────────────────────────────
 cols_t = ['Player', 'WPA', 'WAR', 'IP', 'LI', 'Seasons', 'Pitcher_Type']
 combined_top = pd.concat([
     sp_df[cols_t].assign(Role='SP'),
     high_lev_rp_df[cols_t].assign(Role='RP')
 ])
-top25 = combined_top.nlargest(25, 'WPA').copy()
-top25['WPA'] = top25['WPA'].round(1)
-top25['WAR'] = top25['WAR'].round(1)
-top25['IP']  = top25['IP'].round(1)
-top25['LI']  = top25['LI'].round(2)
-top25 = top25.reset_index(drop=True)
-top25.index = top25.index + 1
+top50 = combined_top.nlargest(50, 'WPA').copy()
+top50['WPA'] = top50['WPA'].round(1)
+top50['WAR'] = top50['WAR'].round(1)
+top50['IP']  = top50['IP'].round(1)
+top50['LI']  = top50['LI'].round(2)
+top50 = top50.reset_index(drop=True)
+top50.index = top50.index + 1
 
 table_rows = ''
-for i, row in top25.iterrows():
+for i, row in top50.iterrows():
     role = row['Role']
     cls = ' class="rp-row"' if role == 'RP' else ''
     table_rows += f'<tr{cls}><td>{i}</td><td>{row["Player"]}</td><td>{role}</td><td>{row["WPA"]:.1f}</td><td>{row["WAR"]:.1f}</td><td>{row["IP"]:.1f}</td><td>{row["LI"]:.2f}</td><td>{int(row["Seasons"])}</td></tr>\n'
@@ -576,9 +576,11 @@ html = f"""<!DOCTYPE html>
     font-style: normal;
   }}
 
-  /* ── Top 25 Table ─────────────────────────────── */
+  /* ── Top 50 Table ─────────────────────────────── */
   .top20-table {{
     overflow-x: auto;
+    overflow-y: auto;
+    max-height: 600px;
     -webkit-overflow-scrolling: touch;
   }}
   .top20-table table {{
@@ -593,6 +595,9 @@ html = f"""<!DOCTYPE html>
     text-align: left;
     font-weight: 600;
     border-bottom: 2px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 2;
   }}
   .top20-table td {{
     padding: 0.35rem 0.6rem;
@@ -887,7 +892,7 @@ html = f"""<!DOCTYPE html>
 
     <div class="chart-wrap">{chart2_html}</div>
 
-    <h3>Top 25 Pitchers by Aggregate WPA</h3>
+    <h3>Top 50 Pitchers by Aggregate WPA</h3>
     <p>
       A single leaderboard combining SPs and high-leverage RPs, sorted by total WPA.
       The number of relievers that appear on this list &mdash; competing directly with aces
