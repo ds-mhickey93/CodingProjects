@@ -781,7 +781,7 @@ html = f"""<!DOCTYPE html>
 
     <div class="metrics" style="margin-top:1.5rem;">
       <div class="metric-card">
-        <strong>Volume vs. Leverage</strong>
+        <strong>SPs Eat Innings</strong>
         <p>SPs dominate the workload &mdash; a typical SP season covers 3&ndash;4&times; the innings of a typical RP season, which is precisely why WAR favors them so heavily.</p>
       </div>
       <div class="metric-card">
