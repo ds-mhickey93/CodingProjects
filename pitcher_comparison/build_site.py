@@ -628,7 +628,7 @@ html = f"""<!DOCTYPE html>
 <!-- ── Hero ──────────────────────────────────────────────────────── -->
 <header class="hero">
   <div class="container">
-    <h1>The Leverage Paradox<br>Rethinking the Value of Elite Relievers</h1>
+    <h1>The Leverage Paradox:<br>Rethinking the Value of Elite Relievers</h1>
     <p class="subtitle">
       An analysis of {n_total:,} pitcher-seasons from the past decade
     </p>
@@ -645,7 +645,7 @@ html = f"""<!DOCTYPE html>
     </p>
 
     <div class="callout">
-      <p><strong>The Core Tension:</strong> WAR says high-leverage relievers are barely worth noticing. WPA says they're the most impactful pitchers in baseball. Neither is fully right. Every team generates a large number of high-leverage moments over a season, and elite relief skill reliably converts those moments into real wins &mdash; but raw WPA overstates the pitcher's individual contribution by conflating skill with opportunity.</p>
+      <p><strong>The Core Tension:</strong> WAR says high-leverage relievers are barely worth noticing. WPA says they&rsquo;re the most impactful pitchers in baseball. How should this be reconciled?</p>
     </div>
   </div>
 </section>
