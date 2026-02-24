@@ -853,11 +853,11 @@ html = f"""<!DOCTYPE html>
 
     <div class="callout">
       <p>Consider the asymmetry: Zach Wheeler throws six strong innings in a comfortable lead
-      and shifts win probability by only a few percentage points. Andr&eacute;s Mu&ntilde;oz enters
+      and shifts win probability by only a few percentage points. Jhoan Duran enters
       in the eighth with the tying run on third, strikes out two batters, and swings win probability by
       30&ndash;40% in two minutes. Both performances require real skill &mdash; but WPA rewards
-      Mu&ntilde;oz&rsquo;s two minutes far more than Wheeler&rsquo;s six innings, not because
-      Mu&ntilde;oz is better, but because the <em>situation</em> carried more weight.</p>
+      Duran&rsquo;s two minutes far more than Wheeler&rsquo;s six innings, not because
+      Duran is better, but because the <em>situation</em> carried more weight.</p>
     </div>
 
     <h3>Season-Level View</h3>
