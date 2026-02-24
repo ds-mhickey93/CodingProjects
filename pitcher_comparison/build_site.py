@@ -628,10 +628,8 @@ html = f"""<!DOCTYPE html>
 <!-- ── Hero ──────────────────────────────────────────────────────── -->
 <header class="hero">
   <div class="container">
-    <h1>The Leverage Paradox</h1>
+    <h1>The Leverage Paradox: Rethinking the Value of Elite Relievers</h1>
     <p class="subtitle">
-      Rethinking the Value of Elite Relievers<br>
-      WAR, WPA and the hidden value of leverage<br>
       An analysis of {n_total:,} pitcher-seasons from the past decade
     </p>
   </div>
@@ -783,7 +781,7 @@ html = f"""<!DOCTYPE html>
 <!-- ── Two Metrics, Two Stories ───────────────────────────────────── -->
 <section>
   <div class="container">
-    <h2>Two Metrics, Two Stories</h2>
+    <h2>WAR, WPA and the Elusive Value of Systemic Leverage</h2>
     <p>
       By WPA, high-leverage relievers outproduce all starting pitchers combined.
       By WAR, they&rsquo;re worth a fraction. Neither extreme reflects reality &mdash;
