@@ -405,7 +405,7 @@ html = f"""<!DOCTYPE html>
   }}
   .hero .subtitle {{
     font-size: 1.3rem;
-    color: #bbb;
+    color: #d4d4d4;
     max-width: 720px;
     margin: 0 auto;
     line-height: 1.6;
@@ -804,6 +804,9 @@ html = f"""<!DOCTYPE html>
       is deployed in high-stakes situations, this clustering effectively identifies the
       subset of relievers whose managers trust them with the game on the line &mdash;
       the closers, setup men, and firemen who anchor a bullpen.
+      Under this framework, the cutoff between mid- and high-leverage sits at a pLI of 1.08,
+      corresponding to the 10-year average leverage of pitchers like Giovanny Gallegos,
+      Tyler Ferguson, and Joe Jim&eacute;nez.
     </p>
 
     <div class="stat-row">
@@ -840,10 +843,10 @@ html = f"""<!DOCTYPE html>
   <div class="container">
     <h2>WAR, WPA and the Elusive Value of Systemic Leverage</h2>
     <p>
-      By WPA, high-leverage relievers outproduce all starting pitchers combined.
-      By WAR, they&rsquo;re worth a fraction. Neither extreme reflects reality &mdash;
-      WAR ignores that these innings matter more, while WPA inflates them with
-      sequencing and managerial context the pitcher doesn&rsquo;t control.
+      At their core, WAR and WPA answer different questions. WAR asks how much total value
+      a player provides over a season, independent of context, while WPA asks who actually
+      swings games in real time. The divergence between these lenses is nowhere more apparent
+      than in the evaluation of elite relievers.
     </p>
     <p style="font-style:italic;color:var(--muted);font-size:0.93rem;margin-top:0.3rem;">
       WAR and WPA both measure value, but they rest on different baselines, making
@@ -892,6 +895,11 @@ html = f"""<!DOCTYPE html>
     </div>
 
     <div class="chart-wrap">{chart2_html}</div>
+
+    <p style="font-weight:600;color:#333;margin-top:1.2rem;">
+      By WPA, high-leverage relievers outproduce all starting pitchers combined.
+      By WAR, they&rsquo;re worth a fraction.
+    </p>
 
     <h3>Top 50 Pitchers by Aggregate WPA</h3>
     <p>
