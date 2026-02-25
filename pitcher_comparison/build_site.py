@@ -896,7 +896,7 @@ html = f"""<!DOCTYPE html>
 
     <div class="chart-wrap">{chart2_html}</div>
 
-    <p style="font-weight:600;color:#333;margin-top:1.2rem;">
+    <p style="font-style:italic;color:var(--muted);font-size:0.95rem;text-align:center;margin:1.5rem auto 0;max-width:600px;">
       By WPA, high-leverage relievers outproduce all starting pitchers combined.
       By WAR, they&rsquo;re worth a fraction.
     </p>
