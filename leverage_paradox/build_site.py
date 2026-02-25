@@ -709,8 +709,8 @@ html = f"""<!DOCTYPE html>
 
     <div class="metrics">
       <div class="metric-card">
-        <strong>WAR</strong> &mdash; Wins Above Replacement
-        <p>Measures pitcher value via performance (ERA/FIP) &times; volume (IP). Isolates underlying skill but <em>ignores leverage</em>, treating all innings as equally important.</p>
+        <strong>fWAR</strong> &mdash; Fangraphs Wins Above Replacement
+        <p>Measures pitcher value in terms of performance (FIP) and volume (IP). Isolates underlying skill but doesn&rsquo;t fully account for leverage.</p>
       </div>
       <div class="metric-card">
         <strong>WPA</strong> &mdash; Win Probability Added
