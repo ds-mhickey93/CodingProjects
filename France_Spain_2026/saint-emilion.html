@@ -23,11 +23,19 @@
 <dl class="ref-card">
   <div>
     <dt>Lodging</dt>
-    <dd><a href="https://www.airbnb.com/rooms/49530637?source_impression_id=p3_1772572880_P3WSwApAEGxo12LS" target="_blank" style="color:var(--accent);">Airbnb — Saint-Émilion area</a></dd>
+    <dd><a href="https://www.airbnb.com/rooms/49530637" target="_blank" style="color:var(--accent);"><strong>Logis de Colette</strong></a><br>7 Mazerat, Saint-Émilion 33330<br>Hosted by Xavier · 5.0★ (14 reviews)</dd>
+  </div>
+  <div>
+    <dt>The Space</dt>
+    <dd>1 bedroom (attic, low stair landing) · 1 bed · 1 bath<br>Full kitchen · Outdoor dining area · WiFi · Free parking<br>Travel crib (Pack 'n Play) available · Heating + fireplace</dd>
+  </div>
+  <div>
+    <dt>Wine Connection</dt>
+    <dd>Managed by <strong>Couvent des Jacobins</strong> (Grand Cru Classé)<br>Next to CALICEM winery &amp; old Merlot vines<br>Visit + tasting included during stay — ask Xavier</dd>
   </div>
   <div>
     <dt>Arrival</dt>
-    <dd>Fri May 16 · INOUI to Bordeaux Saint-Jean<br>Pickup rental car → drive ~45 min east</dd>
+    <dd>Fri May 16 · INOUI to Bordeaux Saint-Jean<br>Pickup rental car → drive ~45 min east to Mazerat</dd>
   </div>
   <div>
     <dt>Departure</dt>
@@ -36,6 +44,10 @@
   <div>
     <dt>Rental Car</dt>
     <dd>Compact crossover SUV (Renault Symbioz or similar)<br>Pickup at Bordeaux Saint-Jean station</dd>
+  </div>
+  <div class="full">
+    <dt>Heads Up</dt>
+    <dd><strong>No washer/dryer.</strong> Plan laundry for Lescun instead. <strong>No A/C</strong> (shouldn't need it in mid-May). <strong>"No hot water" listed</strong> — confirm with Xavier before the trip. Host greets you on arrival.</dd>
   </div>
   <div class="full">
     <dt>Emergency</dt>
@@ -49,37 +61,112 @@
 <h2>Area Map</h2>
 <div id="map-area" class="day-map" style="height:450px;"></div>
 <div class="map-legend">
-  <span>🏠 Lodging</span>
+  <span>🏠 Logis de Colette</span>
   <span>🏛️ Village</span>
+  <span>🚂 Train Station</span>
   <span>🍷 Wine</span>
+  <span>🛒 Groceries</span>
 </div>
 </section>
 
 <!-- ========== WEATHER ========== -->
 <section>
 <h2>Weather & Light</h2>
+
+<!-- Temperature curve (inline SVG) -->
+<div style="background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:22px 22px 14px; margin:16px 0 16px 0;">
+  <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:12px;">Mid-May Day &nbsp;·&nbsp; Temperature (°F) &nbsp;·&nbsp; <span style="color:#4a1a2e;">avg</span> + <span style="color:#c4b0b8;">range</span></div>
+  <svg viewBox="0 0 660 150" style="width:100%; height:auto; display:block;" aria-label="Temperature curve through a typical mid-May day in Saint-Émilion, with variability band">
+    <!-- Grid lines -->
+    <line x1="50" y1="15" x2="560" y2="15" stroke="#e0e0e0" stroke-width="0.5"/>
+    <line x1="50" y1="45" x2="560" y2="45" stroke="#e0e0e0" stroke-width="0.5"/>
+    <line x1="50" y1="75" x2="560" y2="75" stroke="#e0e0e0" stroke-width="0.5"/>
+    <line x1="50" y1="105" x2="560" y2="105" stroke="#e0e0e0" stroke-width="0.5"/>
+    <!-- Y-axis labels (scale: 80° at y=5, 48° at y=115 → 1°F ≈ 3.44px) -->
+    <text x="44" y="19" text-anchor="end" font-size="10" fill="#8a8e94">80°</text>
+    <text x="44" y="49" text-anchor="end" font-size="10" fill="#8a8e94">71°</text>
+    <text x="44" y="79" text-anchor="end" font-size="10" fill="#8a8e94">62°</text>
+    <text x="44" y="109" text-anchor="end" font-size="10" fill="#8a8e94">53°</text>
+    <!-- Variability band (warm day top / cool day bottom) -->
+    <!-- Warm day: 6am 58° → 9am 63° → noon 72° → 3pm 78° → 6pm 74° → 9pm 65° → 12am 59° -->
+    <!-- Cool day: 6am 48° → 9am 51° → noon 57° → 3pm 60° → 6pm 58° → 9pm 53° → 12am 49° -->
+    <path d="M50,76 C100,68 140,52 220,28 C280,10 300,5 305,5 C350,8 390,18 440,32 C480,45 530,60 560,74
+             L560,108 C530,102 480,96 440,92 C390,88 350,80 305,68 C280,76 220,88 140,102 C100,106 80,108 50,108 Z"
+           fill="#4a1a2e" opacity="0.08"/>
+    <!-- Average curve: 6am 53° → 9am 57° → noon 64° → 3pm 72° → 6pm 68° → 9pm 60° → 12am 54° -->
+    <path d="M50,100 C100,90 140,76 220,52 C260,35 280,20 305,12 C350,15 390,28 440,45 C480,58 530,76 560,96" fill="none" stroke="#4a1a2e" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Data points -->
+    <circle cx="50" cy="100" r="3.5" fill="#4a1a2e"/>   <!-- 6am: 53° -->
+    <circle cx="135" cy="88" r="3" fill="#4a1a2e"/>     <!-- 9am: 57° -->
+    <circle cx="220" cy="52" r="3" fill="#4a1a2e"/>     <!-- noon: 64° -->
+    <circle cx="305" cy="12" r="3.5" fill="#4a1a2e"/>   <!-- 3pm: 72° -->
+    <circle cx="390" cy="28" r="3" fill="#4a1a2e"/>     <!-- 6pm: 68° -->
+    <circle cx="475" cy="58" r="3" fill="#4a1a2e"/>     <!-- 9pm: 60° -->
+    <circle cx="560" cy="96" r="3.5" fill="#4a1a2e"/>   <!-- 12am: 54° -->
+    <!-- Point labels (key temps only) -->
+    <text x="50" y="115" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">53°</text>
+    <text x="220" y="46" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">64°</text>
+    <text x="305" y="8" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">72°</text>
+    <text x="475" y="52" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">60°</text>
+    <!-- Variability annotations (right side) -->
+    <text x="570" y="8" font-size="8.5" fill="#8a6a70" font-style="italic">warm day: 78°</text>
+    <text x="570" y="78" font-size="8.5" fill="#8a6a70" font-style="italic">cool day: 60°</text>
+    <!-- X-axis labels -->
+    <text x="50" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">6am</text>
+    <text x="135" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">9am</text>
+    <text x="220" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">noon</text>
+    <text x="305" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">3pm</text>
+    <text x="390" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">6pm</text>
+    <text x="475" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">9pm</text>
+    <text x="560" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">12am</text>
+  </svg>
+</div>
+
+<!-- Rain + Daylight row -->
 <div style="display:flex; flex-wrap:wrap; gap:16px; margin:0 0 12px 0;">
+
+  <!-- Rain -->
   <div style="flex:1; min-width:260px; background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:18px 22px;">
-    <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px;">Temperature · Mid-May Bordeaux Region</div>
+    <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px;">Precipitation · Mid-May</div>
     <div style="display:flex; gap:20px; align-items:baseline;">
       <div>
-        <span style="font-size:1.5em; font-weight:700; color:var(--navy);">55–72°F</span>
-        <span style="font-size:0.88em; color:var(--muted);"> typical range</span>
+        <span style="font-size:1.5em; font-weight:700; color:var(--navy);">~25–35%</span>
+        <span style="font-size:0.88em; color:var(--muted);"> chance on any given day</span>
+      </div>
+      <div>
+        <span style="font-size:1.5em; font-weight:700; color:var(--navy);">~2.5 in.</span>
+        <span style="font-size:0.88em; color:var(--muted);"> monthly total</span>
       </div>
     </div>
-    <p style="font-size:0.84em; color:var(--muted); margin:10px 0 0;">Warmer than Paris. Pleasant mornings in the mid-50s, afternoons often reaching low 70s. Warm enough for shirt sleeves by midday, but bring a layer for evening terrace dining. Possible afternoon showers — quick-passing.</p>
+    <p style="font-size:0.84em; color:var(--muted); margin:10px 0 0;">Bordeaux region gets occasional afternoon showers but fewer rainy days than Paris. Over 3 days, you might see one with some rain — usually brief. Warm enough that a quick shower is refreshing, not miserable.</p>
   </div>
+
+  <!-- Daylight -->
   <div style="flex:1; min-width:260px; background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:18px 22px;">
     <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px;">Daylight · May 16–19</div>
-    <div style="display:flex; gap:20px; align-items:baseline;">
-      <div>
-        <span style="font-size:1.5em; font-weight:700; color:var(--navy);">~15.5 hrs</span>
-        <span style="font-size:0.88em; color:var(--muted);"> of daylight</span>
-      </div>
-    </div>
-    <p style="font-size:0.84em; color:var(--muted); margin:8px 0 0;">Sunrise ~6:30 AM, sunset ~9:15 PM. Long, warm evenings perfect for outdoor dining. Golden hour light on the vineyards around 8 PM is exceptional.</p>
+    <svg viewBox="0 0 400 72" style="width:100%; height:auto; display:block;" aria-label="Daylight hours visualization">
+      <!-- Full 24h bar (dark) -->
+      <rect x="0" y="22" width="400" height="20" rx="4" fill="#d0d3d8"/>
+      <!-- Daylight portion: 6:30am–9:15pm -->
+      <rect x="108" y="22" width="247" height="20" rx="4" fill="#e8dbb8"/>
+      <!-- Golden hour portion: ~8:00pm–9:15pm -->
+      <rect x="326" y="22" width="29" height="20" rx="0 4 4 0" fill="#d4a96a"/>
+      <!-- Golden hour bracket -->
+      <line x1="326" y1="16" x2="326" y2="20" stroke="#b08540" stroke-width="1"/>
+      <line x1="355" y1="16" x2="355" y2="20" stroke="#b08540" stroke-width="1"/>
+      <line x1="326" y1="16" x2="355" y2="16" stroke="#b08540" stroke-width="1"/>
+      <text x="340" y="11" text-anchor="middle" font-size="8.5" fill="#b08540" font-weight="500">golden hr</text>
+      <!-- Bottom labels -->
+      <text x="108" y="58" text-anchor="middle" font-size="10" fill="#4a1a2e" font-weight="600">6:30 am</text>
+      <text x="215" y="36" text-anchor="middle" font-size="9" fill="#8a7a55" font-weight="500">~15 hrs of daylight</text>
+      <text x="326" y="58" text-anchor="middle" font-size="8.5" fill="#b08540" font-weight="500">8:00</text>
+      <text x="396" y="58" text-anchor="end" font-size="8.5" fill="#4a1a2e" font-weight="600">9:15 pm</text>
+    </svg>
+    <p style="font-size:0.84em; color:var(--muted); margin:8px 0 0;">Long warm evenings. Golden hour light on the vineyards and limestone walls starts around 8 PM — exceptional for photos and terrace dining.</p>
   </div>
 </div>
+
+<p style="font-size:0.9em; color:var(--muted); margin-top:8px;"><strong style="color:var(--navy);">What to pack:</strong> Warmer than Paris. Light layers work — shirt sleeves by midday, a light jacket for evening terrace dining. Rain shell stays in the bag but you may not need it. Sunglasses and a hat for vineyard walks.</p>
 </section>
 
 <!-- ====================================================== -->
@@ -116,7 +203,7 @@
   </div>
   <div class="time-block" data-title="Check in & settle">
     <span class="time-label">3:30–4:30 PM</span> <span class="core-tag">core</span>
-    <p>Check into the Airbnb. Unpack. Get Lucy settled. Breathe. You've transitioned from metropolis to wine country and the pace should feel completely different.</p>
+    <p>Check into the Logis de Colette. Xavier (the host) greets you on arrival. Unpack. Set up the Pack 'n Play for Lucy — it's provided. Get settled. The property is right next to CALICEM winery's old Merlot vines — the view from the outdoor dining area sets the tone. Breathe. You've transitioned from metropolis to wine country.</p>
   </div>
   <div class="time-block" data-title="Evening village walk">
     <span class="time-label">5:30–7:00 PM</span> <span class="optional-tag">if energy allows</span>
@@ -124,7 +211,10 @@
   </div>
   <div class="time-block" data-title="Dinner">
     <span class="time-label">7:30 PM</span>
-    <p>Dinner in the village or at the Airbnb. May consider picking up provisions from a local épicerie if the Airbnb has a kitchen. Saint-Émilion has several restaurants on Place du Marché — outdoor seating with views of the village. Keep it simple tonight.</p>
+    <p>Dinner at the Logis or in the village. The kitchen is fully equipped (pots, pans, dishes, cooking basics) — pick up provisions at Carrefour Libourne on the way in, or from a village épicerie. The outdoor dining area overlooking the vines is hard to beat for a quiet first-night dinner. Village restaurants on Place du Marché are the alternative — outdoor seating with views.</p>
+    <div class="tip">
+      <strong>Brunch option:</strong> Xavier offers a delivered brunch prepared by a partner chef (supplement). Ask about it for the morning — could be a great Day 5 treat.
+    </div>
   </div>
 </div>
 
@@ -145,26 +235,26 @@
 </div>
 <div class="day-body">
 
-<p>This is your full day in wine country. The anchor is a vineyard visit — one is plenty. The rest of the day is village wandering, terrace sitting, and reading with a glass of wine while Lucy naps. Don't over-schedule.</p>
+<p>This is your full day in wine country. The anchor is a vineyard visit — and you have one built in: <strong>Couvent des Jacobins</strong> (Grand Cru Classé, in the village) offers a visit and tasting as part of your stay at the Logis. The rest of the day is village wandering, terrace sitting, and reading with a glass of wine while Lucy naps. Don't over-schedule.</p>
 
 <div class="timeline">
   <div class="time-block" data-title="Morning at the Airbnb">
     <span class="time-label">8:00–9:30 AM</span>
-    <p>Slow start. Coffee at the Airbnb. If there's a bakery nearby, pick up croissants and bread. Feed Lucy. No rush — this is not a city day.</p>
+    <p>Slow start. Coffee at the Logis. If there's a bakery nearby, pick up croissants and bread. Feed Lucy. No rush — this is not a city day.</p>
   </div>
   <div class="time-block" data-title="Vineyard visit / wine tasting">
     <span class="time-label">10:30 AM – 12:00 PM</span> <span class="core-tag">core</span>
-    <p><strong>Visit a vineyard.</strong> Saint-Émilion has hundreds of châteaux, many welcoming visitors. One visit is enough for the day. Look for a smaller, family-run property rather than a big commercial operation — they tend to be more relaxed, more personal, and more accommodating of a baby.</p>
+    <p><strong>Visit Couvent des Jacobins.</strong> Your stay at the Logis de Colette includes a visit and tasting at <strong>Couvent des Jacobins</strong> — a Grand Cru Classé estate right in the heart of Saint-Émilion village. This is managed by the same Jean family that runs your accommodation. Coordinate timing with Xavier.</p>
     <ul>
-      <li>Many châteaux require advance booking — check websites or email a few days ahead</li>
       <li>Morning visits are best (cooler, Lucy is fresher)</li>
       <li>Tastings typically last 45–90 minutes including a tour of the caves</li>
-      <li>Bring the carrier — cellars have stairs. Stroller won't work in most</li>
+      <li>Bring the carrier — cellars have stairs. Stroller won't work</li>
       <li>One person drives, one person tastes (or spit — they won't judge)</li>
-      <li>You can buy bottles directly from the château — often at better prices than shops</li>
+      <li>You can buy bottles directly — often at better prices than shops</li>
+      <li>Mention Lucy to Xavier when arranging the visit — the family will accommodate</li>
     </ul>
     <div class="tip">
-      <strong>Booking tip:</strong> Email the château in advance and mention you're traveling with an infant. Most small producers are very welcoming and will adjust the visit accordingly. Phrase it simply: "Nous voyagerons avec notre bébé de 9 mois — est-ce que cela pose un problème?" (We'll be traveling with our 9-month-old baby — is that a problem?)</p>
+      <strong>Want a second tasting?</strong> If you'd like to visit another property beyond Couvent des Jacobins, email a smaller château in advance. Phrase it simply: "Nous voyagerons avec notre bébé de 9 mois — est-ce que cela pose un problème?" (We'll be traveling with our 9-month-old baby — is that a problem?) Most family producers are very welcoming.
     </div>
   </div>
   <div class="time-block" data-title="Lunch in the village">
@@ -173,7 +263,7 @@
   </div>
   <div class="time-block" data-title="Nap time & Airbnb">
     <span class="time-label">2:00–4:30 PM</span>
-    <p>Back to the Airbnb. Lucy's nap. Your nap. Read. Sit outside if the weather is good. This is the pace of wine country — don't fight it.</p>
+    <p>Back to the Logis. Lucy's nap. Your nap. Read. Sit outside if the weather is good. This is the pace of wine country — don't fight it.</p>
   </div>
   <div class="time-block" data-title="Afternoon walk or second village visit">
     <span class="time-label">5:00–6:30 PM</span> <span class="optional-tag">if energy allows</span>
@@ -181,17 +271,17 @@
     <ul>
       <li><strong>Village exploration (continued):</strong> Any streets you missed yesterday. The Cloître des Cordeliers (ruined monastery, lovely courtyard) is worth a look.</li>
       <li><strong>Drive to a viewpoint:</strong> The roads between vineyards are beautiful in the late afternoon light. Just drive slowly and pull over wherever something catches your eye.</li>
-      <li><strong>Walk through the vines:</strong> If the Airbnb is near vineyards, walk the rows with Lucy in the carrier. The light before sunset is magical on the vines.</li>
+      <li><strong>Walk through the vines:</strong> The Logis is right next to the CALICEM vineyards — walk the rows with Lucy in the carrier. The light before sunset is magical on the vines.</li>
     </ul>
   </div>
   <div class="time-block" data-title="Dinner">
     <span class="time-label">7:00–8:00 PM</span>
-    <p>Dinner. Cook at the Airbnb with market provisions, or head back to the village. The golden hour light on the limestone buildings is beautiful. Early-ish dinner works well with the baby schedule.</p>
+    <p>Dinner. Cook at the Logis with market provisions — the kitchen is well-equipped and the outdoor dining area with vine views is ideal. Or head back to the village. The golden hour light on the limestone buildings is beautiful. Early-ish dinner works well with the baby schedule.</p>
   </div>
 </div>
 
 <div class="backup">
-  <strong>Low-Energy Backup:</strong> Skip the château visit. Buy a bottle from a cave in the village, grab lunch at a terrace, and spend the day at the Airbnb reading in the garden. That's a perfectly valid wine country day.
+  <strong>Low-Energy Backup:</strong> Skip the château visit (you still have the Couvent des Jacobins tasting whenever you want it). Buy a bottle from a cave in the village, grab lunch at a terrace, and spend the day at the Logis reading by the vines. That's a perfectly valid wine country day.
 </div>
 
 </div>
@@ -212,7 +302,7 @@
 <div class="timeline">
   <div class="time-block" data-title="Lazy morning">
     <span class="time-label">Morning</span>
-    <p>Slow morning at the Airbnb. Market run if there's a Sunday market nearby (many villages in the region have them). Fresh bread, cheese, fruit. Coffee on the terrace.</p>
+    <p>Slow morning at the Logis. Market run if there's a Sunday market nearby (many villages in the region have them). Fresh bread, cheese, fruit. Coffee on the terrace.</p>
   </div>
   <div class="time-block" data-title="Village or nearby town">
     <span class="time-label">10:30 AM – 12:30 PM</span> <span class="optional-tag">if energy allows</span>
@@ -228,7 +318,7 @@
   </div>
   <div class="time-block" data-title="Quiet afternoon">
     <span class="time-label">Afternoon</span>
-    <p>Afternoon at the Airbnb. Pack partially. Enjoy the last of the wine country pace. Early dinner.</p>
+    <p>Afternoon at the Logis. Pack partially. Enjoy the last of the wine country pace. Early dinner.</p>
   </div>
 </div>
 
@@ -254,7 +344,7 @@
 <div class="timeline">
   <div class="time-block" data-title="Pack up & depart">
     <span class="time-label">8:30–9:00 AM</span> <span class="core-tag">core</span>
-    <p>Checkout from the Airbnb. Load the car. Last look at the vineyards. Head south.</p>
+    <p>Checkout from the Logis de Colette. Load the car. Last look at the vineyards. Head south.</p>
   </div>
   <div class="time-block" data-title="Drive south">
     <span class="time-label">9:00 AM – 12:30 PM</span> <span class="core-tag">core</span>
@@ -282,7 +372,7 @@
 <h2>Practical Notes — Saint-Émilion</h2>
 
 <h3>Getting Around</h3>
-<p><strong>You need the car for everything here.</strong> The village itself is walkable (15 minutes end to end), but the Airbnb, vineyards, and surrounding countryside all require driving. Parking in Saint-Émilion: use the lot below the village (Parking de la Barbanne or Parking de la Porte Bouqueyre). Don't try to drive into the old town — the streets are medieval-width.</p>
+<p><strong>You need the car for everything here.</strong> The village itself is walkable (15 minutes end to end), but the Logis, vineyards, and surrounding countryside all require driving. The Logis has free parking on premises. Parking in Saint-Émilion village: use the lot below (Parking de la Barbanne or Parking de la Porte Bouqueyre). Don't try to drive into the old town — the streets are medieval-width.</p>
 
 <h3>Wine Tasting with a Baby</h3>
 <ul>
@@ -294,7 +384,8 @@
 <h3>Groceries</h3>
 <ul>
   <li><strong>Saint-Émilion village</strong> has a few small shops and an épicerie, but selection is limited and prices are tourist-adjusted.</li>
-  <li><strong>Libourne</strong> (15 min northwest) has a Carrefour, Leclerc, and pharmacies. Stock up here for Airbnb cooking — diapers, wipes, formula, wine, groceries. Do this on arrival day or the next morning.</li>
+  <li><strong>Carrefour Libourne</strong> (~15 min northwest) — your main grocery run. Stock up for cooking at the Logis: diapers, wipes, formula, groceries, wine. Do this on arrival day or the next morning. There are also pharmacies in Libourne.</li>
+  <li><strong>No washer/dryer at the Logis.</strong> Plan to do laundry at the Lescun Airbnb instead. Pack accordingly — you'll need enough clean clothes to get through Saint-Émilion without washing.</li>
 </ul>
 
 <h3>What to Eat & Drink</h3>
@@ -337,19 +428,20 @@
 
   // Saint-Émilion area map
   var village = [44.8954, -0.1545];
-  var m = L.map('map-area', {scrollWheelZoom: true}).setView([44.88, -0.20], 12);
+  var m = L.map('map-area', {scrollWheelZoom: true}).setView([44.87, -0.35], 11);
   L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18}).addTo(m);
 
+  addMarker(m, [44.8880, -0.1620], '\uD83C\uDFE0', 'Logis de Colette — 7 Mazerat', false);
   addMarker(m, village, '\uD83C\uDFDB\uFE0F', 'Saint-\u00c9milion Village', false);
-  addMarker(m, [44.9200, -0.2600], '\uD83D\uDE82', 'Bordeaux Saint-Jean (pickup)', false);
-  addMarker(m, [44.9290, -0.2050], '\uD83D\uDED2', 'Libourne (groceries)', true);
+  addMarker(m, [44.8270, -0.5580], '\uD83D\uDE82', 'Bordeaux Saint-Jean (car pickup)', false);
+  addMarker(m, [44.9290, -0.2050], '\uD83D\uDED2', 'Carrefour Libourne (groceries)', true);
   addMarker(m, [44.8400, -0.1500], '\uD83C\uDF77', 'Vineyard Country (south)', true);
 
-  // Driving route: Bordeaux → Saint-Émilion (approximate)
+  // Driving route: Bordeaux → A89 → Saint-Émilion (direct, not via Libourne)
   L.polyline([
-    [44.9200, -0.2600], [44.9180, -0.2400], [44.9160, -0.2200], [44.9200, -0.2050],
-    [44.9180, -0.1900], [44.9130, -0.1750], [44.9080, -0.1650], [44.9020, -0.1580],
-    [44.8954, -0.1545]
+    [44.8270, -0.5580], [44.8350, -0.5300], [44.8400, -0.5000], [44.8500, -0.4500],
+    [44.8600, -0.4000], [44.8700, -0.3500], [44.8750, -0.3000], [44.8800, -0.2500],
+    [44.8850, -0.2200], [44.8900, -0.1900], [44.8954, -0.1545]
   ], {
     color: navy, weight: 3, opacity: 0.4, dashArray: '8,6', lineCap: 'round'
   }).addTo(m);

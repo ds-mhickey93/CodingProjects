@@ -63,17 +63,60 @@
 <!-- ========== WEATHER ========== -->
 <section>
 <h2>Weather & Light</h2>
+
+<!-- Temperature curve (inline SVG) -->
+<div style="background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:22px 22px 14px; margin:16px 0 16px 0;">
+  <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:12px;">Late May Day &nbsp;·&nbsp; Temperature (°F) &nbsp;·&nbsp; <span style="color:#4a1a2e;">avg</span> + <span style="color:#c4b0b8;">range</span></div>
+  <svg viewBox="0 0 660 150" style="width:100%; height:auto; display:block;" aria-label="Temperature curve through a typical late May day in San Sebastián, with variability band">
+    <!-- Grid lines -->
+    <line x1="50" y1="15" x2="560" y2="15" stroke="#e0e0e0" stroke-width="0.5"/>
+    <line x1="50" y1="45" x2="560" y2="45" stroke="#e0e0e0" stroke-width="0.5"/>
+    <line x1="50" y1="75" x2="560" y2="75" stroke="#e0e0e0" stroke-width="0.5"/>
+    <line x1="50" y1="105" x2="560" y2="105" stroke="#e0e0e0" stroke-width="0.5"/>
+    <!-- Y-axis labels (scale: 76° at y=5, 44° at y=115 → 1°F ≈ 3.44px) -->
+    <text x="44" y="19" text-anchor="end" font-size="10" fill="#8a8e94">76°</text>
+    <text x="44" y="49" text-anchor="end" font-size="10" fill="#8a8e94">67°</text>
+    <text x="44" y="79" text-anchor="end" font-size="10" fill="#8a8e94">58°</text>
+    <text x="44" y="109" text-anchor="end" font-size="10" fill="#8a8e94">49°</text>
+    <!-- Variability band (warm day top / cool day bottom) -->
+    <!-- Warm day: 6am 55° → 9am 59° → noon 66° → 3pm 73° → 6pm 69° → 9pm 62° → 12am 56° -->
+    <!-- Cool day: 6am 47° → 9am 49° → noon 54° → 3pm 57° → 6pm 55° → 9pm 51° → 12am 48° -->
+    <path d="M50,76 C100,68 140,54 220,32 C280,16 300,10 305,10 C350,12 390,22 440,36 C480,48 530,62 560,74
+             L560,106 C530,102 480,98 440,96 C390,92 350,84 305,68 C280,76 220,86 140,100 C100,104 80,106 50,106 Z"
+           fill="#4a1a2e" opacity="0.08"/>
+    <!-- Average curve: 6am 51° → 9am 54° → noon 60° → 3pm 66° → 6pm 63° → 9pm 57° → 12am 52° -->
+    <path d="M50,100 C100,92 140,80 220,58 C260,42 280,30 305,22 C350,25 390,36 440,52 C480,65 530,80 560,96" fill="none" stroke="#4a1a2e" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Data points -->
+    <circle cx="50" cy="100" r="3.5" fill="#4a1a2e"/>   <!-- 6am: 51° -->
+    <circle cx="135" cy="92" r="3" fill="#4a1a2e"/>     <!-- 9am: 54° -->
+    <circle cx="220" cy="58" r="3" fill="#4a1a2e"/>     <!-- noon: 60° -->
+    <circle cx="305" cy="22" r="3.5" fill="#4a1a2e"/>   <!-- 3pm: 66° -->
+    <circle cx="390" cy="36" r="3" fill="#4a1a2e"/>     <!-- 6pm: 63° -->
+    <circle cx="475" cy="65" r="3" fill="#4a1a2e"/>     <!-- 9pm: 57° -->
+    <circle cx="560" cy="96" r="3.5" fill="#4a1a2e"/>   <!-- 12am: 52° -->
+    <!-- Point labels (key temps only) -->
+    <text x="50" y="115" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">51°</text>
+    <text x="220" y="52" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">60°</text>
+    <text x="305" y="16" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">66°</text>
+    <text x="475" y="59" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">57°</text>
+    <!-- Variability annotations (right side) -->
+    <text x="570" y="12" font-size="8.5" fill="#8a6a70" font-style="italic">warm day: 73°</text>
+    <text x="570" y="78" font-size="8.5" fill="#8a6a70" font-style="italic">cool day: 57°</text>
+    <!-- X-axis labels -->
+    <text x="50" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">6am</text>
+    <text x="135" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">9am</text>
+    <text x="220" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">noon</text>
+    <text x="305" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">3pm</text>
+    <text x="390" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">6pm</text>
+    <text x="475" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">9pm</text>
+    <text x="560" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">12am</text>
+  </svg>
+</div>
+
+<!-- Rain + Daylight row -->
 <div style="display:flex; flex-wrap:wrap; gap:16px; margin:0 0 12px 0;">
-  <div style="flex:1; min-width:260px; background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:18px 22px;">
-    <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px;">Temperature · Late May San Sebastián</div>
-    <div style="display:flex; gap:20px; align-items:baseline;">
-      <div>
-        <span style="font-size:1.5em; font-weight:700; color:var(--navy);">52–68°F</span>
-        <span style="font-size:0.88em; color:var(--muted);"> typical range</span>
-      </div>
-    </div>
-    <p style="font-size:0.84em; color:var(--muted); margin:10px 0 0;">Coastal and temperate. Mornings are cool (low 50s), afternoons pleasant (mid to upper 60s). Warmer than Paris but cooler than you might expect for Spain. The Bay of Biscay keeps temperatures moderated. Not beach-swim weather — but beautiful for walking.</p>
-  </div>
+
+  <!-- Rain -->
   <div style="flex:1; min-width:260px; background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:18px 22px;">
     <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px;">Precipitation · Late May</div>
     <div style="display:flex; gap:20px; align-items:baseline;">
@@ -81,10 +124,40 @@
         <span style="font-size:1.5em; font-weight:700; color:var(--navy);">~40–50%</span>
         <span style="font-size:0.88em; color:var(--muted);"> rain chance daily</span>
       </div>
+      <div>
+        <span style="font-size:1.5em; font-weight:700; color:var(--navy);">~4 in.</span>
+        <span style="font-size:0.88em; color:var(--muted);"> monthly total</span>
+      </div>
     </div>
-    <p style="font-size:0.84em; color:var(--muted); margin:8px 0 0;">San Sebastián's north coast is one of the rainiest parts of Spain. Expect at least one rainy day in three. Usually intermittent — not all-day washouts. Rain shell stays in the bag at all times. The city is beautiful in the rain.</p>
+    <p style="font-size:0.84em; color:var(--muted); margin:10px 0 0;">San Sebastián's north coast is one of the rainiest parts of Spain. Expect at least one rainy day in three. Usually intermittent — not all-day washouts. Rain shell stays in the bag at all times. The city is beautiful in the rain.</p>
+  </div>
+
+  <!-- Daylight -->
+  <div style="flex:1; min-width:260px; background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:18px 22px;">
+    <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px;">Daylight · May 22–25</div>
+    <svg viewBox="0 0 400 72" style="width:100%; height:auto; display:block;" aria-label="Daylight hours visualization">
+      <!-- Full 24h bar (dark) -->
+      <rect x="0" y="22" width="400" height="20" rx="4" fill="#d0d3d8"/>
+      <!-- Daylight portion: 6:45am–9:30pm -->
+      <rect x="112" y="22" width="247" height="20" rx="4" fill="#e8dbb8"/>
+      <!-- Golden hour portion: ~8:15pm–9:30pm -->
+      <rect x="331" y="22" width="28" height="20" rx="0 4 4 0" fill="#d4a96a"/>
+      <!-- Golden hour bracket -->
+      <line x1="331" y1="16" x2="331" y2="20" stroke="#b08540" stroke-width="1"/>
+      <line x1="359" y1="16" x2="359" y2="20" stroke="#b08540" stroke-width="1"/>
+      <line x1="331" y1="16" x2="359" y2="16" stroke="#b08540" stroke-width="1"/>
+      <text x="345" y="11" text-anchor="middle" font-size="8.5" fill="#b08540" font-weight="500">golden hr</text>
+      <!-- Bottom labels -->
+      <text x="112" y="58" text-anchor="middle" font-size="10" fill="#4a1a2e" font-weight="600">6:45 am</text>
+      <text x="218" y="36" text-anchor="middle" font-size="9" fill="#8a7a55" font-weight="500">~15 hrs 15 min of daylight</text>
+      <text x="331" y="58" text-anchor="middle" font-size="8.5" fill="#b08540" font-weight="500">8:15</text>
+      <text x="396" y="58" text-anchor="end" font-size="8.5" fill="#4a1a2e" font-weight="600">9:30 pm</text>
+    </svg>
+    <p style="font-size:0.84em; color:var(--muted); margin:8px 0 0;">Long evenings. Sun sets late over the Bay of Biscay — golden hour on La Concha starts around 8:15 PM. Perfect for a post-pintxos paseo along the boardwalk.</p>
   </div>
 </div>
+
+<p style="font-size:0.9em; color:var(--muted); margin-top:8px;"><strong style="color:var(--navy);">What to pack:</strong> Coastal and temperate — similar to Paris but wetter. Light jacket, rain shell (essential), comfortable walking shoes. Not beach-swim weather for most people, but wade-able on a warm afternoon. Layers for evening pintxos along the waterfront.</p>
 </section>
 
 <!-- ====================================================== -->
