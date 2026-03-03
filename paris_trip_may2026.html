@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paris with Lucy — May 2026</title>
+<style>
+  :root {
+    --navy: #1a2332;
+    --warm: #3d3029;
+    --cream: #faf8f5;
+    --accent: #8b6f4e;
+    --light-accent: #d4c5b0;
+    --soft-blue: #4a6785;
+    --muted: #6b6b6b;
+    --border: #e5e0da;
+    --highlight: #f0ebe4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: var(--warm);
+    background: var(--cream);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 30px 60px;
+  }
+
+  /* Header */
+  .hero {
+    text-align: center;
+    padding: 50px 20px 40px;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .hero h1 {
+    font-size: 2.2em;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .hero .subtitle {
+    font-size: 1em;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* Navigation */
+  nav {
+    background: var(--highlight);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 25px;
+    margin-bottom: 40px;
+  }
+  nav h3 {
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  nav ul { list-style: none; columns: 2; column-gap: 20px; }
+  nav li { margin-bottom: 5px; break-inside: avoid; }
+  nav a {
+    color: var(--soft-blue);
+    text-decoration: none;
+    font-size: 0.95em;
+  }
+  nav a:hover { text-decoration: underline; }
+
+  /* Sections */
+  h2 {
+    font-size: 1.6em;
+    font-weight: 400;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+    margin: 50px 0 20px;
+  }
+  h3 {
+    font-size: 1.15em;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 25px 0 10px;
+  }
+  h4 {
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--warm);
+    margin: 18px 0 8px;
+  }
+
+  p { margin-bottom: 12px; }
+
+  /* Quick Reference Card */
+  .ref-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 30px;
+  }
+  .ref-card .full { grid-column: 1 / -1; }
+  .ref-card dt {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+  .ref-card dd {
+    font-size: 0.95em;
+    margin-bottom: 10px;
+  }
+
+  /* Day Sections */
+  .day-header {
+    background: var(--navy);
+    color: white;
+    padding: 18px 25px;
+    border-radius: 6px 6px 0 0;
+    margin-top: 40px;
+  }
+  .day-header h2 {
+    color: white;
+    border: none;
+    margin: 0;
+    padding: 0;
+    font-size: 1.4em;
+  }
+  .day-header .day-sub {
+    font-size: 0.85em;
+    color: var(--light-accent);
+    font-style: italic;
+    margin-top: 4px;
+  }
+  .day-body {
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    padding: 25px;
+    background: white;
+    margin-bottom: 30px;
+  }
+
+  /* Timeline */
+  .timeline {
+    border-left: 2px solid var(--light-accent);
+    padding-left: 20px;
+    margin: 15px 0 20px;
+  }
+  .timeline .time-block {
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .timeline .time-block::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    left: -24px;
+    top: 7px;
+  }
+  .time-label {
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 0.9em;
+    font-family: 'Segoe UI', 'Helvetica', sans-serif;
+  }
+
+  /* Info boxes */
+  .tip {
+    background: var(--highlight);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    margin: 15px 0;
+    font-size: 0.93em;
+    border-radius: 0 4px 4px 0;
+  }
+  .tip strong { color: var(--accent); }
+
+  .backup {
+    background: #f0f4f8;
+    border-left: 3px solid var(--soft-blue);
+    padding: 12px 16px;
+    margin: 15px 0;
+    font-size: 0.93em;
+    border-radius: 0 4px 4px 0;
+  }
+  .backup strong { color: var(--soft-blue); }
+
+  /* Food recommendations */
+  .food-rec {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 15px 18px;
+    margin: 12px 0;
+  }
+  .food-rec .name {
+    font-weight: 700;
+    color: var(--warm);
+  }
+  .food-rec .address {
+    font-size: 0.85em;
+    color: var(--muted);
+    font-family: 'Segoe UI', 'Helvetica', sans-serif;
+  }
+  .food-rec .note {
+    font-size: 0.9em;
+    margin-top: 4px;
+  }
+
+  /* Packing list */
+  .pack-section {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    margin: 15px 0;
+  }
+  .pack-section h4 {
+    margin-top: 0;
+    color: var(--accent);
+  }
+  .pack-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  .pack-section li {
+    padding: 3px 0 3px 22px;
+    position: relative;
+    font-size: 0.93em;
+  }
+  .pack-section li::before {
+    content: '☐';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+  }
+
+  /* Images */
+  .photo {
+    width: 100%;
+    border-radius: 6px;
+    margin: 15px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .photo-caption {
+    text-align: center;
+    font-size: 0.82em;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: -8px;
+    margin-bottom: 15px;
+  }
+
+  /* Map container */
+  .map-container {
+    margin: 15px 0;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .map-container iframe {
+    width: 100%;
+    height: 350px;
+    border: none;
+  }
+  .map-link {
+    display: inline-block;
+    background: var(--soft-blue);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.88em;
+    font-family: 'Segoe UI', 'Helvetica', sans-serif;
+    margin: 8px 4px 8px 0;
+    transition: opacity 0.2s;
+  }
+  .map-link:hover { opacity: 0.85; }
+
+  /* Lists */
+  ul, ol { margin-left: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 4px; }
+
+  /* Print */
+  @media print {
+    body { font-size: 11pt; }
+    .container { max-width: 100%; padding: 0; }
+    .day-header { background: #333 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .map-container, .map-link { display: none; }
+    .photo { max-height: 250px; object-fit: cover; }
+    nav { break-inside: avoid; }
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 15px; }
+    .ref-card { grid-template-columns: 1fr; }
+    nav ul { columns: 1; }
+    .hero h1 { font-size: 1.6em; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ========== HEADER ========== -->
+<div class="hero">
+  <h1>Paris with Lucy</h1>
+  <div class="subtitle">May 13–16, 2026 &middot; 3 Nights &middot; Slow Travel</div>
+</div>
+
+<!-- ========== TABLE OF CONTENTS ========== -->
+<nav>
+  <h3>Contents</h3>
+  <ul>
+    <li><a href="#quick-ref">Quick Reference</a></li>
+    <li><a href="#weather">Weather & Light</a></li>
+    <li><a href="#day0">Day 0 — Arrival</a></li>
+    <li><a href="#day1">Day 1 — Tuileries & Right Bank</a></li>
+    <li><a href="#day2">Day 2 — Rodin & Left Bank</a></li>
+    <li><a href="#day3">Day 3 — Departure</a></li>
+    <li><a href="#packing">Packing List</a></li>
+    <li><a href="#practical">Practical Notes</a></li>
+    <li><a href="#wine">Wine Guide</a></li>
+  </ul>
+</nav>
+
+<!-- ========== QUICK REFERENCE ========== -->
+<section id="quick-ref">
+<h2>Quick Reference</h2>
+<dl class="ref-card">
+  <div>
+    <dt>Hotel</dt>
+    <dd>Hôtel Le Cinq Codet &middot; Spa Suite<br>5 Rue Louis Codet, 75007 Paris<br>+33 1 53 85 15 60</dd>
+  </div>
+  <div>
+    <dt>Nearest Metro</dt>
+    <dd>École Militaire (Line 8)<br>La Tour-Maubourg (Line 8)<br>~3 min walk to either</dd>
+  </div>
+  <div>
+    <dt>Arrival</dt>
+    <dd>Wed May 13 &middot; CDG &middot; 11:00 AM<br>Taxi to hotel (~50 min)</dd>
+  </div>
+  <div>
+    <dt>Departure</dt>
+    <dd>Sat May 16 &middot; Montparnasse &middot; 10:15 AM<br>Train (~15 min taxi to station)</dd>
+  </div>
+  <div>
+    <dt>Taxi App</dt>
+    <dd><strong>G7</strong> — Book on demand with car seat<br>Install app before trip. Select "siège bébé" (baby seat) option when booking.</dd>
+  </div>
+  <div>
+    <dt>Emergency</dt>
+    <dd>112 (EU general)<br>15 (SAMU / medical)<br>17 (Police)</dd>
+  </div>
+  <div class="full">
+    <dt>Check-in / Check-out</dt>
+    <dd>Check-in: 3:00 PM &middot; Check-out: 12:00 PM — Le Cinq Codet is a small boutique hotel; they're typically accommodating with early bag drop. Call or email ahead to ask about early access to the spa suite.</dd>
+  </div>
+</dl>
+</section>
+
+<!-- ========== HOTEL AREA MAP ========== -->
+<div class="map-container">
+  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=2.2920%2C48.8505%2C2.3160%2C48.8620&amp;layer=mapnik&amp;marker=48.8558%2C2.3063" loading="lazy"></iframe>
+</div>
+<p class="photo-caption">Hotel Le Cinq Codet is in the heart of the 7th — between the Eiffel Tower and Les Invalides. Nearly everything on this trip is within walking distance.</p>
+
+<!-- ========== WEATHER ========== -->
+<section id="weather">
+<h2>Weather & Light</h2>
+<p><strong>Mid-May Paris averages:</strong> Highs around 19–22°C (66–72°F), lows around 11–13°C (52–55°F). Expect a mix of sunny spells and occasional showers — always have a light rain layer handy. Humidity is moderate.</p>
+<p><strong>Daylight:</strong> Sunrise ~6:15 AM, sunset ~9:20 PM. You have very long golden hours. Evenings stay light until nearly 10 PM, which means you can stroll late without it feeling late.</p>
+<p><strong>What this means for packing:</strong> Layers. A light jacket + a packable rain shell covers you. Mornings and evenings can feel cool, midday is comfortable in a single layer. Sunglasses and a hat for Lucy.</p>
+</section>
+
+<!-- ====================================================== -->
+<!--                    DAY 0 — ARRIVAL                     -->
+<!-- ====================================================== -->
+<section id="day0">
+<div class="day-header">
+  <h2>Day 0 — Wednesday, May 13</h2>
+  <div class="day-sub">Arrival + Eiffel Tower Walk</div>
+</div>
+<div class="day-body">
+
+<p>This is an arrival day. The only goal is to land, get to the hotel, and take a walk. If Lucy needs to nap in the carrier while you wait for the room, all the better — the Eiffel Tower is an 8-minute walk from the hotel door.</p>
+
+<div class="timeline">
+  <div class="time-block">
+    <span class="time-label">11:00 AM</span>
+    <p>Land at CDG. Expect 30–45 minutes for passport control + baggage. Have the G7 taxi app ready, or grab a taxi from the stand outside arrivals. <strong>Do not take the RER with luggage and a baby.</strong> Taxi is ~€55–65 and takes 45–70 min depending on traffic.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">~12:30–1:30 PM</span>
+    <p>Arrive at Hôtel Le Cinq Codet. Drop bags at the front desk. If the room is ready early, great. If not, you now have the perfect excuse to go for a walk.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">1:30–2:30 PM</span>
+    <p><strong>Walk to Champ de Mars / Eiffel Tower.</strong> Head south down Avenue de la Bourdonnais or Rue de Grenelle — you'll see the tower almost immediately. It's barely 800 meters. No agenda needed. Walk the park, find a bench, take some photos, let Lucy look at the trees. This is a <em>walk</em>, not a visit.</p>
+    <p>If Lucy falls asleep in the carrier or Doona on the way, just keep strolling. The park is wide and flat with good paths.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">3:00 PM</span>
+    <p>Check in properly. Unpack. Get Lucy settled. Start to let the spa suite do its work — run the hot tub if you're not too tired. Decompress.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">5:00–6:00 PM</span>
+    <p><strong>Walk Rue Cler.</strong> This is your neighborhood market street, ~5 minutes from the hotel. Pick up essentials: grab a baguette, some cheese, fruit, and a bottle of wine from Nicolas or one of the small caves. Wander. This street is one of the most charming in Paris and it's your backyard for 3 days.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">7:00 PM</span>
+    <p>Early dinner near the hotel. You're jet-lagged and that's fine. Eat on a terrace, drink a glass of wine, go to bed early.</p>
+  </div>
+</div>
+
+<img src="https://images.unsplash.com/photo-1543349689-9a4d426bee8e?w=800&h=380&fit=crop&q=80" alt="Eiffel Tower from Champ de Mars" class="photo" loading="lazy">
+<p class="photo-caption">Champ de Mars — an 8-minute walk from the hotel. No tickets, no lines, just a park with a good view.</p>
+
+<h3>Where to Eat — Day 0</h3>
+<div class="food-rec">
+  <span class="name">Café du Marché</span>
+  <span class="address"> — 38 Rue Cler, 75007</span>
+  <p class="note">Classic corner bistro with a generous terrace. Good for a first-night steak-frites or croque monsieur. Relaxed, not fussy. Right on Rue Cler.</p>
+</div>
+<div class="food-rec">
+  <span class="name">Le Petit Cler</span>
+  <span class="address"> — 29 Rue Cler, 75007</span>
+  <p class="note">Smaller, slightly cozier. Good salads, simple dishes. Can feel a bit tight with a stroller — bring the carrier if going here.</p>
+</div>
+<div class="food-rec">
+  <span class="name">For pastries: Boulangerie Secco</span>
+  <span class="address"> — 20 Rue Jean Nicot, 75007</span>
+  <p class="note">Excellent neighborhood bakery, a few minutes from the hotel. Croissants, pain au chocolat, baguettes. Go here in the morning on any day.</p>
+</div>
+
+<div class="tip">
+  <strong>Day 0 Priorities:</strong> Arrive safely. Walk to the Eiffel Tower. Buy wine on Rue Cler. Eat something. Go to bed. That's a perfect first day.
+</div>
+
+<a href="https://www.google.com/maps/dir/H%C3%B4tel+Le+Cinq+Codet,+Rue+Louis+Codet,+Paris/Champ+de+Mars,+Paris/@48.856,2.298,16z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x47e6700197ee82f9:0xa39a4d81c3a9c049!2m2!1d2.3063!2d48.8559!1m5!1m1!1s0x47e6701e34088a0f:0x3a83b1b46b09e4e!2m2!1d2.2945!2d48.8556!3e2" class="map-link" target="_blank">📍 Walking Route: Hotel → Champ de Mars</a>
+<a href="https://www.google.com/maps/dir/H%C3%B4tel+Le+Cinq+Codet,+Rue+Louis+Codet,+Paris/Rue+Cler,+Paris/@48.856,2.302,16z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x47e6700197ee82f9:0xa39a4d81c3a9c049!2m2!1d2.3063!2d48.8559!1m5!1m1!1s0x47e6700026742201:0x999d391fe6b5b914!2m2!1d2.3056!2d48.8575!3e2" class="map-link" target="_blank">📍 Walking Route: Hotel → Rue Cler</a>
+
+</div>
+</section>
+
+<!-- ====================================================== -->
+<!--              DAY 1 — TUILERIES & RIGHT BANK            -->
+<!-- ====================================================== -->
+<section id="day1">
+<div class="day-header">
+  <h2>Day 1 — Thursday, May 14</h2>
+  <div class="day-sub">Pont Alexandre III → Tuileries → Angelina → Orangerie → Louvre Exterior</div>
+</div>
+<div class="day-body">
+
+<p>This is the big day on the Right Bank. The route is beautifully linear: walk north from the hotel, cross Pont Alexandre III (photo stop), continue to the Tuileries, hit Angelina for takeaway pastries, visit the Orangerie if Lucy is cooperating, and end at the Louvre exterior. Everything flows geographically — no backtracking.</p>
+
+<h3>The Route</h3>
+<p><strong>Hotel → Pont Alexandre III:</strong> ~15 min walk north through the 7th, past Les Invalides.<br>
+<strong>Pont Alexandre III → Place de la Concorde:</strong> ~10 min along the Right Bank or through the Grand Palais area.<br>
+<strong>Concorde → Jardin des Tuileries:</strong> You're already at the entrance.<br>
+<strong>Tuileries → Angelina:</strong> ~5 min to the north side (226 Rue de Rivoli).<br>
+<strong>Angelina → Musée de l'Orangerie:</strong> ~5 min back into the southwest corner of the Tuileries.<br>
+<strong>Orangerie → Louvre Pyramid:</strong> ~10 min walk east through the gardens.<br>
+<strong>Total one-way walking:</strong> ~45–50 min if done continuously, but you'll spread this over a full morning.</p>
+
+<div class="timeline">
+  <div class="time-block">
+    <span class="time-label">8:00–9:00 AM</span>
+    <p>Slow morning. Coffee from the hotel or walk to <strong>Coutume Café</strong> (47 Rue de Babylone, ~10 min walk) — one of the best specialty coffee shops in Paris. Or grab a pastry from Boulangerie Secco. No rush.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">9:30 AM</span>
+    <p>Head out. Walk north toward <strong>Pont Alexandre III</strong>. You'll pass by the Esplanade des Invalides — a wide open park, good stroller terrain. The bridge appears ahead, unmistakable with its gold statues and green patina.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">10:00 AM</span>
+    <p><strong>Pont Alexandre III — Photo Stop.</strong> This is arguably the most beautiful bridge in Paris. Morning light will be coming from the east, so the Seine-facing sides of the bridge photograph well. Take your time. Shoot back toward the Eiffel Tower from the bridge — it's one of the best vantage points in the city. 15–20 minutes here is plenty.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">10:30 AM</span>
+    <p>Cross to the Right Bank. Walk east through the Champs-Élysées gardens or along the river toward <strong>Place de la Concorde</strong>, then into the <strong>Jardin des Tuileries</strong>.</p>
+    <p>The Tuileries in mid-May are beautiful — green, flowers blooming, the large central basin with chairs around it. Find a green metal chair, sit down, let Lucy people-watch. This is the experience.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">11:15 AM</span>
+    <p><strong>Angelina</strong> (226 Rue de Rivoli). Your wife wants this — the famous hot chocolate ("l'Africain") and Mont-Blanc pastry. The sit-down salon often has a wait, but there's a <strong>takeaway counter</strong> that's much faster. Grab pastries and hot chocolates to-go and eat them on a bench in the Tuileries. This is better than waiting 30+ minutes for a table, especially with a baby.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">11:45 AM – 12:45 PM</span>
+    <p><strong>Musée de l'Orangerie.</strong> Book tickets in advance at <a href="https://www.musee-orangerie.fr/en" target="_blank">musee-orangerie.fr</a>. It's in the southwest corner of the Tuileries. This museum is <em>perfect</em> with a baby:</p>
+    <ul>
+      <li>It's small — you can see the whole thing in 45–60 minutes</li>
+      <li>The Monet Water Lilies rooms are calm, oval, quiet — almost meditative</li>
+      <li>The lower level has excellent Impressionist/Post-Impressionist works (Renoir, Cézanne, Modigliani)</li>
+      <li>Baby in carrier works great here. Stroller also fine — it's accessible</li>
+      <li>Thursday mornings are generally less crowded than weekends</li>
+    </ul>
+    <p>If Lucy is melting down, skip it. The Tuileries themselves are the main event.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">1:00 PM</span>
+    <p><strong>Louvre Exterior + Pyramid.</strong> Walk east through the Tuileries toward the Arc de Triomphe du Carrousel, and the glass Pyramid appears. Walk through the <strong>Cour Carrée</strong> (the quiet Renaissance courtyard east of the Pyramid) — fewer tourists, beautiful architecture, great photos. You do not need to go inside the Louvre. The exterior <em>is</em> the visit.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">1:30 PM</span>
+    <p><strong>Head back.</strong> Options:</p>
+    <ul>
+      <li><strong>Metro:</strong> Palais Royal–Musée du Louvre (Line 1) → Concorde (transfer to Line 8) → École Militaire. About 15–20 min total including the transfer.</li>
+      <li><strong>G7 Taxi:</strong> Book via app. ~10 min ride back to hotel.</li>
+      <li><strong>Walk the Seine:</strong> If Lucy is asleep in the carrier and everyone's happy, walk along the Right Bank quais back west. ~35–40 min. Beautiful walk.</li>
+    </ul>
+  </div>
+  <div class="time-block">
+    <span class="time-label">2:00–4:30 PM</span>
+    <p>Back at hotel. Lucy nap. Your nap. Spa suite. Hot tub. Read a book. This is what you're paying for.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">5:00 PM (Optional)</span>
+    <p>If energy permits, take a late-afternoon stroll. The area around the hotel is pleasant just to wander. Or head to Rue Cler for provisions and an early apéro.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">Evening</span>
+    <p>Light dinner nearby, or room service. Wine from your Rue Cler haul. Hotel bar with baby monitor once Lucy is down. Enjoy the spa suite.</p>
+  </div>
+</div>
+
+<img src="https://images.unsplash.com/photo-1555397430-57791c75748a?w=800&h=380&fit=crop&q=80" alt="Pont Alexandre III in Paris with golden statues and the Eiffel Tower in background" class="photo" loading="lazy">
+<p class="photo-caption">Pont Alexandre III — your photo stop on the walk to the Tuileries. The Eiffel Tower frames perfectly from the middle of the bridge.</p>
+
+<img src="https://images.unsplash.com/photo-1564594736624-def7a10ab047?w=800&h=380&fit=crop&q=80" alt="Jardin des Tuileries in spring with green chairs and basin" class="photo" loading="lazy">
+<p class="photo-caption">Tuileries in spring. Grab a green chair, sit by the basin, eat an Angelina pastry.</p>
+
+<h3>Where to Eat — Day 1</h3>
+<div class="food-rec">
+  <span class="name">Coutume Café</span>
+  <span class="address"> — 47 Rue de Babylone, 75007</span>
+  <p class="note">Outstanding specialty coffee. Bright, modern space. ~10 min walk from hotel. Good for a proper morning coffee before heading out. Light breakfast items available.</p>
+</div>
+<div class="food-rec">
+  <span class="name">Angelina (Takeaway Counter)</span>
+  <span class="address"> — 226 Rue de Rivoli, 75001</span>
+  <p class="note">Get the hot chocolate ("l'Africain"), a Mont-Blanc, and whatever else looks good. Use the takeaway counter on the left side — dramatically shorter wait. Eat in the Tuileries. This is the move.</p>
+</div>
+<div class="food-rec">
+  <span class="name">Café Kitsuné</span>
+  <span class="address"> — Jardin du Palais Royal, 75001</span>
+  <p class="note">If you end up near the Palais Royal after the Louvre exterior. Great matcha and coffee in a beautiful garden setting. Slightly out of the way but worth noting.</p>
+</div>
+
+<div class="tip">
+  <strong>Orangerie Tip:</strong> Book the earliest available slot (typically 9:00 or 9:30 AM). If you want to hit it first, you can reverse the route — metro to Concorde, start at Orangerie, then walk west back through Tuileries toward the river and home. But the Pont Alexandre III photo stop works best as a first stop headed east.
+</div>
+
+<div class="backup">
+  <strong>Low-Energy Backup:</strong> Skip the Orangerie and Louvre. Just walk to Pont Alexandre III, stroll the Tuileries, get Angelina takeaway, sit in the garden, and head home. That's still a great day.
+</div>
+
+<a href="https://www.google.com/maps/dir/H%C3%B4tel+Le+Cinq+Codet,+Rue+Louis+Codet,+Paris/Pont+Alexandre+III,+Paris/Jardin+des+Tuileries,+Paris/Angelina,+226+Rue+de+Rivoli,+Paris/Mus%C3%A9e+de+l'Orangerie,+Paris/Louvre+Pyramid,+Paris/@48.862,2.315,14z/data=!4m38!4m37!1m5!1m1!1s0x47e6700197ee82f9:0x0!2m2!1d2.3063!2d48.8559!1m5!1m1!1s0x47e66fcd48a40c0d:0x0!2m2!1d2.3136!2d48.8637!1m5!1m1!1s0x47e66e2e86869c2d:0x0!2m2!1d2.3275!2d48.8634!1m5!1m1!1s0x47e66e2d3575df0f:0x0!2m2!1d2.3285!2d48.8649!1m5!1m1!1s0x47e66e2c0e54d6e7:0x0!2m2!1d2.3226!2d48.8608!1m5!1m1!1s0x47e671d71abe5c51:0x0!2m2!1d2.3364!2d48.8611!3e2" class="map-link" target="_blank">📍 Full Day 1 Walking Route</a>
+
+</div>
+</section>
+
+<!-- ====================================================== -->
+<!--            DAY 2 — RODIN & LEFT BANK                   -->
+<!-- ====================================================== -->
+<section id="day2">
+<div class="day-header">
+  <h2>Day 2 — Friday, May 15</h2>
+  <div class="day-sub">Musée Rodin → Saint-Germain-des-Prés → Notre-Dame → Seine Walk</div>
+</div>
+<div class="day-body">
+
+<p>Left Bank day. Start with the Rodin Museum — it's a 7-minute walk from the hotel and has some of the best gardens in Paris. Then head east into Saint-Germain-des-Prés for lunch and café culture. If energy holds, walk down to Notre-Dame and Place Dauphine on the Île de la Cité, then meander along the Seine back toward home.</p>
+
+<h3>The Route</h3>
+<p><strong>Hotel → Musée Rodin:</strong> ~7 min walk (77 Rue de Varenne).<br>
+<strong>Rodin → Saint-Germain-des-Prés:</strong> ~20 min walk east through the 7th, or metro Varenne (Line 13) to Saint-Germain-des-Prés (Line 4) with one transfer at Invalides — honestly easier to walk or grab a taxi.<br>
+<strong>Saint-Germain → Notre-Dame:</strong> ~15 min walk along Blvd Saint-Germain east, cross to Île de la Cité.<br>
+<strong>Notre-Dame → Place Dauphine:</strong> ~5 min walk to the western tip of the island.<br>
+<strong>Place Dauphine → Hotel (via Seine walk):</strong> ~30 min along the Left Bank quais. Beautiful walk.</p>
+
+<div class="timeline">
+  <div class="time-block">
+    <span class="time-label">8:30 AM</span>
+    <p>Morning pastry run. Boulangerie Secco or another neighborhood bakery. Coffee at the hotel or from Coutume if you loved it yesterday.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">10:00 AM</span>
+    <p><strong>Musée Rodin.</strong> Opens at 10. Walk over — it's nothing. The reason this museum is perfect for you:</p>
+    <ul>
+      <li>The <strong>gardens</strong> are the main attraction. Three hectares of sculpture gardens with The Thinker, The Gates of Hell, The Burghers of Calais, all in a gorgeous setting.</li>
+      <li>Baby-friendly: wide paths, open air, benches everywhere, grass to sit on.</li>
+      <li>The indoor galleries (in the Hôtel Biron) are manageable in 20–30 min if you want to go inside. The Kiss is inside.</li>
+      <li>You can do garden-only tickets if you just want to be outside.</li>
+      <li>Friday mornings are typically calm.</li>
+    </ul>
+    <p>Budget 1–1.5 hours. Book at <a href="https://www.musee-rodin.fr/en" target="_blank">musee-rodin.fr</a>.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">11:30 AM</span>
+    <p>Walk east toward <strong>Saint-Germain-des-Prés</strong>. The walk takes you through quiet streets of the 7th — Rue de Grenelle, Rue du Bac. You'll pass boutiques, bookshops, and small galleries. This is peak "atmosphere over checklist" territory.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">12:00 PM</span>
+    <p><strong>Lunch in Saint-Germain.</strong> Find a terrace. This is one of the best neighborhoods in Paris for exactly what you want — sitting outside with a carafe of wine, watching the city go by, lingering over a long lunch while Lucy chews on bread.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">1:30 PM</span>
+    <p><strong>Walk to Notre-Dame.</strong> Head east along Boulevard Saint-Germain. Cross to the Île de la Cité via the Pont Saint-Michel or Pont au Double. Notre-Dame reopened in December 2024 after the fire reconstruction — the exterior is stunning and the area around it is worth seeing. Check <a href="https://www.notredamedeparis.fr/en/" target="_blank">notredamedeparis.fr</a> for current visitor information if you want to go inside — free entry but timed reservation may be required.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">2:00 PM</span>
+    <p><strong>Place Dauphine.</strong> Walk to the western tip of the Île de la Cité. Place Dauphine is a quiet, triangular square with trees and bistros — one of the hidden gems of Paris. Feels completely separate from the tourist bustle of Notre-Dame just a few hundred meters away. Nice for a quiet moment or a coffee.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">2:30 PM</span>
+    <p><strong>Seine walk home.</strong> Cross to the Left Bank and walk west along the quais. You'll pass the Musée d'Orsay (beautiful exterior, note for a future trip), bouquinistes (book stalls), and eventually the Assemblée Nationale before reaching your neighborhood. ~30 min walk, mostly flat, along the water. If Lucy is asleep in the carrier, this is bliss.</p>
+    <p>Or: G7 taxi home if everyone's done walking.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">3:00–5:00 PM</span>
+    <p>Hotel. Naps. Spa. Hot tub. This is your last full afternoon — use it.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">Evening</span>
+    <p>Final evening in Paris. Options: a slightly nicer dinner nearby, or keep it simple with Rue Cler and wine at the hotel. Pack after Lucy goes down. Last spa session.</p>
+  </div>
+</div>
+
+<img src="https://images.unsplash.com/photo-1591289009723-aef0a1a8a211?w=800&h=380&fit=crop&q=80" alt="Musée Rodin sculpture garden with The Thinker" class="photo" loading="lazy">
+<p class="photo-caption">Musée Rodin gardens — The Thinker with the Hôtel Biron behind. Wide paths, open air, benches. Best museum in Paris for a baby.</p>
+
+<h3>Where to Eat — Day 2</h3>
+<div class="food-rec">
+  <span class="name">Café de Flore</span>
+  <span class="address"> — 172 Boulevard Saint-Germain, 75006</span>
+  <p class="note">Yes it's touristy. Yes it's overpriced. Do it once anyway. The terrace is iconic. Order a croque monsieur and a café crème. Great for people watching. Lucy will be the most interesting person there.</p>
+</div>
+<div class="food-rec">
+  <span class="name">Les Deux Magots</span>
+  <span class="address"> — 6 Place Saint-Germain-des-Prés, 75006</span>
+  <p class="note">Same vibe as Café de Flore, directly across the street. Pick whichever has a table open. The hot chocolate here is excellent.</p>
+</div>
+<div class="food-rec">
+  <span class="name">Huîtrerie Régis</span>
+  <span class="address"> — 3 Rue de Montfaucon, 75006</span>
+  <p class="note">Tiny, only serves oysters, white wine, and bread. If you love oysters and can squeeze in. Very small — might be tricky with stroller.</p>
+</div>
+<div class="food-rec">
+  <span class="name">Clover Grill</span>
+  <span class="address"> — 6 Rue Bailleul, 75001 (closer to Notre-Dame)</span>
+  <p class="note">If you want something a bit more contemporary for a nice lunch. Jean-François Piège's casual grill. Reservations helpful.</p>
+</div>
+<div class="food-rec">
+  <span class="name">For wine browsing: La Dernière Goutte</span>
+  <span class="address"> — 6 Rue de Bourbon le Château, 75006</span>
+  <p class="note">Excellent small wine shop specializing in small French producers. English-speaking staff. If you want to find something special to bring home, stop here during the Saint-Germain walk.</p>
+</div>
+
+<div class="tip">
+  <strong>Optional Add-on — Jardin du Luxembourg:</strong> If you're walking from Rodin to Saint-Germain and have extra energy, you can swing south to the Jardin du Luxembourg (~15 min detour). It has a beautiful fountain, green chairs, and a playground area. But it adds distance and you'll already have gardens from Rodin. Save it for the next trip if needed.
+</div>
+
+<div class="backup">
+  <strong>Low-Energy Backup:</strong> Just do Musée Rodin gardens + lunch in the 7th arrondissement near the hotel. Skip Notre-Dame entirely. Rodin's gardens and a long lunch is a full, wonderful day.
+</div>
+
+<a href="https://www.google.com/maps/dir/H%C3%B4tel+Le+Cinq+Codet,+Rue+Louis+Codet,+Paris/Mus%C3%A9e+Rodin,+Paris/Saint-Germain-des-Pr%C3%A9s,+Paris/Notre-Dame+de+Paris/Place+Dauphine,+Paris/@48.855,2.325,14z/data=!3m1!4b1!4m32!4m31!1m5!1m1!1s0x47e6700197ee82f9:0x0!2m2!1d2.3063!2d48.8559!1m5!1m1!1s0x47e66f9725b4e691:0x0!2m2!1d2.3158!2d48.8554!1m5!1m1!1s0x47e671d9d4399817:0x0!2m2!1d2.3338!2d48.8539!1m5!1m1!1s0x47e671e19ff53a01:0x0!2m2!1d2.3499!2d48.8530!1m5!1m1!1s0x47e671e35d31f655:0x0!2m2!1d2.3417!2d48.8565!3e2" class="map-link" target="_blank">📍 Full Day 2 Walking Route</a>
+
+</div>
+</section>
+
+<!-- ====================================================== -->
+<!--                  DAY 3 — DEPARTURE                     -->
+<!-- ====================================================== -->
+<section id="day3">
+<div class="day-header">
+  <h2>Day 3 — Saturday, May 16</h2>
+  <div class="day-sub">Departure Morning</div>
+</div>
+<div class="day-body">
+
+<p>Train departs Gare Montparnasse at 10:15 AM. You want to be at the station by 9:30–9:45. This is a short morning — don't overthink it.</p>
+
+<div class="timeline">
+  <div class="time-block">
+    <span class="time-label">7:30 AM</span>
+    <p>Wake up. Final pack. You should have packed most things last night.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">8:00–8:30 AM</span>
+    <p>Breakfast. Either at the hotel or grab a pastry from Boulangerie Secco on the way out. Last café crème.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">9:00–9:15 AM</span>
+    <p>Checkout. Head to Montparnasse.</p>
+    <ul>
+      <li><strong>Taxi (G7):</strong> ~12–15 min. Easiest with luggage + baby. Book 10 min ahead via the app.</li>
+      <li><strong>Metro:</strong> École Militaire (Line 8) → change at La Motte-Picquet–Grenelle to Line 6 → Montparnasse-Bienvenüe. ~15 min total. Doable but stairs can be a hassle with bags.</li>
+    </ul>
+  </div>
+  <div class="time-block">
+    <span class="time-label">9:30–9:45 AM</span>
+    <p>Arrive at Gare Montparnasse. Find your platform. The departures board usually updates 20 min before departure. Hall 1 vs Hall 2 depends on your destination — check your ticket.</p>
+  </div>
+  <div class="time-block">
+    <span class="time-label">10:15 AM</span>
+    <p>Train departs. Au revoir, Paris.</p>
+  </div>
+</div>
+
+<div class="tip">
+  <strong>Gare Montparnasse Tip:</strong> The station has a Relay convenience store and a Paul bakery if you need snacks for the train. There's also a small Monoprix inside the station. Baby changing facilities exist but can be hard to find — ask at the information desk.
+</div>
+
+</div>
+</section>
+
+<!-- ====================================================== -->
+<!--                    PACKING LIST                        -->
+<!-- ====================================================== -->
+<section id="packing">
+<h2>Packing List</h2>
+<p>Optimized for 3 nights in mid-May Paris. Assumes carry-ons + Doona as gate check/checked item. The goal is to pack light — you can buy anything you forget at a French pharmacy or Monoprix.</p>
+
+<div class="pack-section">
+  <h4>📄 Travel Documents</h4>
+  <ul>
+    <li>Passports — all three (check Lucy's expiry!)</li>
+    <li>Flight confirmation / boarding passes</li>
+    <li>Train tickets (Montparnasse departure)</li>
+    <li>Hotel confirmation</li>
+    <li>Travel insurance documents</li>
+    <li>Lucy's birth certificate (some airlines request for lap infants)</li>
+    <li>Credit cards with no foreign transaction fees</li>
+    <li>Some euros in cash (€100–150 for small vendors, tips, markets)</li>
+    <li>Digital copies of all documents (email or cloud)</li>
+    <li>G7 Taxi app installed and account set up</li>
+  </ul>
+</div>
+
+<div class="pack-section">
+  <h4>👕 Adult Clothing — Per Person</h4>
+  <p style="font-size:0.88em; color:var(--muted);">Weather assumption: 13–22°C (55–72°F), variable. Layers are everything.</p>
+  <ul>
+    <li>3 tops / shirts (mix casual and one slightly nicer)</li>
+    <li>2 bottoms (jeans + one lighter pair)</li>
+    <li>1 light jacket or blazer</li>
+    <li>1 packable rain jacket (this is non-negotiable)</li>
+    <li>3–4 sets of underwear + socks</li>
+    <li>1 scarf (warmth + style, very practical in Paris)</li>
+    <li>Comfortable walking shoes (broken in!)</li>
+    <li>Sunglasses</li>
+    <li>Sleepwear</li>
+    <li>Swimsuit (for the spa suite hot tub)</li>
+  </ul>
+</div>
+
+<div class="pack-section">
+  <h4>👶 Lucy's Gear</h4>
+  <ul>
+    <li>5–6 onesies / outfits (extra for blowouts — you know the drill)</li>
+    <li>2 light layers / sweaters</li>
+    <li>1 warm fleece or jacket for evenings</li>
+    <li>Sun hat</li>
+    <li>Socks (3–4 pairs, they vanish)</li>
+    <li>Sleep sack</li>
+    <li>PJs (2 sets)</li>
+    <li>Swim diaper (if spa allows — check with hotel)</li>
+  </ul>
+</div>
+
+<div class="pack-section">
+  <h4>🍼 Baby Essentials</h4>
+  <ul>
+    <li>Doona stroller / car seat (gate check or check)</li>
+    <li>Baby carrier (Ergobaby, BabyBjorn, etc.)</li>
+    <li>Bottles / sippy cups</li>
+    <li>Formula / milk (enough for travel + first day; buy more locally)</li>
+    <li>Baby food pouches / snacks</li>
+    <li>Diapers — bring enough for travel day + 1 day, buy rest at a French pharmacy or Monoprix</li>
+    <li>Wipes (1 travel pack; buy more locally)</li>
+    <li>Portable sound machine</li>
+    <li>Baby monitor (portable — CRITICAL for hotel evenings)</li>
+    <li>Favorite lovey / stuffed animal (bring a backup if possible)</li>
+    <li>Pacifiers (at least 3 — they disappear)</li>
+    <li>Bibs (3–4)</li>
+    <li>Baby spoons</li>
+    <li>Portable placemat or suction bowl</li>
+    <li>Zip-lock bags (dirty clothes, wet stuff, snack storage)</li>
+    <li>Stroller rain cover</li>
+    <li>Muslin blanket (shade, warmth, nursing cover, everything)</li>
+  </ul>
+</div>
+
+<div class="pack-section">
+  <h4>💊 Health & Medication</h4>
+  <ul>
+    <li>Baby Tylenol (acetaminophen / paracetamol)</li>
+    <li>Baby Ibuprofen (if she's on it for teething)</li>
+    <li>Infant thermometer</li>
+    <li>Teething gel or teethers</li>
+    <li>Baby-safe sunscreen</li>
+    <li>Saline nose drops</li>
+    <li>Basic first aid (band-aids, antiseptic wipes)</li>
+    <li>Any adult prescriptions</li>
+    <li>Hand sanitizer</li>
+    <li>Imodium / Pepto (just in case — travel stomach)</li>
+  </ul>
+</div>
+
+<div class="pack-section">
+  <h4>📸 Photography</h4>
+  <ul>
+    <li>Camera body + lens (a 24-70mm or 35mm prime covers most Paris situations)</li>
+    <li>Extra battery + charger</li>
+    <li>Extra SD card</li>
+    <li>Phone (a recent iPhone or Android is genuinely excellent for travel photos)</li>
+    <li>Small tabletop tripod or GorillaPod (for family shots — prop on walls, benches)</li>
+    <li>Lens wipe cloth</li>
+  </ul>
+</div>
+
+<div class="pack-section">
+  <h4>🔌 Tech & Misc</h4>
+  <ul>
+    <li>Universal power adapter (France uses Type C/E — two round pins)</li>
+    <li>Portable phone charger / battery pack</li>
+    <li>Phone charging cables</li>
+    <li>Small packable tote bag (for daily outings — lighter than your full bag)</li>
+    <li>Ziplock bags (multiple sizes — the most versatile travel item)</li>
+    <li>Pen (for customs forms)</li>
+  </ul>
+</div>
+
+<div class="pack-section">
+  <h4>🏨 Hotel / Spa Suite Notes</h4>
+  <ul>
+    <li>Le Cinq Codet provides: robes, slippers, high-end toiletries, hairdryer</li>
+    <li>Bring: swimsuits for hot tub, baby monitor, any specific bath products for Lucy</li>
+    <li>Contact hotel in advance to request: baby crib, bottle warmer, and ask about spa/hot tub hours for your suite</li>
+    <li>Don't overpack toiletries — the hotel will have you covered, and French pharmacies are outstanding for anything else</li>
+  </ul>
+</div>
+
+</section>
+
+<!-- ====================================================== -->
+<!--                  PRACTICAL NOTES                       -->
+<!-- ====================================================== -->
+<section id="practical">
+<h2>Practical Notes</h2>
+
+<h3>Metro vs. Walking vs. Taxi</h3>
+<p><strong>Walking is your default.</strong> Most of your destinations are within 20–40 minutes of the hotel. Paris is flat, the sidewalks are good, and the whole point of the trip is to see the city on foot. With the carrier, you can walk for miles.</p>
+<p><strong>Metro is useful for:</strong> Getting back from the Louvre area (Day 1), possibly getting to Saint-Germain (Day 2), and reaching Montparnasse (Day 3). Your nearest stations are École Militaire and La Tour-Maubourg, both on Line 8.</p>
+<p><strong>Metro with a baby — real talk:</strong> Many Paris metro stations have <em>no</em> elevator and <em>no</em> escalator. You will carry the stroller up and down stairs. The carrier is much easier for metro trips. If you use the Doona on the metro, fold it and carry it. Or just leave the Doona at the hotel and use the carrier for metro days.</p>
+<p><strong>Buy a carnet of t+ tickets</strong> (pack of 10) at any metro station — valid for metro, bus, and RER within Paris. Or use contactless credit cards if available on your arrival. The Navigo Easy card (rechargeable) is also an option — buy at any station.</p>
+<p><strong>G7 Taxi App:</strong> Download before the trip. You can request a car seat ("siège bébé") when booking. Works like Uber but with licensed Paris taxis. Very reliable, especially with luggage or when everyone's tired. Use it for the CDG transfer, the Montparnasse departure, and anytime walking sounds like too much.</p>
+
+<h3>Baby-Friendly Dining in Paris</h3>
+<ul>
+  <li><strong>Terraces are your best friend.</strong> More space for stroller, Lucy can look around, less noise concern. Most Paris cafés have outdoor seating in May.</li>
+  <li><strong>Lunch is easier than dinner.</strong> French lunch service starts around noon. Eat at 12:00–12:30 before the rush. Dinner in Paris starts at 7:30–8:00 PM, which is likely past Lucy's bedtime anyway.</li>
+  <li><strong>High chairs are inconsistent.</strong> Some places have them, many don't. The carrier or your lap will work. A clip-on portable high chair can be useful but isn't essential for 3 days.</li>
+  <li><strong>Bread is a baby toy.</strong> Every restaurant gives you bread. Lucy will be entertained.</li>
+  <li><strong>Nobody minds a baby in a bistro.</strong> The French are generally welcoming to babies in restaurants during the day. Don't stress about it.</li>
+</ul>
+
+<h3>Where to Buy Wine Near the Hotel</h3>
+<div class="food-rec">
+  <span class="name">Nicolas</span>
+  <span class="address"> — Multiple locations; closest on Rue Saint-Dominique or Rue Cler area</span>
+  <p class="note">Reliable French wine chain. Staff is knowledgeable and usually speaks some English. Great for everyday bottles at €8–15. Ask for recommendations — they enjoy helping. Good picks for value: Côtes du Rhône, Crozes-Hermitage, Chablis, Sancerre. If bringing wine home, they sell protective shipping boxes.</p>
+</div>
+<div class="food-rec">
+  <span class="name">La Dernière Goutte</span>
+  <span class="address"> — 6 Rue de Bourbon le Château, 75006 (Saint-Germain)</span>
+  <p class="note">Small-producer specialist. English-speaking staff (American-owned). Excellent for finding something unique. Slightly pricier but worth it for a special bottle. Hit this on Day 2 during the Saint-Germain walk.</p>
+</div>
+<div class="food-rec">
+  <span class="name">Small caves on Rue Cler</span>
+  <p class="note">There are a few small independent wine shops along Rue Cler. Ask for "un bon rapport qualité-prix" (good value) and they'll guide you. Budget €8–18 for drinking wine, €20–35 for something to bring home.</p>
+</div>
+
+<h3>Grocery & Pharmacy</h3>
+<ul>
+  <li><strong>Franprix</strong> — small grocery chain, several locations near the hotel. Good for water, snacks, fruit, yogurt, basic baby food. The one near Rue Cler is your closest bet.</li>
+  <li><strong>Monoprix</strong> — larger chain with groceries + pharmacy + household items + clothing. There's one in the 7th and one in the Montparnasse station. If you need diapers, wipes, or formula, this is the one-stop shop.</li>
+  <li><strong>Pharmacies (Pharmacie)</strong> — French pharmacies are exceptional. Green cross sign. They carry baby care products (Mustela, A-Derma), diapers, baby sunscreen, infant pain relief (Doliprane = French baby Tylenol). Pharmacists are helpful and many speak English. Open daily; some have Sunday hours. Don't pack too many baby supplies — buy here.</li>
+</ul>
+
+<h3>Realistic Expectations with a 9-Month-Old</h3>
+<p>You already know this, but it's worth writing down so you can both read it on Day 2 when you're tired:</p>
+<ul>
+  <li><strong>One anchor outing per day is the right amount.</strong> You'll fill the rest with meals, naps, walks, and hotel time — and that's not wasted time, that's the trip.</li>
+  <li><strong>Lucy sets the pace.</strong> If she needs to nap at 11 AM, you nap at 11 AM or walk until she sleeps. Don't fight the schedule, ride it.</li>
+  <li><strong>The hotel room is not a consolation prize.</strong> You have a spa suite with a hot tub. Use it. Afternoons in the room are a feature, not a failure.</li>
+  <li><strong>The moments between destinations matter most.</strong> The Seine at sunset. A pastry on a bench. Lucy babbling at pigeons. That's the stuff. </li>
+  <li><strong>You will not see everything on this list.</strong> That's by design. This itinerary has more than you need so you can choose in the moment based on energy and mood.</li>
+  <li><strong>Paris will be here next time.</strong> This trip is about being in Paris together, not about seeing Paris comprehensively.</li>
+</ul>
+
+<h3>Photography Notes</h3>
+<ul>
+  <li><strong>Best light:</strong> Morning (8–10 AM) and golden hour (7:30–9:00 PM in mid-May). Midday light is harsh on buildings but fine for gardens.</li>
+  <li><strong>Pont Alexandre III:</strong> Morning light from the east. Shoot toward the Eiffel Tower from the center of the bridge.</li>
+  <li><strong>Tuileries:</strong> Morning light is best, with the sun behind you as you face the Louvre to the east.</li>
+  <li><strong>Champ de Mars / Eiffel Tower:</strong> Sunset and blue hour are magic, but midday works too since you're just walking.</li>
+  <li><strong>Notre-Dame:</strong> Morning light on the south side, afternoon light on the west facade.</li>
+  <li><strong>The Seine:</strong> Late afternoon through sunset. The water catches the light beautifully.</li>
+  <li><strong>Eiffel Tower sparkle:</strong> Every hour on the hour after sunset for 5 minutes. Visible from many places in the 7th — potentially even from your hotel area.</li>
+</ul>
+
+</section>
+
+<!-- ====================================================== -->
+<!--                     WINE GUIDE                         -->
+<!-- ====================================================== -->
+<section id="wine">
+<h2>Wine Buying Guide</h2>
+<p>You don't need to be an expert. Here's what to look for at Nicolas or any cave near the hotel.</p>
+
+<h3>For Drinking at the Hotel (€7–15)</h3>
+<ul>
+  <li><strong>Côtes du Rhône</strong> (red) — Grenache-based, fruit-forward, easy drinking. The everyday wine of France. €7–10.</li>
+  <li><strong>Crozes-Hermitage</strong> (red) — Syrah from the Northern Rhône. A step up from Côtes du Rhône, still great value. €10–15.</li>
+  <li><strong>Bourgogne Rouge</strong> (red) — entry-level Burgundy Pinot Noir. Light, elegant. €10–15.</li>
+  <li><strong>Sancerre</strong> (white) — Loire Valley Sauvignon Blanc. Crisp, mineral, perfect for warm afternoons. €12–17.</li>
+  <li><strong>Chablis</strong> (white) — Burgundy Chardonnay, unoaked, lean. Amazing with cheese. €10–15.</li>
+  <li><strong>Picpoul de Pinet</strong> (white) — Languedoc, very affordable, crisp. €6–9.</li>
+</ul>
+
+<h3>To Bring Home (€18–35)</h3>
+<ul>
+  <li><strong>Saint-Joseph</strong> or <strong>Cornas</strong> (red) — Northern Rhône Syrah with more complexity.</li>
+  <li><strong>Châteauneuf-du-Pape</strong> (red) — a classic for a reason.</li>
+  <li><strong>Pouilly-Fumé</strong> (white) — like Sancerre's sibling, often with more body.</li>
+  <li>Ask the staff: "Qu'est-ce que vous conseillez pour ramener aux États-Unis?" (What do you recommend to bring back to the US?)</li>
+</ul>
+
+<div class="tip">
+  <strong>Packing wine home:</strong> Wine in checked luggage is fine. Wrap bottles in dirty clothes and put them in the center of your bag. Or buy a wine skin / protective bag (Nicolas often sells them). You can carry up to 5 liters (about 6 bottles) into the US duty-free, but there's no duty on reasonable quantities for personal use anyway.
+</div>
+
+</section>
+
+<!-- ========== OVERVIEW MAP ========== -->
+<section>
+<h2>Overview Map — Key Locations</h2>
+<p>All three days plotted. Everything clusters around the hotel in the 7th, with Day 1 extending north/east to the Tuileries and Day 2 extending east to Saint-Germain and Notre-Dame.</p>
+<div class="map-container">
+  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=2.2850%2C48.8440%2C2.3580%2C48.8700&amp;layer=mapnik&amp;marker=48.8558%2C2.3063" loading="lazy"></iframe>
+</div>
+<p style="font-size:0.88em; color:var(--muted);">Marker shows hotel location. Key sites west to east: Eiffel Tower / Champ de Mars → Hotel → Musée Rodin → Pont Alexandre III → Musée d'Orsay → Tuileries / Orangerie → Louvre → Saint-Germain-des-Prés → Notre-Dame</p>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<div style="text-align:center; padding:40px 0 20px; border-top:1px solid var(--border); margin-top:50px;">
+  <p style="font-size:0.85em; color:var(--muted);">Prepared March 2026. Verify hours, prices, and reservation requirements before travel.<br>
+  Bon voyage. 🇫🇷</p>
+</div>
+
+</div>
+</body>
+</html>
