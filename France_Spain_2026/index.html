@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>France & Spain 2026 — Trip Overview</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -39,6 +41,15 @@
   <span class="route-stop">Paris CDG</span>
   <span class="route-arrow">→<span class="transport">flight</span></span>
   <span class="route-stop">DEN</span>
+</div>
+
+<!-- Full trip map -->
+<h3>Trip Map</h3>
+<div id="map-trip" class="day-map" style="height:520px;"></div>
+<div class="map-legend">
+  <span style="display:inline-flex;align-items:center;gap:5px;"><span style="display:inline-block;width:24px;height:3px;background:#4a1a2e;"></span> INOUI (train)</span>
+  <span style="display:inline-flex;align-items:center;gap:5px;"><span style="display:inline-block;width:24px;height:3px;background:#8b6f4e;border-top:2px dashed #8b6f4e;height:0;"></span> Rental car</span>
+  <span style="display:inline-flex;align-items:center;gap:5px;"><span style="display:inline-block;width:24px;height:3px;background:#999;border-top:1px dotted #999;height:0;"></span> Flight</span>
 </div>
 </section>
 
@@ -120,7 +131,7 @@
   </div>
   <div>
     <dt>Lodging</dt>
-    <dd><a href="https://www.airbnb.com/rooms/49530637?source_impression_id=p3_1772572880_P3WSwApAEGxo12LS" target="_blank" style="color:var(--accent);">Airbnb — Saint-Émilion area</a></dd>
+    <dd><a href="https://www.airbnb.com/rooms/49530637" target="_blank" style="color:var(--accent);">Logis de Colette</a> · 7 Mazerat<br>Hosted by Xavier · Couvent des Jacobins</dd>
   </div>
   <div>
     <dt>Arrival</dt>
@@ -149,7 +160,7 @@
   </div>
   <div>
     <dt>Lodging</dt>
-    <dd><a href="https://www.airbnb.com/rooms/868707663926540204?source_impression_id=p3_1772572887_P396bD8I9g5GLl4k" target="_blank" style="color:var(--accent);">Airbnb — Lescun</a></dd>
+    <dd><a href="https://www.airbnb.com/rooms/868707663926540204" target="_blank" style="color:var(--accent);">La Bourdette</a> · 1745 D340<br>Renovated sheepfold · Hosted by Thierry</dd>
   </div>
   <div>
     <dt>Arrival</dt>
@@ -240,6 +251,127 @@
 </div>
 
 </div>
+<script>
+(function() {
+  var navy = '#4a1a2e';
+  var carColor = '#8b6f4e';
+  var flightColor = '#999';
+  var tileUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+  var tileAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>';
+
+  function emojiIcon(emoji, size) {
+    var s = size || 36;
+    return L.divIcon({
+      className: '',
+      html: '<div style="font-size:' + (s*0.5) + 'px;width:' + s + 'px;height:' + s + 'px;display:flex;align-items:center;justify-content:center;background:white;border-radius:50%;border:2px solid ' + navy + ';box-shadow:0 1px 4px rgba(0,0,0,0.18);">' + emoji + '</div>',
+      iconSize: [s, s],
+      iconAnchor: [s/2, s/2],
+      popupAnchor: [0, -s/2]
+    });
+  }
+
+  // Locations
+  var cdg     = [49.0097, 2.5479];
+  var paris   = [48.8548, 2.3083];  // Le Cinq Codet
+  var montpar = [48.8408, 2.3188];  // Gare Montparnasse
+  var bordx   = [44.8270, -0.5580]; // Bordeaux Saint-Jean
+  var stemil  = [44.8880, -0.1620]; // Logis de Colette
+  var lescun  = [42.9440, -0.6340]; // La Bourdette
+  var sanSeb  = [43.3183, -1.9850]; // San Sebastián
+  var biarr   = [43.4690, -1.5580]; // Biarritz station
+
+  var m = L.map('map-trip', {scrollWheelZoom: true}).setView([45.5, 0.5], 6);
+  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18}).addTo(m);
+
+  // --- Markers ---
+  L.marker(cdg, {icon: emojiIcon('\u2708\uFE0F', 38)}).addTo(m).bindPopup('<strong>CDG Airport</strong><br>Arrive May 13 · Depart May 26');
+  L.marker(paris, {icon: emojiIcon('\uD83C\uDFE8', 38)}).addTo(m).bindPopup('<strong>Paris</strong><br>H\u00f4tel Le Cinq Codet<br>May 13\u201316 · 3 nights');
+  L.marker(bordx, {icon: emojiIcon('\uD83D\uDE82', 34)}).addTo(m).bindPopup('<strong>Bordeaux Saint-Jean</strong><br>INOUI arrival · Car pickup');
+  L.marker(stemil, {icon: emojiIcon('\uD83C\uDF77', 38)}).addTo(m).bindPopup('<strong>Saint-\u00c9milion</strong><br>Logis de Colette<br>May 16\u201319 · 3 nights');
+  L.marker(lescun, {icon: emojiIcon('\uD83C\uDFD4\uFE0F', 38)}).addTo(m).bindPopup('<strong>Lescun</strong><br>La Bourdette<br>May 19\u201322 · 3 nights');
+  L.marker(sanSeb, {icon: emojiIcon('\uD83C\uDF4A', 38)}).addTo(m).bindPopup('<strong>San Sebasti\u00e1n</strong><br>May 22\u201325 · 3 nights');
+  L.marker(biarr, {icon: emojiIcon('\uD83D\uDE82', 34)}).addTo(m).bindPopup('<strong>Biarritz</strong><br>Car drop-off · INOUI to Paris');
+
+  // --- Flight legs (dotted, gray) ---
+  L.polyline([cdg, paris], {
+    color: flightColor, weight: 2, opacity: 0.5, dashArray: '4,8', lineCap: 'round'
+  }).addTo(m);
+
+  // --- INOUI legs (solid, navy) ---
+  // Paris Montparnasse → Bordeaux Saint-Jean
+  L.polyline([
+    montpar, [48.45, 1.80], [47.80, 1.20], [47.00, 0.60],
+    [46.30, 0.10], [45.60, -0.30], [45.10, -0.45], bordx
+  ], {
+    color: navy, weight: 3.5, opacity: 0.7, lineCap: 'round'
+  }).addTo(m).bindPopup('<strong>INOUI First Class</strong><br>Paris Montparnasse \u2192 Bordeaux<br>10:17 AM · ~2h10');
+
+  // Biarritz → Paris (return INOUI)
+  L.polyline([
+    biarr, [43.70, -1.30], [44.20, -0.90], [44.80, -0.55],
+    [45.50, -0.30], [46.30, 0.10], [47.00, 0.60],
+    [47.80, 1.20], [48.45, 1.80], montpar
+  ], {
+    color: navy, weight: 3.5, opacity: 0.7, lineCap: 'round'
+  }).addTo(m).bindPopup('<strong>INOUI</strong><br>Biarritz \u2192 Paris<br>~4.5 hrs');
+
+  // Label for INOUI
+  var inouiLabel1 = L.divIcon({
+    className: '',
+    html: '<div style="font-size:11px;font-weight:700;color:#4a1a2e;background:rgba(255,255,255,0.9);padding:2px 6px;border-radius:4px;border:1px solid #4a1a2e;white-space:nowrap;">INOUI</div>',
+    iconSize: [50, 20],
+    iconAnchor: [25, 10]
+  });
+  L.marker([46.30, 0.10], {icon: inouiLabel1, interactive: false}).addTo(m);
+
+  // --- Rental car legs (dashed, warm brown) ---
+  // Bordeaux → Saint-Émilion
+  L.polyline([
+    bordx, [44.84, -0.50], [44.85, -0.40], [44.86, -0.30],
+    [44.87, -0.25], [44.88, -0.20], stemil
+  ], {
+    color: carColor, weight: 3, opacity: 0.65, dashArray: '8,6', lineCap: 'round'
+  }).addTo(m).bindPopup('<strong>Rental Car</strong><br>Bordeaux \u2192 Saint-\u00c9milion<br>~45 min');
+
+  // Saint-Émilion → Lescun
+  L.polyline([
+    stemil, [44.70, -0.20], [44.40, -0.30], [44.00, -0.40],
+    [43.60, -0.50], [43.30, -0.55], [43.10, -0.60], lescun
+  ], {
+    color: carColor, weight: 3, opacity: 0.65, dashArray: '8,6', lineCap: 'round'
+  }).addTo(m).bindPopup('<strong>Rental Car</strong><br>Saint-\u00c9milion \u2192 Lescun<br>~3.5 hrs');
+
+  // Lescun → San Sebastián
+  L.polyline([
+    lescun, [42.98, -0.80], [43.05, -1.10], [43.10, -1.30],
+    [43.15, -1.50], [43.20, -1.70], sanSeb
+  ], {
+    color: carColor, weight: 3, opacity: 0.65, dashArray: '8,6', lineCap: 'round'
+  }).addTo(m).bindPopup('<strong>Rental Car</strong><br>Lescun \u2192 San Sebasti\u00e1n<br>~2.5 hrs');
+
+  // San Sebastián → Biarritz
+  L.polyline([
+    sanSeb, [43.35, -1.85], [43.40, -1.75], [43.45, -1.65], biarr
+  ], {
+    color: carColor, weight: 3, opacity: 0.65, dashArray: '8,6', lineCap: 'round'
+  }).addTo(m).bindPopup('<strong>Rental Car</strong><br>San Sebasti\u00e1n \u2192 Biarritz<br>~35 min · Car drop-off');
+
+  // Label for rental car
+  var carLabel = L.divIcon({
+    className: '',
+    html: '<div style="font-size:11px;font-weight:700;color:#8b6f4e;background:rgba(255,255,255,0.9);padding:2px 6px;border-radius:4px;border:1px solid #8b6f4e;white-space:nowrap;">Rental Car</div>',
+    iconSize: [70, 20],
+    iconAnchor: [35, 10]
+  });
+  L.marker([43.60, -0.50], {icon: carLabel, interactive: false}).addTo(m);
+
+  // Fit bounds to show everything
+  m.fitBounds([
+    [42.50, -2.50],
+    [49.30, 3.00]
+  ], {padding: [30, 30]});
+})();
+</script>
 <script src="nav.js"></script>
 </body>
 </html>
