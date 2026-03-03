@@ -21,33 +21,34 @@
 <section>
 <h2>The Route</h2>
 
-<div class="route-diagram">
-  <span class="route-stop">DEN</span>
-  <span class="route-arrow">→<span class="transport">flight</span></span>
-  <span class="route-stop">CDG</span>
-  <span class="route-arrow">→<span class="transport">taxi/RER</span></span>
-  <span class="route-stop">Paris</span>
-  <span class="route-arrow">→<span class="transport">INOUI</span></span>
-  <span class="route-stop">Bordeaux</span>
-  <span class="route-arrow">→<span class="transport">car</span></span>
-  <span class="route-stop">Saint-Émilion</span>
-  <span class="route-arrow">→<span class="transport">car</span></span>
-  <span class="route-stop">Lescun</span>
-  <span class="route-arrow">→<span class="transport">car</span></span>
-  <span class="route-stop">San Sebastián</span>
-  <span class="route-arrow">→<span class="transport">car</span></span>
-  <span class="route-stop">Biarritz</span>
-  <span class="route-arrow">→<span class="transport">INOUI</span></span>
-  <span class="route-stop">Paris CDG</span>
-  <span class="route-arrow">→<span class="transport">flight</span></span>
-  <span class="route-stop">DEN</span>
+<div class="route-timeline">
+  <div class="rt-stop muted"><span class="rt-name">DEN</span></div>
+  <div class="rt-leg flight"><span class="rt-mode">flight</span></div>
+  <div class="rt-stop muted"><span class="rt-name">CDG</span></div>
+  <div class="rt-leg transfer"><span class="rt-mode">taxi / RER</span></div>
+  <div class="rt-stop"><span class="rt-name">Paris</span></div>
+  <div class="rt-leg train"><span class="rt-mode">INOUI</span></div>
+  <div class="rt-stop"><span class="rt-name">Bordeaux</span></div>
+  <div class="rt-leg car"><span class="rt-mode">car</span></div>
+  <div class="rt-stop"><span class="rt-name">St-Émilion</span></div>
+  <div class="rt-leg car"><span class="rt-mode">car</span></div>
+  <div class="rt-stop"><span class="rt-name">Lescun</span></div>
+  <div class="rt-leg car"><span class="rt-mode">car</span></div>
+  <div class="rt-stop"><span class="rt-name">San Seb.</span></div>
+  <div class="rt-leg car"><span class="rt-mode">car</span></div>
+  <div class="rt-stop"><span class="rt-name">Biarritz</span></div>
+  <div class="rt-leg train"><span class="rt-mode">INOUI</span></div>
+  <div class="rt-stop muted"><span class="rt-name">CDG</span></div>
+  <div class="rt-leg flight"><span class="rt-mode">flight</span></div>
+  <div class="rt-stop muted"><span class="rt-name">DEN</span></div>
 </div>
 
 <!-- Full trip map -->
 <h3>Trip Map</h3>
 <div id="map-trip" class="day-map" style="height:520px;"></div>
 <div class="map-legend">
-  <span style="display:inline-flex;align-items:center;gap:5px;"><span style="display:inline-block;width:24px;height:3px;background:#4a1a2e;"></span> INOUI (train)</span>
+  <span style="display:inline-flex;align-items:center;gap:5px;"><span style="display:inline-block;width:24px;height:3px;background:#4a1a2e;"></span> INOUI outbound</span>
+  <span style="display:inline-flex;align-items:center;gap:5px;"><span style="display:inline-block;width:24px;height:0;border-top:2.5px dashed #4a6e8b;"></span> INOUI return</span>
   <span style="display:inline-flex;align-items:center;gap:5px;"><span style="display:inline-block;width:24px;height:3px;background:#8b6f4e;border-top:2px dashed #8b6f4e;height:0;"></span> Rental car</span>
   <span style="display:inline-flex;align-items:center;gap:5px;"><span style="display:inline-block;width:24px;height:3px;background:#999;border-top:1px dotted #999;height:0;"></span> Flight</span>
 </div>
@@ -254,6 +255,7 @@
 <script>
 (function() {
   var navy = '#4a1a2e';
+  var returnBlue = '#4a6e8b';
   var carColor = '#8b6f4e';
   var flightColor = '#999';
   var tileUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
@@ -304,16 +306,16 @@
     [46.30, 0.10], [45.60, -0.30], [45.10, -0.45], bordx
   ], {
     color: navy, weight: 3.5, opacity: 0.7, lineCap: 'round'
-  }).addTo(m).bindPopup('<strong>INOUI First Class</strong><br>Paris Montparnasse \u2192 Bordeaux<br>10:17 AM · ~2h10');
+  }).addTo(m).bindPopup('<strong>INOUI Outbound</strong><br>Paris Montparnasse \u2192 Bordeaux<br>10:17 AM \u00b7 ~2h10');
 
-  // Biarritz → Paris (return INOUI)
+  // Biarritz → Paris (return INOUI — offset east, steel blue)
   L.polyline([
-    biarr, [43.70, -1.30], [44.20, -0.90], [44.80, -0.55],
-    [45.50, -0.30], [46.30, 0.10], [47.00, 0.60],
-    [47.80, 1.20], [48.45, 1.80], montpar
+    biarr, [43.72, -1.18], [44.22, -0.76], [44.82, -0.40],
+    [45.52, -0.12], [46.32, 0.28], [47.02, 0.78],
+    [47.82, 1.38], [48.48, 1.96], montpar
   ], {
-    color: navy, weight: 3.5, opacity: 0.7, lineCap: 'round'
-  }).addTo(m).bindPopup('<strong>INOUI</strong><br>Biarritz \u2192 Paris<br>~4.5 hrs');
+    color: returnBlue, weight: 3.5, opacity: 0.7, dashArray: '12,6', lineCap: 'round'
+  }).addTo(m).bindPopup('<strong>INOUI Return</strong><br>Biarritz \u2192 Paris<br>~4.5 hrs');
 
   // Label for INOUI
   var inouiLabel1 = L.divIcon({
