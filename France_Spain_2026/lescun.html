@@ -84,35 +84,35 @@
     <line x1="50" y1="45" x2="560" y2="45" stroke="#e0e0e0" stroke-width="0.5"/>
     <line x1="50" y1="75" x2="560" y2="75" stroke="#e0e0e0" stroke-width="0.5"/>
     <line x1="50" y1="105" x2="560" y2="105" stroke="#e0e0e0" stroke-width="0.5"/>
-    <!-- Y-axis labels (scale: 72° at y=5, 38° at y=115 → 1°F ≈ 3.24px) -->
-    <text x="44" y="19" text-anchor="end" font-size="10" fill="#8a8e94">72°</text>
-    <text x="44" y="49" text-anchor="end" font-size="10" fill="#8a8e94">63°</text>
-    <text x="44" y="79" text-anchor="end" font-size="10" fill="#8a8e94">53°</text>
-    <text x="44" y="109" text-anchor="end" font-size="10" fill="#8a8e94">44°</text>
+    <!-- Y-axis labels (scale: 70° at y=15, 40° at y=105 → 3.0 px/°F) -->
+    <text x="44" y="19" text-anchor="end" font-size="10" fill="#8a8e94">70°</text>
+    <text x="44" y="49" text-anchor="end" font-size="10" fill="#8a8e94">60°</text>
+    <text x="44" y="79" text-anchor="end" font-size="10" fill="#8a8e94">50°</text>
+    <text x="44" y="109" text-anchor="end" font-size="10" fill="#8a8e94">40°</text>
     <!-- Variability band (warm day top / cool day bottom) -->
     <!-- Warm day: 6am 48° → 9am 54° → noon 62° → 3pm 68° → 6pm 63° → 9pm 55° → 12am 49° -->
     <!-- Cool day: 6am 38° → 9am 41° → noon 47° → 3pm 50° → 6pm 48° → 9pm 43° → 12am 39° -->
-    <path d="M50,78 C100,68 140,52 220,28 C280,12 300,6 305,6 C350,10 390,22 440,38 C480,52 530,65 560,76
-             L560,108 C530,104 480,100 440,98 C390,94 350,86 305,72 C280,80 220,90 140,102 C100,106 80,108 50,108 Z"
+    <path d="M50,81 C78,75 107,70 135,63 C163,56 192,46 220,39 C248,32 277,22 305,21 C333,20 362,30 390,36 C418,42 447,53 475,60 C503,67 532,72 560,78
+             L560,108 C532,104 503,100 475,96 C447,92 418,84 390,81 C362,78 333,74 305,75 C277,76 248,80 220,84 C192,88 163,98 135,102 C107,106 78,108 50,111 Z"
            fill="#4a1a2e" opacity="0.08"/>
     <!-- Average curve: 6am 43° → 9am 48° → noon 55° → 3pm 62° → 6pm 57° → 9pm 50° → 12am 44° -->
-    <path d="M50,105 C100,96 140,82 220,60 C260,42 280,28 305,18 C350,22 390,35 440,55 C480,68 530,85 560,102" fill="none" stroke="#4a1a2e" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M50,96 C78,91 107,87 135,81 C163,75 192,67 220,60 C248,53 277,40 305,39 C333,38 362,48 390,54 C418,60 447,68 475,75 C503,82 532,87 560,93" fill="none" stroke="#4a1a2e" stroke-width="2.5" stroke-linecap="round"/>
     <!-- Data points -->
-    <circle cx="50" cy="105" r="3.5" fill="#4a1a2e"/>   <!-- 6am: 43° -->
-    <circle cx="135" cy="96" r="3" fill="#4a1a2e"/>     <!-- 9am: 48° -->
+    <circle cx="50" cy="96" r="3.5" fill="#4a1a2e"/>   <!-- 6am: 43° -->
+    <circle cx="135" cy="81" r="3" fill="#4a1a2e"/>     <!-- 9am: 48° -->
     <circle cx="220" cy="60" r="3" fill="#4a1a2e"/>     <!-- noon: 55° -->
-    <circle cx="305" cy="18" r="3.5" fill="#4a1a2e"/>   <!-- 3pm: 62° -->
-    <circle cx="390" cy="35" r="3" fill="#4a1a2e"/>     <!-- 6pm: 57° -->
-    <circle cx="475" cy="68" r="3" fill="#4a1a2e"/>     <!-- 9pm: 50° -->
-    <circle cx="560" cy="102" r="3.5" fill="#4a1a2e"/>  <!-- 12am: 44° -->
+    <circle cx="305" cy="39" r="3.5" fill="#4a1a2e"/>   <!-- 3pm: 62° -->
+    <circle cx="390" cy="54" r="3" fill="#4a1a2e"/>     <!-- 6pm: 57° -->
+    <circle cx="475" cy="75" r="3" fill="#4a1a2e"/>     <!-- 9pm: 50° -->
+    <circle cx="560" cy="93" r="3.5" fill="#4a1a2e"/>   <!-- 12am: 44° -->
     <!-- Point labels (key temps only) -->
-    <text x="50" y="120" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">43°</text>
+    <text x="50" y="111" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">43°</text>
     <text x="220" y="54" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">55°</text>
-    <text x="305" y="12" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">62°</text>
-    <text x="475" y="62" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">50°</text>
+    <text x="305" y="33" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">62°</text>
+    <text x="475" y="69" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">50°</text>
     <!-- Variability annotations (right side) -->
-    <text x="570" y="10" font-size="8.5" fill="#8a6a70" font-style="italic">warm day: 68°</text>
-    <text x="570" y="78" font-size="8.5" fill="#8a6a70" font-style="italic">cool day: 50°</text>
+    <text x="570" y="25" font-size="8.5" fill="#8a6a70" font-style="italic">warm day: 68°</text>
+    <text x="570" y="79" font-size="8.5" fill="#8a6a70" font-style="italic">cool day: 50°</text>
     <!-- X-axis labels -->
     <text x="50" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">6am</text>
     <text x="135" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">9am</text>

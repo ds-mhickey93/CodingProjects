@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Travel Days — France & Spain 2026</title>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 <div class="container">
@@ -122,6 +124,12 @@
   </div>
 </div>
 
+<!-- Route Map: Paris → Bordeaux → Saint-Émilion -->
+<div style="background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:18px; margin:20px 0 0 0;">
+  <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px;">Route Map · May 16</div>
+  <div id="map-paris-bordeaux" style="height:340px; border-radius:8px; border:1px solid var(--border);"></div>
+</div>
+
 </div>
 </section>
 
@@ -155,6 +163,17 @@
     <dd>~35 min · A-8/E-70 coastal motorway · Easy drive</dd>
   </div>
 </dl>
+
+<!-- Driving Route Map -->
+<div style="background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:18px; margin:10px 0 24px 0;">
+  <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px;">Driving Route Overview</div>
+  <div id="map-driving" style="height:440px; border-radius:8px; border:1px solid var(--border);"></div>
+  <div style="display:flex; flex-wrap:wrap; gap:12px 20px; margin-top:10px; font-size:0.82em; color:var(--muted);">
+    <span><span style="display:inline-block;width:18px;height:3px;background:#8b6f4e;vertical-align:middle;margin-right:4px;border-top:2px dashed #8b6f4e;"></span> Car route</span>
+    <span style="color:#4a1a2e;">&#9679; Destinations</span>
+    <span style="color:#8b6f4e;">&#9679; Waypoints</span>
+  </div>
+</div>
 
 <h3>Car Rental — What to Know</h3>
 <ul>
@@ -217,6 +236,13 @@
     <span class="time-label">~3:00–4:00 PM (estimated)</span>
     <p>Arrive in Paris. If at Montparnasse, take a taxi to CDG (~1 hr, €55–65) or RER B from Denfert-Rochereau (~50 min, €11.45). If the train serves CDG directly, you're already there.</p>
   </div>
+
+<!-- Route Map: San Sebastián → Biarritz → Paris -->
+<div style="background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:18px; margin:20px 0 0 0;">
+  <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px;">Route Map · May 25</div>
+  <div id="map-return" style="height:340px; border-radius:8px; border:1px solid var(--border);"></div>
+</div>
+
   <div class="time-block" data-title="CDG airport hotel">
     <span class="time-label">Evening</span>
     <p>Check into the airport hotel. Options:</p>
@@ -273,6 +299,179 @@
 </div>
 
 </div>
+
+<script>
+(function() {
+  var navy = '#4a1a2e';
+  var carColor = '#8b6f4e';
+  var returnBlue = '#4a6e8b';
+  var tileUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+  var tileAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>';
+
+  function emojiIcon(emoji, size) {
+    var s = size || 34;
+    return L.divIcon({
+      className: '',
+      html: '<div style="font-size:' + (s*0.5) + 'px;width:' + s + 'px;height:' + s + 'px;display:flex;align-items:center;justify-content:center;background:white;border-radius:50%;border:2px solid ' + navy + ';box-shadow:0 1px 4px rgba(0,0,0,0.18);">' + emoji + '</div>',
+      iconSize: [s, s],
+      iconAnchor: [s/2, s/2],
+      popupAnchor: [0, -s/2]
+    });
+  }
+  function waypointIcon(emoji, size) {
+    var s = size || 28;
+    return L.divIcon({
+      className: '',
+      html: '<div style="font-size:' + (s*0.45) + 'px;width:' + s + 'px;height:' + s + 'px;display:flex;align-items:center;justify-content:center;background:#faf8f5;border-radius:50%;border:2px dashed ' + carColor + ';box-shadow:0 1px 3px rgba(0,0,0,0.12);">' + emoji + '</div>',
+      iconSize: [s, s],
+      iconAnchor: [s/2, s/2],
+      popupAnchor: [0, -s/2]
+    });
+  }
+
+  // ── Shared locations ──
+  var montpar = [48.8408, 2.3188];
+  var bordx   = [44.8270, -0.5580];
+  var stemil  = [44.8880, -0.1620];
+  var oloron  = [43.194, -0.616];
+  var lescun  = [42.9440, -0.6340];
+  var canfranc = [42.752, -0.517];
+  var jaca    = [42.570, -0.549];
+  var pamplona = [42.812, -1.645];
+  var tolosa  = [43.135, -2.079];
+  var sanSeb  = [43.3183, -1.9850];
+  var biarr   = [43.4690, -1.5580];
+  var stJeanDeLuz = [43.389, -1.663];
+  var irun    = [43.338, -1.789];
+
+  // ══════════════════════════════════════════════════════════════
+  //  MAP 1 — Paris → Bordeaux → Saint-Émilion
+  // ══════════════════════════════════════════════════════════════
+  var m1 = L.map('map-paris-bordeaux', {scrollWheelZoom: false}).fitBounds(
+    [[44.50, -1.00], [49.15, 3.00]]
+  );
+  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18}).addTo(m1);
+
+  // INOUI train route
+  L.polyline([
+    montpar, [48.45, 1.80], [47.80, 1.20], [47.00, 0.60],
+    [46.30, 0.10], [45.60, -0.30], [45.10, -0.45], bordx
+  ], {
+    color: navy, weight: 3, opacity: 0.7, lineCap: 'round'
+  }).addTo(m1).bindPopup('<strong>INOUI</strong><br>Paris Montparnasse \u2192 Bordeaux<br>10:17 AM \u00b7 ~2h10');
+
+  // Car: Bordeaux → Saint-Émilion
+  L.polyline([
+    bordx, [44.826, -0.460], [44.870, -0.280], stemil
+  ], {
+    color: carColor, weight: 2.5, opacity: 0.7, dashArray: '6,6', lineCap: 'round'
+  }).addTo(m1).bindPopup('<strong>Drive</strong><br>Bordeaux \u2192 Saint-\u00c9milion<br>~45 min');
+
+  // Markers
+  L.marker(montpar, {icon: emojiIcon('\uD83D\uDE84', 36)}).addTo(m1)
+    .bindPopup('<strong>Gare Montparnasse</strong><br>Depart 10:17 AM');
+  L.marker(bordx, {icon: emojiIcon('\uD83D\uDE82', 34)}).addTo(m1)
+    .bindPopup('<strong>Bordeaux Saint-Jean</strong><br>Arrive ~12:30 PM<br>Pick up rental car');
+  L.marker(stemil, {icon: emojiIcon('\uD83C\uDF77', 36)}).addTo(m1)
+    .bindPopup('<strong>Saint-\u00c9milion</strong><br>Logis de Colette<br>~45 min drive from Bordeaux');
+
+  // ══════════════════════════════════════════════════════════════
+  //  MAP 2 — All Driving Legs
+  // ══════════════════════════════════════════════════════════════
+  var m2 = L.map('map-driving', {scrollWheelZoom: false}).fitBounds(
+    [[42.35, -2.50], [45.20, 0.20]]
+  );
+  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18}).addTo(m2);
+
+  // Leg 1: Bordeaux → Saint-Émilion
+  L.polyline([
+    bordx, [44.826, -0.460], [44.870, -0.280], stemil
+  ], {
+    color: carColor, weight: 2.5, opacity: 0.7, dashArray: '6,6', lineCap: 'round'
+  }).addTo(m2).bindPopup('<strong>Leg 1</strong><br>Bordeaux \u2192 Saint-\u00c9milion<br>~45 min');
+
+  // Leg 2: Saint-Émilion → Lescun (via Oloron-Sainte-Marie)
+  L.polyline([
+    stemil, [44.800, -0.220], [44.530, -0.350],
+    [44.200, -0.420], [43.890, -0.510], [43.540, -0.580],
+    oloron, [43.070, -0.625], lescun
+  ], {
+    color: carColor, weight: 2.5, opacity: 0.7, dashArray: '6,6', lineCap: 'round'
+  }).addTo(m2).bindPopup('<strong>Leg 2</strong><br>Saint-\u00c9milion \u2192 Lescun<br>~3.5 hrs via Oloron-Sainte-Marie');
+
+  // Leg 3: Lescun → San Sebastián (via Canfranc, Pamplona)
+  L.polyline([
+    lescun, oloron, [42.797, -0.531], canfranc,
+    jaca, [42.650, -0.900], [42.720, -1.300], pamplona,
+    [42.900, -1.800], [43.050, -1.950], tolosa,
+    [43.200, -2.010], sanSeb
+  ], {
+    color: carColor, weight: 2.5, opacity: 0.7, dashArray: '6,6', lineCap: 'round'
+  }).addTo(m2).bindPopup('<strong>Leg 3</strong><br>Lescun \u2192 San Sebasti\u00e1n<br>~2.5 hrs via Canfranc & Pamplona');
+
+  // Leg 4: San Sebastián → Biarritz
+  L.polyline([
+    sanSeb, irun, stJeanDeLuz, biarr
+  ], {
+    color: carColor, weight: 2.5, opacity: 0.7, dashArray: '6,6', lineCap: 'round'
+  }).addTo(m2).bindPopup('<strong>Leg 4</strong><br>San Sebasti\u00e1n \u2192 Biarritz<br>~35 min');
+
+  // Destination markers
+  L.marker(bordx, {icon: emojiIcon('\uD83D\uDE82', 34)}).addTo(m2)
+    .bindPopup('<strong>Bordeaux Saint-Jean</strong><br>Car pickup');
+  L.marker(stemil, {icon: emojiIcon('\uD83C\uDF77', 34)}).addTo(m2)
+    .bindPopup('<strong>Saint-\u00c9milion</strong><br>May 16\u201319');
+  L.marker(lescun, {icon: emojiIcon('\uD83C\uDFD4\uFE0F', 34)}).addTo(m2)
+    .bindPopup('<strong>Lescun</strong><br>May 19\u201322');
+  L.marker(sanSeb, {icon: emojiIcon('\uD83C\uDF4A', 34)}).addTo(m2)
+    .bindPopup('<strong>San Sebasti\u00e1n</strong><br>May 22\u201325');
+  L.marker(biarr, {icon: emojiIcon('\uD83D\uDE82', 30)}).addTo(m2)
+    .bindPopup('<strong>Biarritz</strong><br>Car drop-off');
+
+  // Waypoint markers
+  L.marker(oloron, {icon: waypointIcon('\u26EA', 28)}).addTo(m2)
+    .bindPopup('<strong>Oloron-Sainte-Marie</strong><br>Lunch stop on the way to Lescun<br>Historic cathedral town');
+  L.marker(canfranc, {icon: waypointIcon('\uD83D\uDE89', 28)}).addTo(m2)
+    .bindPopup('<strong>Canfranc Estaci\u00f3n</strong><br>Spectacular abandoned railway station<br>Worth a quick photo stop');
+  L.marker(pamplona, {icon: waypointIcon('\uD83D\uDC02', 28)}).addTo(m2)
+    .bindPopup('<strong>Pamplona</strong><br>Famous for San Ferm\u00edn<br>Pass through on route to San Sebasti\u00e1n');
+  L.marker(jaca, {icon: waypointIcon('\uD83C\uDFF0', 26)}).addTo(m2)
+    .bindPopup('<strong>Jaca</strong><br>Aragonese Pyrenees town<br>Romanesque cathedral');
+
+  // ══════════════════════════════════════════════════════════════
+  //  MAP 3 — San Sebastián → Biarritz → Paris (Return)
+  // ══════════════════════════════════════════════════════════════
+  var m3 = L.map('map-return', {scrollWheelZoom: false}).fitBounds(
+    [[42.80, -2.50], [49.15, 3.00]]
+  );
+  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18}).addTo(m3);
+
+  // Car: San Sebastián → Biarritz
+  L.polyline([
+    sanSeb, irun, stJeanDeLuz, biarr
+  ], {
+    color: carColor, weight: 2.5, opacity: 0.7, dashArray: '6,6', lineCap: 'round'
+  }).addTo(m3).bindPopup('<strong>Drive</strong><br>San Sebasti\u00e1n \u2192 Biarritz<br>~35 min');
+
+  // INOUI return: Biarritz → Paris
+  L.polyline([
+    biarr, [43.72, -1.18], [44.22, -0.76], [44.82, -0.40],
+    [45.52, -0.12], [46.32, 0.28], [47.02, 0.78],
+    [47.82, 1.38], [48.48, 1.96], montpar
+  ], {
+    color: returnBlue, weight: 3, opacity: 0.7, lineCap: 'round'
+  }).addTo(m3).bindPopup('<strong>INOUI Return</strong><br>Biarritz \u2192 Paris Montparnasse<br>~4.5 hrs');
+
+  // Markers
+  L.marker(sanSeb, {icon: emojiIcon('\uD83C\uDF4A', 34)}).addTo(m3)
+    .bindPopup('<strong>San Sebasti\u00e1n</strong><br>Checkout & depart 9 AM');
+  L.marker(biarr, {icon: emojiIcon('\uD83D\uDE82', 34)}).addTo(m3)
+    .bindPopup('<strong>Biarritz</strong><br>Drop car \u00b7 Board INOUI');
+  L.marker(montpar, {icon: emojiIcon('\uD83D\uDE84', 34)}).addTo(m3)
+    .bindPopup('<strong>Paris Montparnasse</strong><br>Arrive ~3\u20134 PM<br>Transfer to CDG');
+
+})();
+</script>
 <script src="nav.js"></script>
 </body>
 </html>
