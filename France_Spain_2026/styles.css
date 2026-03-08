@@ -100,6 +100,10 @@ body {
   font-style: italic;
 }
 
+/* Standard hero image handling (used on Saint-Émilion and Paris) */
+.hero figure { margin: 0 0 12px 0; }
+.hero figure img { width:100%; height:auto; border-radius:10px; display:block; }
+
 /* ===== In-Page Navigation ===== */
 nav.toc {
   background: var(--highlight);
@@ -339,6 +343,92 @@ p { margin-bottom: 12px; }
 }
 .backup strong { color: var(--soft-blue); }
 
+/* ===== Winery Cards (collapsible) ===== */
+details.winery-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: white;
+  overflow: hidden;
+  transition: box-shadow 0.18s, transform 0.12s;
+}
+details.winery-card > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 12px 14px;
+  display: block;
+  font-weight: 700;
+  color: var(--navy);
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+}
+details.winery-card > summary::-webkit-details-marker { display: none; }
+details.winery-card > summary::before {
+  content: '\25B8';
+  color: var(--accent);
+  margin-right: 8px;
+  transition: transform 0.18s;
+  display: inline-block;
+}
+details.winery-card[open] > summary::before { transform: rotate(90deg); }
+details.winery-card > div {
+  padding: 12px 14px 18px;
+  color: var(--muted);
+}
+
+details.winery-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.08); transform: translateY(-2px); }
+
+/* Center and scale winery photos inside the cards */
+details.winery-card figure { text-align: center; margin: 12px 0; }
+details.winery-card .photo { max-width: 640px; margin-left: auto; margin-right: auto; }
+
+/* Preferred badge for top options */
+.badge {
+  display: inline-block;
+  font-size: 0.75em;
+  padding: 4px 8px;
+  border-radius: 999px;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+.badge.preferred {
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+}
+
+/* Winery summary name & classification */
+details.winery-card > summary strong {
+  font-size: 1.12em;
+  font-weight: 800;
+  line-height: 1.05;
+}
+details.winery-card > summary .classification {
+  font-size: 0.9em;
+  font-weight: 500;
+  color: var(--muted);
+  margin-left: 8px;
+}
+
+/* Timeline images: placed outside collapsed bodies so they remain visible */
+.timeline-images {
+  margin: 8px 0 16px 0;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.timeline-images img {
+  /* increased ~25% from previous 420px -> 525px */
+  max-width: 525px;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+.time-block-with-media { margin-bottom: 10px; }
+
+
+
 /* ===== Food Recommendations ===== */
 .food-rec {
   background: white;
@@ -477,6 +567,49 @@ details.food-section > .food-rec:last-of-type {
   margin: 10px 0;
   z-index: 0;
 }
+.container .day-map,
+.container .map-legend,
+.container section,
+.container .day-body,
+.container .timeline,
+.container .ref-card,
+.container .purchase-table,
+.container table {
+  max-width: 100%;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+/* Emergency containment: force children to respect the page container
+   This prevents layout breakouts caused by unclosed tags or runtime DOM
+   manipulations. Full-bleed elements should opt-in with `.full-bleed`. */
+.container {
+  position: relative;
+  overflow-x: hidden;
+}
+.container > * {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.container svg,
+.container iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.full-bleed {
+  /* preserve intentional full-bleed sections by making them viewport-wide */
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  box-sizing: border-box;
+}
 .map-legend {
   font-size: 0.82em;
   color: var(--muted);
@@ -539,52 +672,111 @@ li { margin-bottom: 4px; }
 .route-timeline {
   display: flex;
   align-items: center;
-  margin: 20px 0 44px;
-  padding: 12px 8px 40px;
+  justify-content: center;
+  margin: 20px 0 52px;
+  padding: 56px 12px 86px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 .rt-stop {
-  width: 13px; height: 13px; min-width: 13px;
+  width: 14px; height: 14px; min-width: 14px;
   border-radius: 50%;
   background: var(--navy);
   border: 2.5px solid var(--cream);
-  box-shadow: 0 0 0 1.5px var(--navy);
+  box-shadow: 0 0 0 2px var(--navy);
   position: relative;
   flex-shrink: 0;
+  z-index: 2;
+}
+.rt-stop.stay {
+  width: 20px; height: 20px; min-width: 20px;
+  border: 3px solid var(--cream);
+  box-shadow: 0 0 0 2.5px var(--navy);
 }
 .rt-stop.muted {
-  background: var(--muted);
-  box-shadow: 0 0 0 1.5px var(--muted);
+  background: #aaa;
+  box-shadow: 0 0 0 2px #aaa;
+  width: 11px; height: 11px; min-width: 11px;
+}
+.rt-dest-icon {
+  position: absolute;
+  bottom: 26px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  line-height: 0;
+  opacity: 0.85;
 }
 .rt-name {
   position: absolute;
-  top: 20px; left: 50%;
+  top: 28px; left: 50%;
   transform: translateX(-50%);
-  font-size: 0.72em; font-weight: 600;
+  font-size: 0.78em; font-weight: 600;
   color: var(--warm);
   white-space: nowrap;
   letter-spacing: 0.01em;
 }
+.rt-nights {
+  position: absolute;
+  top: 50px; left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+.rt-nights-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.rt-nights-bar {
+  width: 18px; height: 3px;
+  background: var(--navy);
+  border-radius: 1px;
+  opacity: 0.5;
+}
+.rt-nights-label {
+  font-size: 0.54em;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-top: 1px;
+  white-space: nowrap;
+}
 .rt-leg {
-  flex: 0 0 50px;
+  flex: 1 0 70px;
+  max-width: 120px;
   height: 0;
   position: relative;
 }
-.rt-leg.flight   { border-top: 2px dotted #999; }
-.rt-leg.car      { border-top: 2.5px dashed #8b6f4e; }
-.rt-leg.train    { border-top: 2.5px solid var(--navy); }
-.rt-leg.transfer { border-top: 2px dotted var(--muted); }
+.rt-leg.flight   { border-top: 2px dotted #9e9e9e; flex: 0.6; }
+.rt-leg.car      { border-top: 3px dashed #8b6f4e; }
+.rt-leg.train    { border-top: 3.5px solid var(--navy); }
+.rt-leg.transfer { border-top: 2px dotted #bbb; flex: 0.4; }
+.rt-icon {
+  position: absolute;
+  top: -28px; left: 50%;
+  transform: translateX(-50%);
+  line-height: 1;
+  z-index: 3;
+}
+.rt-svg {
+  width: 28px; height: 28px;
+  display: block;
+  opacity: 0.85;
+}
 .rt-mode {
   position: absolute;
-  top: 5px; left: 50%;
+  top: 9px; left: 50%;
   transform: translateX(-50%);
-  font-size: 0.6em;
-  color: var(--accent);
+  font-size: 0.75em;
   text-transform: uppercase;
   letter-spacing: 0.6px;
   white-space: nowrap;
 }
+.rt-leg.flight .rt-mode   { color: #9e9e9e; }
+.rt-leg.car .rt-mode      { color: #8b6f4e; }
+.rt-leg.train .rt-mode    { color: var(--navy); font-weight: 600; }
+.rt-leg.transfer .rt-mode { color: #bbb; }
 
 /* ===== Print ===== */
 @media print {

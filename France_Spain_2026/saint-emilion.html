@@ -13,6 +13,9 @@
 
 <!-- ========== HEADER ========== -->
 <div class="hero">
+  <figure>
+    <img src="saint_emilion_header.jpeg" alt="Saint-Émilion">
+  </figure>
   <h1>Saint-Émilion</h1>
   <div class="subtitle">May 16–19, 2026 · 3 Nights · Wine Country</div>
 </div>
@@ -35,11 +38,11 @@
   </div>
   <div>
     <dt>Arrival</dt>
-    <dd>Fri May 16 · INOUI to Bordeaux Saint-Jean<br>Pickup rental car → drive ~45 min east to Mazerat</dd>
+    <dd>Sat May 16 · INOUI to Bordeaux Saint-Jean<br>Pickup rental car → drive ~45 min east to Mazerat</dd>
   </div>
   <div>
     <dt>Departure</dt>
-    <dd>Mon May 19 · Drive to Lescun (~3.5 hrs south)</dd>
+    <dd>Tue May 19 · Drive to Lescun (~3.5 hrs south)</dd>
   </div>
   <div>
     <dt>Rental Car</dt>
@@ -47,7 +50,7 @@
   </div>
   <div class="full">
     <dt>Heads Up</dt>
-    <dd><strong>No washer/dryer.</strong> Plan laundry for Lescun instead. <strong>No A/C</strong> (shouldn't need it in mid-May). <strong>"No hot water" listed</strong> — confirm with Xavier before the trip. Host greets you on arrival.</dd>
+    <dd><strong>No washer/dryer.</strong> Plan laundry for Lescun instead. <strong>No A/C</strong> (shouldn't need it in mid-May). Host greets you on arrival.</dd>
   </div>
   <div class="full">
     <dt>Emergency</dt>
@@ -56,9 +59,8 @@
 </dl>
 </section>
 
-<!-- ========== AREA MAP ========== -->
+<!-- ========== MAP & WEATHER ========== -->
 <section>
-<h2>Area Map</h2>
 <div id="map-area" class="day-map" style="height:450px;"></div>
 <div class="map-legend">
   <span>🏠 Logis de Colette</span>
@@ -69,268 +71,263 @@
 </div>
 </section>
 
-<!-- ========== WEATHER ========== -->
 <section>
 <h2>Weather & Light</h2>
-
-<!-- Temperature curve (inline SVG) -->
-<div style="background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:22px 22px 14px; margin:16px 0 16px 0;">
-  <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:12px;">Mid-May Day &nbsp;·&nbsp; Temperature (°F) &nbsp;·&nbsp; <span style="color:#4a1a2e;">avg</span> + <span style="color:#c4b0b8;">range</span></div>
-  <svg viewBox="0 0 660 150" style="width:100%; height:auto; display:block;" aria-label="Temperature curve through a typical mid-May day in Saint-Émilion, with variability band">
-    <!-- Grid lines -->
+<div style="background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:22px; margin:16px 0;">
+  <div style="font-size:0.82em; text-transform:uppercase; color:var(--muted); margin-bottom:12px;">Mid-May Day · Temperature (°F) · <span style="color:#4a1a2e;">avg</span> + <span style="color:#c4b0b8;">range</span></div>
+  <svg viewBox="0 0 660 150" style="width:100%; height:auto; display:block;" aria-label="Temperature curve">
     <line x1="50" y1="15" x2="560" y2="15" stroke="#e0e0e0" stroke-width="0.5"/>
     <line x1="50" y1="45" x2="560" y2="45" stroke="#e0e0e0" stroke-width="0.5"/>
     <line x1="50" y1="75" x2="560" y2="75" stroke="#e0e0e0" stroke-width="0.5"/>
     <line x1="50" y1="105" x2="560" y2="105" stroke="#e0e0e0" stroke-width="0.5"/>
-    <!-- Y-axis labels (scale: 80° at y=15, 50° at y=105 → 3.0 px/°F) -->
     <text x="44" y="19" text-anchor="end" font-size="10" fill="#8a8e94">80°</text>
     <text x="44" y="49" text-anchor="end" font-size="10" fill="#8a8e94">70°</text>
     <text x="44" y="79" text-anchor="end" font-size="10" fill="#8a8e94">60°</text>
     <text x="44" y="109" text-anchor="end" font-size="10" fill="#8a8e94">50°</text>
-    <!-- Variability band (warm day top / cool day bottom) -->
-    <!-- Warm day: 6am 58° → 9am 63° → noon 72° → 3pm 78° → 6pm 74° → 9pm 65° → 12am 59° -->
-    <!-- Cool day: 6am 48° → 9am 51° → noon 57° → 3pm 60° → 6pm 58° → 9pm 53° → 12am 49° -->
-    <path d="M50,81 C78,76 107,73 135,66 C163,59 192,46 220,39 C248,32 277,22 305,21 C333,20 362,26 390,33 C418,40 447,52 475,60 C503,68 532,72 560,78
-             L560,108 C532,104 503,100 475,96 C447,92 418,84 390,81 C362,78 333,74 305,75 C277,76 248,80 220,84 C192,88 163,98 135,102 C107,106 78,108 50,111 Z"
-           fill="#4a1a2e" opacity="0.08"/>
-    <!-- Average curve: 6am 53° → 9am 57° → noon 64° → 3pm 72° → 6pm 68° → 9pm 60° → 12am 54° -->
+    <path d="M50,81 C78,76 107,73 135,66 C163,59 192,46 220,39 C248,32 277,22 305,21 C333,20 362,26 390,33 C418,40 447,52 475,60 C503,68 532,72 560,78 L560,108 C532,104 503,100 475,96 C447,92 418,84 390,81 C362,78 333,74 305,75 C277,76 248,80 220,84 C192,88 163,98 135,102 C107,106 78,108 50,111 Z" fill="#4a1a2e" opacity="0.08"/>
     <path d="M50,96 C78,92 107,90 135,84 C163,78 192,70 220,63 C248,56 277,41 305,39 C333,37 362,45 390,51 C418,57 447,68 475,75 C503,82 532,87 560,93" fill="none" stroke="#4a1a2e" stroke-width="2.5" stroke-linecap="round"/>
-    <!-- Data points -->
-    <circle cx="50" cy="96" r="3.5" fill="#4a1a2e"/>   <!-- 6am: 53° -->
-    <circle cx="135" cy="84" r="3" fill="#4a1a2e"/>     <!-- 9am: 57° -->
-    <circle cx="220" cy="63" r="3" fill="#4a1a2e"/>     <!-- noon: 64° -->
-    <circle cx="305" cy="39" r="3.5" fill="#4a1a2e"/>   <!-- 3pm: 72° -->
-    <circle cx="390" cy="51" r="3" fill="#4a1a2e"/>     <!-- 6pm: 68° -->
-    <circle cx="475" cy="75" r="3" fill="#4a1a2e"/>     <!-- 9pm: 60° -->
-    <circle cx="560" cy="93" r="3.5" fill="#4a1a2e"/>   <!-- 12am: 54° -->
-    <!-- Point labels (key temps only) -->
+    <circle cx="50" cy="96" r="3.5" fill="#4a1a2e"/>
+    <circle cx="135" cy="84" r="3" fill="#4a1a2e"/>
+    <circle cx="220" cy="63" r="3" fill="#4a1a2e"/>
+    <circle cx="305" cy="39" r="3.5" fill="#4a1a2e"/>
+    <circle cx="390" cy="51" r="3" fill="#4a1a2e"/>
+    <circle cx="475" cy="75" r="3" fill="#4a1a2e"/>
+    <circle cx="560" cy="93" r="3.5" fill="#4a1a2e"/>
     <text x="50" y="111" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">53°</text>
     <text x="220" y="57" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">64°</text>
     <text x="305" y="33" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">72°</text>
     <text x="475" y="69" text-anchor="middle" font-size="9" font-weight="600" fill="#4a1a2e">60°</text>
-    <!-- Variability annotations (right side) -->
     <text x="570" y="25" font-size="8.5" fill="#8a6a70" font-style="italic">warm day: 78°</text>
     <text x="570" y="79" font-size="8.5" fill="#8a6a70" font-style="italic">cool day: 60°</text>
-    <!-- X-axis labels -->
-    <text x="50" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">6am</text>
-    <text x="135" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">9am</text>
-    <text x="220" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">noon</text>
-    <text x="305" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">3pm</text>
-    <text x="390" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">6pm</text>
-    <text x="475" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">9pm</text>
-    <text x="560" y="140" text-anchor="middle" font-size="10" fill="#8a8e94">12am</text>
   </svg>
 </div>
-
-<!-- Rain + Daylight row -->
-<div style="display:flex; flex-wrap:wrap; gap:16px; margin:0 0 12px 0;">
-
-  <!-- Rain -->
-  <div style="flex:1; min-width:260px; background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:18px 22px;">
-    <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px;">Precipitation · Mid-May</div>
-    <div style="display:flex; gap:20px; align-items:baseline;">
-      <div>
-        <span style="font-size:1.5em; font-weight:700; color:var(--navy);">~25–35%</span>
-        <span style="font-size:0.88em; color:var(--muted);"> chance on any given day</span>
-      </div>
-      <div>
-        <span style="font-size:1.5em; font-weight:700; color:var(--navy);">~2.5 in.</span>
-        <span style="font-size:0.88em; color:var(--muted);"> monthly total</span>
-      </div>
-    </div>
-    <p style="font-size:0.84em; color:var(--muted); margin:10px 0 0;">Bordeaux region gets occasional afternoon showers but fewer rainy days than Paris. Over 3 days, you might see one with some rain — usually brief. Warm enough that a quick shower is refreshing, not miserable.</p>
-  </div>
-
-  <!-- Daylight -->
-  <div style="flex:1; min-width:260px; background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:18px 22px;">
-    <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px;">Daylight · May 16–19</div>
-    <svg viewBox="0 0 400 72" style="width:100%; height:auto; display:block;" aria-label="Daylight hours visualization">
-      <!-- Full 24h bar (dark) -->
-      <rect x="0" y="22" width="400" height="20" rx="4" fill="#d0d3d8"/>
-      <!-- Daylight portion: 6:30am–9:15pm -->
-      <rect x="108" y="22" width="247" height="20" rx="4" fill="#e8dbb8"/>
-      <!-- Golden hour portion: ~8:00pm–9:15pm -->
-      <rect x="326" y="22" width="29" height="20" rx="0 4 4 0" fill="#d4a96a"/>
-      <!-- Golden hour bracket -->
-      <line x1="326" y1="16" x2="326" y2="20" stroke="#b08540" stroke-width="1"/>
-      <line x1="355" y1="16" x2="355" y2="20" stroke="#b08540" stroke-width="1"/>
-      <line x1="326" y1="16" x2="355" y2="16" stroke="#b08540" stroke-width="1"/>
-      <text x="340" y="11" text-anchor="middle" font-size="8.5" fill="#b08540" font-weight="500">golden hr</text>
-      <!-- Bottom labels -->
-      <text x="108" y="58" text-anchor="middle" font-size="10" fill="#4a1a2e" font-weight="600">6:30 am</text>
-      <text x="215" y="36" text-anchor="middle" font-size="9" fill="#8a7a55" font-weight="500">~15 hrs of daylight</text>
-      <text x="326" y="58" text-anchor="middle" font-size="8.5" fill="#b08540" font-weight="500">8:00</text>
-      <text x="396" y="58" text-anchor="end" font-size="8.5" fill="#4a1a2e" font-weight="600">9:15 pm</text>
-    </svg>
-    <p style="font-size:0.84em; color:var(--muted); margin:8px 0 0;">Long warm evenings. Golden hour light on the vineyards and limestone walls starts around 8 PM — exceptional for photos and terrace dining.</p>
-  </div>
-</div>
-
 <p style="font-size:0.9em; color:var(--muted); margin-top:8px;"><strong style="color:var(--navy);">What to pack:</strong> Warmer than Paris. Light layers work — shirt sleeves by midday, a light jacket for evening terrace dining. Rain shell stays in the bag but you may not need it. Sunglasses and a hat for vineyard walks.</p>
 </section>
 
 <!-- ========== WINERIES ========== -->
 <section>
 <h2>Wineries Worth Visiting</h2>
-<p style="font-size:0.93em; color:var(--muted); margin-bottom:20px;">Five options ranging from the one built into your stay to a scenic estate drive. All are Grand Cru Classé, all welcome families, and none require you to pretend Lucy isn't there. Pick one or two — this is wine country at a baby's pace, not a tasting marathon.</p>
-
-<!-- Couvent des Jacobins -->
-<div style="background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:22px 26px; margin-bottom:18px;">
-  <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:6px;">
-    <h3 style="margin:0; font-size:1.08em; color:var(--navy);"><a href="https://www.couventdesjacobins.com/en/" target="_blank" style="color:var(--navy);">1. Couvent des Jacobins</a></h3>
-    <span style="font-size:0.75em; background:var(--navy); color:white; padding:3px 10px; border-radius:12px; font-weight:600;">YOUR PRIMARY VISIT</span>
-  </div>
-  <div style="font-size:0.82em; color:var(--muted); margin:4px 0 12px;">Grand Cru Classé · Est. 1389 · Walking distance from village center · <a href="https://www.couventdesjacobins.com/en/" target="_blank" style="color:var(--accent);">couventdesjacobins.com</a></div>
-
-  <dl class="ref-card" style="margin:0;">
-    <div>
-      <dt>Visit</dt>
-      <dd>Free cellar tour + tasting · ~30 min · Walk-in or call ahead</dd>
-    </div>
-    <div>
-      <dt>Baby Rating</dt>
-      <dd><strong style="color:var(--navy);">Excellent.</strong> Juice offered for children. Free for kids.</dd>
-    </div>
-    <div class="full">
-      <dt>What to Expect</dt>
-      <dd>Guided tour of historic underground cellars beneath a Dominican priory dating to 1389 — nearly 700 years of continuous winemaking. Organic certified since 2020. The tasting is casual and unhurried. This is the same estate that manages your Logis de Colette, so you're already connected — coordinate timing with Xavier.</dd>
-    </div>
-    <div class="full">
-      <dt>Why This One</dt>
-      <dd>It's included with your stay, it's prestigious, it's a two-minute walk, and it's genuinely welcoming to families. Start here. If you only visit one winery, make it this one.</dd>
-    </div>
-  </dl>
+<div class="tip" style="margin-top:8px; font-size:0.92em; color:var(--muted);">
+  <strong>Plan ahead:</strong> Many Saint-Émilion estates operate by appointment. Contact wineries to reserve tours and tastings.
 </div>
 
-<!-- Château Villemaurine -->
-<div style="background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:22px 26px; margin-bottom:18px;">
-  <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:6px;">
-    <h3 style="margin:0; font-size:1.08em; color:var(--navy);"><a href="https://www.villemaurine.com/index.php/en/" target="_blank" style="color:var(--navy);">2. Château Villemaurine</a></h3>
-    <span style="font-size:0.75em; background:var(--accent); color:white; padding:3px 10px; border-radius:12px; font-weight:600;">ELITE &amp; ACCESSIBLE</span>
-  </div>
-  <div style="font-size:0.82em; color:var(--muted); margin:4px 0 12px;">Grand Cru Classé · Few minutes' walk from village center · <a href="https://www.villemaurine.com/index.php/en/" target="_blank" style="color:var(--accent);">villemaurine.com</a></div>
-
-  <dl class="ref-card" style="margin:0;">
-    <div>
-      <dt>Visit</dt>
-      <dd>Heritage Tour: €20/adult (free under 12) · ~45 min<br>From Vine to Glass: €25/adult · Book online or email ahead</dd>
-    </div>
-    <div>
-      <dt>Baby Rating</dt>
-      <dd><strong style="color:var(--navy);">Good</strong> (with one caveat — cellars are ~15°C, bring a light jacket for Lucy)</dd>
-    </div>
-    <div class="full">
-      <dt>What to Expect</dt>
-      <dd>Spectacular monolithic underground cellars carved into the limestone plateau. Animated history walk, panoramic views, modern architecture layered onto 700+ years of history. Recent vintages hit 96-point ratings. The Heritage Tour includes two wines; the longer tour adds a vineyard walk and technical facilities.</dd>
-    </div>
-    <div class="full">
-      <dt>Why This One</dt>
-      <dd>A step up in prestige from Couvent — shows you what "elite but accessible" means in Saint-Émilion. The underground quarries are visually stunning. Free entry for Lucy, walkable from the village.</dd>
-    </div>
-  </dl>
-</div>
-
-<!-- Château Bernateau -->
-<div style="background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:22px 26px; margin-bottom:18px;">
-  <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:6px;">
-    <h3 style="margin:0; font-size:1.08em; color:var(--navy);"><a href="https://www.chateau-bernateau.com/" target="_blank" style="color:var(--navy);">3. Château Bernateau</a></h3>
-    <span style="font-size:0.75em; background:#5a7a5a; color:white; padding:3px 10px; border-radius:12px; font-weight:600;">MOST FAMILY-FRIENDLY</span>
-  </div>
-  <div style="font-size:0.82em; color:var(--muted); margin:4px 0 12px;">Grand Cru Classé · 11th-generation Lavau family · 5-minute drive · <a href="https://www.chateau-bernateau.com/" target="_blank" style="color:var(--accent);">chateau-bernateau.com</a></div>
-
-  <dl class="ref-card" style="margin:0;">
-    <div>
-      <dt>Visit</dt>
-      <dd>Full tour (vineyard + cellar + tasting) + garden · ~90 min · Call to book</dd>
-    </div>
-    <div>
-      <dt>Baby Rating</dt>
-      <dd><strong style="color:var(--navy);">Excellent.</strong> Dedicated children's playhouse. Garden with picnic spots.</dd>
-    </div>
-    <div class="full">
-      <dt>What to Expect</dt>
-      <dd>A complete winery experience — vineyard walk, gravity vat house tour, cellar, and tasting — but intentionally designed for families. The charming garden has a children's playhouse and space to spread out after the tour. Eleven generations of the Lavau family, mixing old-world viticulture with modern techniques.</dd>
-    </div>
-    <div class="full">
-      <dt>Why This One</dt>
-      <dd>The most relaxed option. The playhouse and garden mean Lucy can enjoy outdoor time while you linger over a tasting. Short drive from the Logis. Perfect if you want a longer, more immersive winery visit without worrying about the baby.</dd>
-    </div>
-  </dl>
-</div>
-
-<!-- Château Coutet -->
-<div style="background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:22px 26px; margin-bottom:18px;">
-  <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:6px;">
-    <h3 style="margin:0; font-size:1.08em; color:var(--navy);"><a href="https://www.chateaucoutet.com/" target="_blank" style="color:var(--navy);">4. Château Coutet</a></h3>
-    <span style="font-size:0.75em; background:#7a6a50; color:white; padding:3px 10px; border-radius:12px; font-weight:600;">INTIMATE + BEAUTIFUL</span>
-  </div>
-  <div style="font-size:0.82em; color:var(--muted); margin:4px 0 12px;">Grand Cru Classé · 14 generations of family ownership · 20-min walk or 5-min drive · <a href="https://www.chateaucoutet.com/" target="_blank" style="color:var(--accent);">chateaucoutet.com</a></div>
-
-  <dl class="ref-card" style="margin:0;">
-    <div>
-      <dt>Visit</dt>
-      <dd>Garden + tasting experience · 60–90 min · Call ahead Mon–Sat</dd>
-    </div>
-    <div>
-      <dt>Baby Rating</dt>
-      <dd><strong style="color:var(--navy);">Excellent.</strong> Pond with ducks (major baby visual delight). Garden setting.</dd>
-    </div>
-    <div class="full">
-      <dt>What to Expect</dt>
-      <dd>Intimate, personal experience guided by the owner or a family member. Beautiful garden with a pond and ducks — genuinely delightful for Lucy. Tasting happens in or near the garden with vineyard views. Organic and biodynamic practices from the very beginning, across 400 years of continuous family stewardship.</dd>
-    </div>
-    <div class="full">
-      <dt>Why This One</dt>
-      <dd>Combines prestige, intimacy, and pure baby appeal. The ducks alone are worth the visit for a 9-month-old. Walking distance from the village if you want to combine it with a village day.</dd>
-    </div>
-  </dl>
-</div>
-
-<!-- Château de Ferrand -->
-<div style="background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:22px 26px; margin-bottom:18px;">
-  <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:6px;">
-    <h3 style="margin:0; font-size:1.08em; color:var(--navy);"><a href="https://www.chateaudeferrand.com/en/" target="_blank" style="color:var(--navy);">5. Château de Ferrand</a></h3>
-    <span style="font-size:0.75em; background:var(--muted); color:white; padding:3px 10px; border-radius:12px; font-weight:600;">SCENIC ESTATE</span>
-  </div>
-  <div style="font-size:0.82em; color:var(--muted); margin:4px 0 12px;">Grand Cru Classé · Est. 17th century · 6 km drive · <a href="https://www.chateaudeferrand.com/en/" target="_blank" style="color:var(--accent);">chateaudeferrand.com</a></div>
-
-  <dl class="ref-card" style="margin:0;">
-    <div>
-      <dt>Visit</dt>
-      <dd>Estate tour + garden · 90–120 min · Book online or call</dd>
-    </div>
-    <div>
-      <dt>Baby Rating</dt>
-      <dd><strong style="color:var(--navy);">Good.</strong> Large grounds for stroller cruising. Pond and ducks. Less intimate feel.</dd>
-    </div>
-    <div class="full">
-      <dt>What to Expect</dt>
-      <dd>A fuller, more expansive experience across 32 hectares — one of the larger Grand Cru Classé properties. Picturesque garden with a pond and ducks. Historic château architecture. Modern and traditional winemaking side by side. More of a "day out" feeling than the village properties above.</dd>
-    </div>
-    <div class="full">
-      <dt>Why This One</dt>
-      <dd>Your best option if you have the time and energy for a second winery beyond Couvent. The bigger grounds mean Lucy can stay comfortable in the stroller longer, and the garden is relaxing for a post-tasting wind-down. Worth the short drive.</dd>
-    </div>
-  </dl>
-</div>
-
-<div class="tip">
-  <strong>Suggested approach:</strong> Do Couvent des Jacobins first (it's free, it's included, it's right there). If you want a second visit, pick one based on mood: Villemaurine for "wow factor," Bernateau for family ease, Coutet for charm, or Ferrand for a scenic drive. Two wineries in three days is plenty with a baby.
+<div style="overflow-x:auto; margin-bottom:24px;">
+<table style="border-collapse:collapse; width:100%; font-size:0.97em;">
+  <thead>
+    <tr style="background:var(--cream);">
+      <th style="padding:8px 10px; border:1px solid var(--border); text-align:center;">Winery</th>
+      <th style="padding:8px 10px; border:1px solid var(--border); text-align:center;">Classification <span style="font-size:0.85em; color:#888;">(ranked)</span></th>
+      <th style="padding:8px 10px; border:1px solid var(--border); text-align:center;">Walkable?</th>
+      <th style="padding:8px 10px; border:1px solid var(--border); text-align:center;">Distance</th>
+      <th style="padding:8px 10px; border:1px solid var(--border); text-align:center;">Family Friendly</th>
+      <th style="padding:8px 10px; border:1px solid var(--border); text-align:center;">Food/Dining</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background:var(--cream);">
+      <td style="text-align:center;"><strong style="color:var(--navy);">Couvent des Jacobins <span style="font-size:0.85em; color:var(--accent);">★ Preferred</span></strong></td>
+      <td style="text-align:center; color:#4a1a2e; font-weight:500; border-left:3px solid #4a1a2e; background:linear-gradient(90deg,#f8f8ff,#fff);">Grand Cru Classé</td>
+      <td style="text-align:center; color:#4a1a2e;">✓</td>
+      <td style="text-align:center;">2 min walk</td>
+      <td style="text-align:center; color:#4a1a2e;">✓</td>
+      <td style="text-align:center;">None (eat in town)</td>
+    </tr>
+    <tr style="background:var(--cream);">
+      <td style="text-align:center;"><strong style="color:var(--navy);">Château La Dominique <span style="font-size:0.85em; color:var(--accent);">★ Preferred</span></strong></td>
+      <td style="text-align:center; color:#4a1a2e; font-weight:500; border-left:3px solid #4a1a2e; background:linear-gradient(90deg,#f8f8ff,#fff);">Grand Cru Classé</td>
+      <td style="text-align:center; color:#bbb;">✗</td>
+      <td style="text-align:center;">5 min drive</td>
+      <td style="text-align:center; color:#4a1a2e;">✓</td>
+      <td style="text-align:center;">Rooftop terrace</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;">Troplong Mondot</td>
+      <td style="text-align:center; color:#b08540; font-weight:500; border-left:3px solid #b08540; background:linear-gradient(90deg,#fffbe6,#fff);">Premier Grand Cru Classé B</td>
+      <td style="text-align:center; color:#bbb;">✗</td>
+      <td style="text-align:center;">8–10 min drive</td>
+      <td style="text-align:center; color:#bbb;">•</td>
+      <td style="text-align:center;">Michelin restaurant</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;">Villemaurine</td>
+      <td style="text-align:center; color:#4a1a2e; font-weight:500; border-left:3px solid #4a1a2e; background:linear-gradient(90deg,#f8f8ff,#fff);">Grand Cru Classé</td>
+      <td style="text-align:center; color:#4a1a2e;">✓</td>
+      <td style="text-align:center;">5 min walk</td>
+      <td style="text-align:center; color:#bbb;">•</td>
+      <td style="text-align:center;">Tastings only</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;">Bernateau</td>
+      <td style="text-align:center; color:#888; font-weight:400; border-left:3px solid #bbb; background:linear-gradient(90deg,#fafafa,#fff);">Saint-Émilion Grand Cru</td>
+      <td style="text-align:center; color:#bbb;">✗</td>
+      <td style="text-align:center;">10 min drive</td>
+      <td style="text-align:center; color:#4a1a2e;">✓</td>
+      <td style="text-align:center;">Tastings only</td>
+    </tr>
+  </tbody>
+</table>
+<div style="font-size:0.92em; color:#888; margin-top:6px; text-align:right;">Classification hierarchy: <span style="color:#b08540;">Premier Grand Cru Classé B</span> &gt; <span style="color:#4a1a2e;">Grand Cru Classé</span> &gt; <span style="color:#888;">Saint-Émilion Grand Cru</span></div>
 </div>
 </section>
 
-<!-- ====================================================== -->
-<!--              DAY 4 — ARRIVAL IN WINE COUNTRY           -->
-<!-- ====================================================== -->
+<!-- Collapsible winery cards for quick browsing -->
+<section aria-label="Winery details">
+  <div style="display:flex; flex-direction:column; gap:18px; margin-top:18px;">
+
+    <details class="winery-card" open>
+      <summary><strong>Couvent des Jacobins</strong> — <span class="classification">Grand Cru Classé</span> <span class="badge preferred">Preferred</span></summary>
+      <div>
+        <figure style="margin:10px 0 12px 0;"><img src="couvent_de_jacobins_st_emilion.jpg" alt="Couvent des Jacobins" class="photo"></figure>
+        <ul style="list-style:none; margin:0 0 10px 0; padding:0; color:var(--muted);">
+          <li><strong>Distance:</strong> 2 min walk</li>
+          <li><strong>Visit:</strong> Tour & tasting ~45 min (included for our stay connection)</li>
+          <li><strong>Family:</strong> Kid-friendly outdoor tasting area</li>
+        </ul>
+        <p style="color:var(--muted);">Small, hospitable estate connected to our Airbnb host. Tastings are personal and informative — best for a short morning visit paired with a village stroll. Reserve for groups &gt;4.</p>
+        <p style="font-size:0.9em; color:var(--muted);"><strong>Best for:</strong> Short, walkable tasting; families; convenience.</p>
+      </div>
+    </details>
+
+    <details class="winery-card" open>
+      <summary><strong>Château La Dominique</strong> — <span class="classification">Grand Cru Classé</span> <span class="badge preferred">Preferred</span></summary>
+      <div>
+        <figure style="margin:10px 0 12px 0;"><img src="chateau_la_dominique_st_emilion.webp" alt="Château La Dominique rooftop" class="photo"></figure>
+        <ul style="list-style:none; margin:0 0 10px 0; padding:0; color:var(--muted);">
+          <li><strong>Distance:</strong> 5–10 min drive</li>
+          <li><strong>Visit:</strong> Rooftop restaurant; tastings available by appointment</li>
+          <li><strong>Family:</strong> Baby-friendly terrace seating</li>
+        </ul>
+        <p style="color:var(--muted);">A modern estate notable for its rooftop dining and panoramic vineyard views. Prefer booking lunch here rather than a short tasting — the experience is best enjoyed slowly.</p>
+        <p style="font-size:0.9em; color:var(--muted);"><strong>Best for:</strong> Scenic lunch, relaxed dining.</p>
+      </div>
+    </details>
+
+    <details class="winery-card">
+      <summary><strong>Troplong Mondot</strong> — <span class="classification">Premier Grand Cru Classé B</span></summary>
+      <div>
+        <p style="color:var(--muted);">High-end estate with an outstanding restaurant. Formal tasting visits are limited — dining is the primary attraction. Expect a luxurious experience and book far in advance.</p>
+        <p style="font-size:0.9em; color:var(--muted);"><strong>Best for:</strong> Michelin-level dining; special occasions.</p>
+      </div>
+    </details>
+
+    <details class="winery-card">
+      <summary><strong>Château Villemaurine</strong> — <span class="classification">Grand Cru Classé</span></summary>
+      <div>
+        <p style="color:var(--muted);">Pleasant family-run estate within walking distance. Tastings are thoughtful and the outdoor areas make it comfortable with a small child.</p>
+        <p style="font-size:0.9em; color:var(--muted);"><strong>Best for:</strong> Walkable tasting; gentle visit.</p>
+      </div>
+    </details>
+
+    <details class="winery-card">
+      <summary><strong>Château Bernateau</strong> — <span class="classification">Saint-Émilion Grand Cru</span></summary>
+      <div>
+        <p style="color:var(--muted);">Smaller, relaxed producer a short drive from town — good for a focused tasting without the typical crowds of the larger estates.</p>
+        <p style="font-size:0.9em; color:var(--muted);"><strong>Best for:</strong> Low-key tasting; family-run feel.</p>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<!-- Town section & purchase table -->
+<section id="saint-emilion-town" class="town-section" style="margin-top:22px;">
+  <h2>Saint‑Émilion Town</h2>
+  <figure style="margin:0 0 12px 0; max-width:880px;">
+    <img src="saint_emilion_town.jpeg" alt="Saint-Émilion town" style="width:100%; height:auto; border-radius:8px; display:block;">
+  </figure>
+  <p style="font-size:0.93em; color:var(--muted); margin-bottom:12px;">Quick notes for the village: sites, dining, and nearby bottle options if you prefer to buy without visiting each château.</p>
+
+  <h3 style="margin:6px 0 10px 0; color:var(--navy);">In the village</h3>
+  <div style="font-size:0.92em; color:var(--muted); margin-bottom:12px;">
+    <ul style="margin:8px 0 12px 20px;">
+      <li><strong>Monolithic Church (Église Monolithe)</strong> — carved from limestone; one of the largest underground churches in Europe.</li>
+      <li><strong>Saint‑Émilion Cloisters & Chapelle du Collégial</strong> — historic medieval architecture, pleasant for a short stroll.</li>
+      <li><strong>Place du Marché & main streets</strong> — charming squares with cafés, shops, and vineyard views.</li>
+      <li><strong>Wine shop</strong>: Maison du Vin Saint-Émilion — reliable local selection and staff recommendations.</li>
+    </ul>
+  </div>
+
+  <h3 style="margin:6px 0 10px 0; color:var(--navy);">Dining Options</h3>
+  <div style="font-size:0.94em; color:var(--muted); margin-bottom:12px;">
+    <ul style="margin:8px 0 12px 20px;">
+      <li><strong>La Terrasse Rouge</strong> — Rooftop restaurant at Château La Dominique with panoramic views; ideal for a scenic lunch (outdoor seating and baby-friendly midday service).</li>
+      <li><strong>L'Envers du Décor</strong> — Classic wine bar and bistro in town with a good wine list and relaxed atmosphere; casual and stroller-friendly.</li>
+      <li><strong>Ô 3 fontaines</strong> — Casual bistro with outdoor seating and a flexible menu; a reliable easy option.</li>
+      <li><strong>Le Tertre</strong> — Charming mid-range restaurant for lunch or dinner; reservations recommended but generally comfortable for families.</li>
+    </ul>
+  </div>
+
+  <h3 style="margin:6px 0 10px 0; color:var(--navy);">Purchase Wine — Outside the Wineries</h3>
+  <p style="font-size:0.89em; color:var(--muted); margin-bottom:10px;">If you prefer to buy bottles without touring each château, these notable names commonly appear in wine shops and restaurant lists nearby. Availability and by-the-glass offerings vary by vendor and season.</p>
+
+  <div style="overflow-x:auto; margin-bottom:12px;">
+    <table class="purchase-table" style="width:100%;">
+      <thead>
+        <tr>
+          <th>Winery</th>
+          <th>Classification</th>
+          <th>Dominant Grape</th>
+          <th>Bottle Price</th>
+          <th>By-the-Glass</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Château Margaux</td>
+          <td>1855 First Growth (Premier Cru Classé)</td>
+          <td>Cabernet Sauvignon</td>
+          <td>$800–$1,500</td>
+          <td>$150–$300</td>
+        </tr>
+        <tr>
+          <td>Château Cheval Blanc</td>
+          <td>Premier Grand Cru Classé A</td>
+          <td>Cabernet Franc + Merlot</td>
+          <td>$700–$1,200</td>
+          <td>$120–$250</td>
+        </tr>
+        <tr>
+          <td>Château Ausone</td>
+          <td>Premier Grand Cru Classé A</td>
+          <td>Cabernet Franc + Merlot</td>
+          <td>$900–$1,500</td>
+          <td>Rare</td>
+        </tr>
+        <tr>
+          <td>Château Canon</td>
+          <td>Premier Grand Cru Classé B</td>
+          <td>Merlot</td>
+          <td>$120–$200</td>
+          <td>$30–$60</td>
+        </tr>
+        <tr>
+          <td>Château Pavie Macquin</td>
+          <td>Premier Grand Cru Classé B</td>
+          <td>Merlot</td>
+          <td>$90–$150</td>
+          <td>$25–$50</td>
+        </tr>
+        <tr>
+          <td>Château Larcis Ducasse</td>
+          <td>Premier Grand Cru Classé B</td>
+          <td>Merlot + Cabernet Franc</td>
+          <td>$80–$140</td>
+          <td>$25–$45</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">Note: Prices are approximate retail ranges in wine shops and by-the-glass restaurant listings; availability and by-the-glass offerings vary by venue and season.</div>
+</section>
+
+<!-- ========== DAY ITINERARY ========== -->
 <section>
 <div class="day-header">
-  <div class="day-number">Day 4 · Friday, May 16</div>
+  <div class="day-number">Day 4 · Saturday, May 16</div>
   <h2>Bordeaux, Car & the Village</h2>
 </div>
 <div class="day-body">
-
 <p>Transit day: train from Paris, pick up the car, and drive east to Saint-Émilion. The main goal is to arrive, get settled, and take an evening walk through the village. Don't try to do too much — you've been traveling since morning.</p>
-
 <div class="timeline">
   <div class="time-block" data-title="INOUI arrives Bordeaux">
     <span class="time-label">~12:30 PM</span> <span class="core-tag">core</span>
@@ -339,9 +336,6 @@
   <div class="time-block" data-title="Pick up rental car">
     <span class="time-label">1:00–1:45 PM</span> <span class="core-tag">core</span>
     <p>Pick up the rental car. Install the car seat (bring the Doona or your own), load luggage. Budget 30–45 min for the rental process — French agencies can be slow. Make sure the car has a GPS or use Google Maps offline (download the Nouvelle-Aquitaine region before the trip).</p>
-    <div class="tip">
-      <strong>Car Seat:</strong> If using the Doona, it clicks into the car base. If renting a seat from the agency, inspect it carefully — quality varies. Having your own is strongly recommended.
-    </div>
   </div>
   <div class="time-block" data-title="Lunch in Bordeaux or on the road">
     <span class="time-label">1:45–2:30 PM</span> <span class="optional-tag">optional</span>
@@ -351,208 +345,65 @@
     <span class="time-label">2:30–3:15 PM</span> <span class="core-tag">core</span>
     <p>Drive east to Saint-Émilion. ~45 minutes via the A89 motorway, then D-roads through vineyard country. The landscape shifts quickly — flat urban Bordeaux gives way to rolling vines. Park in the lot below the village (Parking de la Barbanne or similar) — the cobblestone streets inside are steep and narrow.</p>
   </div>
-  <div class="time-block" data-title="Check in & settle">
-    <span class="time-label">3:30–4:30 PM</span> <span class="core-tag">core</span>
-    <p>Check into the Logis de Colette. Xavier (the host) greets you on arrival. Unpack. Set up the Pack 'n Play for Lucy — it's provided. Get settled. The property is right next to CALICEM winery's old Merlot vines — the view from the outdoor dining area sets the tone. Breathe. You've transitioned from metropolis to wine country.</p>
-  </div>
-  <div class="time-block" data-title="Evening village walk">
-    <span class="time-label">5:30–7:00 PM</span> <span class="optional-tag">if energy allows</span>
-    <p><strong>Walk through Saint-Émilion village.</strong> The medieval center is a UNESCO World Heritage site — steep cobblestone streets, golden limestone buildings, and church spires above the vineyards. Walk to the Place du Marché (the main square), peek at the Monolithic Church entrance, and wander the narrow lanes. The village is small — you can see the highlights in 30–45 minutes. Wear sturdy shoes (cobblestones + stroller = challenging; carrier is better here).</p>
-  </div>
-  <div class="time-block" data-title="Dinner">
-    <span class="time-label">7:30 PM</span>
-    <p>Dinner at the Logis or in the village. The kitchen is fully equipped (pots, pans, dishes, cooking basics) — pick up provisions at Carrefour Libourne on the way in, or from a village épicerie. The outdoor dining area overlooking the vines is hard to beat for a quiet first-night dinner. Village restaurants on Place du Marché are the alternative — outdoor seating with views.</p>
-    <div class="tip">
-      <strong>Brunch option:</strong> Xavier offers a delivered brunch prepared by a partner chef (supplement). Ask about it for the morning — could be a great Day 5 treat.
-    </div>
-  </div>
 </div>
-
-<div class="tip">
-  <strong>Day 4 Priorities:</strong> Get the car. Get to the Airbnb. Take one walk. Eat something. That's it.
-</div>
-
+<div class="tip"><strong>Day 4 Priorities:</strong> Get the car. Get to the Airbnb. Take one walk. Eat something. That's it.</div>
 </div>
 </section>
 
-<!-- ====================================================== -->
-<!--              DAY 5 — WINE COUNTRY                      -->
-<!-- ====================================================== -->
 <section>
 <div class="day-header">
-  <div class="day-number">Day 5 · Saturday, May 17</div>
-  <h2>Vineyards & Village Life</h2>
+  <div class="day-number">Day 5 · Sunday, May 17</div>
+  <h2>Château La Dominique Lunch & Relax</h2>
 </div>
 <div class="day-body">
-
-<p>This is your full day in wine country. The anchor is a vineyard visit — and you have one built in: <strong>Couvent des Jacobins</strong> (Grand Cru Classé, in the village) offers a visit and tasting as part of your stay at the Logis. The rest of the day is village wandering, terrace sitting, and reading with a glass of wine while Lucy naps. Don't over-schedule.</p>
-
+</p>
+<p>Today's plan centers on a leisurely rooftop lunch at <strong>La Terrasse Rouge</strong> at <strong>Château La Dominique</strong>. Make a reservation for the terrace (12:30 is ideal) — the meal and views are the primary experience here.</p>
 <div class="timeline">
-  <div class="time-block" data-title="Morning at the Airbnb">
-    <span class="time-label">8:00–9:30 AM</span>
-    <p>Slow start. Coffee at the Logis. If there's a bakery nearby, pick up croissants and bread. Feed Lucy. No rush — this is not a city day.</p>
-  </div>
-  <div class="time-block" data-title="Vineyard visit / wine tasting">
-    <span class="time-label">10:30 AM – 12:00 PM</span> <span class="core-tag">core</span>
-    <p><strong>Visit Couvent des Jacobins.</strong> Your stay at the Logis de Colette includes a visit and tasting at <strong>Couvent des Jacobins</strong> — a Grand Cru Classé estate right in the heart of Saint-Émilion village. This is managed by the same Jean family that runs your accommodation. Coordinate timing with Xavier.</p>
-    <ul>
-      <li>Morning visits are best (cooler, Lucy is fresher)</li>
-      <li>Tastings typically last 45–90 minutes including a tour of the caves</li>
-      <li>Bring the carrier — cellars have stairs. Stroller won't work</li>
-      <li>One person drives, one person tastes (or spit — they won't judge)</li>
-      <li>You can buy bottles directly — often at better prices than shops</li>
-      <li>Mention Lucy to Xavier when arranging the visit — the family will accommodate</li>
-    </ul>
-    <div class="tip">
-      <strong>Want a second tasting?</strong> If you'd like to visit another property beyond Couvent des Jacobins, email a smaller château in advance. Phrase it simply: "Nous voyagerons avec notre bébé de 9 mois — est-ce que cela pose un problème?" (We'll be traveling with our 9-month-old baby — is that a problem?) Most family producers are very welcoming.
-    </div>
-  </div>
-  <div class="time-block" data-title="Lunch in the village">
-    <span class="time-label">12:30–2:00 PM</span> <span class="core-tag">core</span>
-    <p>Lunch in Saint-Émilion village. Head back to Place du Marché or one of the restaurants with terrace seating. Try a local specialty — entrecôte with Bordelaise sauce, or duck confit. Pair with a glass of the local wine (you'll be drinking Saint-Émilion and Pomerol the entire stay). Outdoor seating with vineyard views is the move if available.</p>
-  </div>
-  <div class="time-block" data-title="Nap time & Airbnb">
-    <span class="time-label">2:00–4:30 PM</span>
-    <p>Back to the Logis. Lucy's nap. Your nap. Read. Sit outside if the weather is good. This is the pace of wine country — don't fight it.</p>
-  </div>
-  <div class="time-block" data-title="Afternoon walk or second village visit">
-    <span class="time-label">5:00–6:30 PM</span> <span class="optional-tag">if energy allows</span>
-    <p>Late afternoon walk. Options:</p>
-    <ul>
-      <li><strong>Village exploration (continued):</strong> Any streets you missed yesterday. The Cloître des Cordeliers (ruined monastery, lovely courtyard) is worth a look.</li>
-      <li><strong>Drive to a viewpoint:</strong> The roads between vineyards are beautiful in the late afternoon light. Just drive slowly and pull over wherever something catches your eye.</li>
-      <li><strong>Walk through the vines:</strong> The Logis is right next to the CALICEM vineyards — walk the rows with Lucy in the carrier. The light before sunset is magical on the vines.</li>
-    </ul>
-  </div>
-  <div class="time-block" data-title="Dinner">
-    <span class="time-label">7:00–8:00 PM</span>
-    <p>Dinner. Cook at the Logis with market provisions — the kitchen is well-equipped and the outdoor dining area with vine views is ideal. Or head back to the village. The golden hour light on the limestone buildings is beautiful. Early-ish dinner works well with the baby schedule.</p>
-  </div>
+  <div class="time-block" data-title="Morning at the Airbnb"><span class="time-label">8:00–11:00 AM</span><p>Easy morning: coffee, pastries, pack a small bag for the short drive. Prep baby gear and stroller if needed.</p></div>
+  <div class="time-block" data-title="Drive to La Dominique"><span class="time-label">11:00–11:30 AM</span><p>Short drive to Château La Dominique. Allow extra time for parking and a quick freshen-up before lunch.</p></div>
+  <div class="time-block" data-title="La Terrasse Rouge lunch"><span class="time-label">12:00–2:00 PM</span> <span class="core-tag">core</span><p><strong>La Terrasse Rouge — rooftop lunch at Château La Dominique.</strong> Reserve the terrace; request a spot with vineyard views. Plan for a relaxed 90–120 minute meal.</p></div>
+  <div class="time-block" data-title="Afternoon options"><span class="time-label">2:15 PM onward</span><p>After lunch, return to the village for a gentle walk, visit a wine shop, or relax at the Airbnb. Options: short village stroll, visit Maison du Vin, or nap time.</p></div>
 </div>
-
-<div class="backup">
-  <strong>Low-Energy Backup:</strong> Skip the château visit (you still have the Couvent des Jacobins tasting whenever you want it). Buy a bottle from a cave in the village, grab lunch at a terrace, and spend the day at the Logis reading by the vines. That's a perfectly valid wine country day.
-</div>
-
+<div class="backup"><strong>Low-Energy Backup:</strong> If reservation issues arise, buy a bottle from a local cave and picnic on the Logis terrace or enjoy snacks and wine in town.</div>
 </div>
 </section>
 
-<!-- ====================================================== -->
-<!--             DAY 6 — SECOND DAY / DEPARTURE             -->
-<!-- ====================================================== -->
 <section>
 <div class="day-header">
-  <div class="day-number">Day 6 · Sunday, May 18</div>
-  <h2>A Quiet Day Before the Mountains</h2>
+  <div class="day-number">Day 6 · Monday, May 18</div>
+  <h2>Day 6 — Couvent des Jacobins: Tour & Tasting</h2>
 </div>
 <div class="day-body">
-
-<p>Your last full day in wine country. Tomorrow you drive to the Pyrenees — a 3.5-hour drive. Today should be easy and restorative. Recovery day before a travel day.</p>
-
+</p>
+<p>Your final full day in Saint-Émilion is focused on a proper visit to <strong>Couvent des Jacobins</strong> — a guided tour and tasting in the morning, followed by time exploring the village and a flexible lunch.</p>
 <div class="timeline">
-  <div class="time-block" data-title="Lazy morning / delivered brunch">
-    <span class="time-label">Morning</span> <span class="core-tag">core</span>
-    <p>Slow morning at the Logis — and this is the day to use the <strong>chef-prepared brunch delivery</strong>. Xavier can arrange for a partner chef to prepare and deliver a full brunch directly to the Logis. Ask him when you check in (or message ahead) to book it for Sunday morning. Eat on the terrace overlooking the vines. No cooking, no going out, just a proper last-morning-in-wine-country moment.</p>
-    <div class="tip">
-      <strong>Book early:</strong> Let Xavier know as soon as possible — ideally before arrival or at check-in on Friday. It's a supplement, but worth it for a zero-effort farewell meal in the vineyards.
-    </div>
-  </div>
-  <div class="time-block" data-title="Village or nearby town">
-    <span class="time-label">10:30 AM – 12:30 PM</span> <span class="optional-tag">if energy allows</span>
-    <p>One morning outing:</p>
-    <ul>
-      <li><strong>Return to Saint-Émilion village</strong> if you want more time there — Sunday morning is often quieter.</li>
-      <li><strong>Drive to a nearby village:</strong> Pomerol, Fronsac, or Castillon-la-Bataille are all within 20 minutes and much less touristed. Just drive, park, walk, eat.</li>
-    </ul>
-  </div>
-  <div class="time-block" data-title="Lunch & provisions">
-    <span class="time-label">12:30 PM</span>
-    <p>Lunch. Pick up any provisions you'll want for the drive tomorrow — snacks, water, baby supplies. Fill up the gas tank today so you're ready to go in the morning.</p>
-  </div>
-  <div class="time-block" data-title="Quiet afternoon">
-    <span class="time-label">Afternoon</span>
-    <p>Afternoon at the Logis. Pack partially. Enjoy the last of the wine country pace. Early dinner.</p>
-  </div>
+  <div class="time-block" data-title="Couvent des Jacobins tour"><span class="time-label">9:00–10:00 AM</span> <span class="core-tag">core</span><p><strong>Couvent des Jacobins — 45-minute guided tour & tasting.</strong> Confirm the appointment with Xavier in advance; arrive a few minutes early.</p></div>
+  <div class="time-block" data-title="Explore village & lunch"><span class="time-label">10:30 AM–2:00 PM</span><p>Walk back into the village, visit the Monolithic Church or Maison du Vin, and choose a flexible lunch spot (terrace in town or casual bistro). Keep timing loose — this is a relaxed day.</p></div>
+  <div class="time-block" data-title="Afternoon wind-down"><span class="time-label">2:30 PM</span><p>Return to the Airbnb for rest, pack a small overnight bag for the mountain drive, or take one last stroll through the lanes.</p></div>
 </div>
-
-<div class="tip">
-  <strong>Tomorrow's Drive:</strong> Saint-Émilion to Lescun is ~3.5 hours (270 km). Route goes south through Langon, then the A65 autoroute toward Pau, then mountain roads into the Aspe Valley. Plan a stop in Pau or Oloron-Sainte-Marie for lunch and a break.
-</div>
-
+<div class="tip"><strong>Booking & baby notes:</strong> Bring a carrier rather than a stroller for cellar steps. Coordinate tasting time with Xavier; plan lunch reservations only if you prefer a guaranteed table.</div>
 </div>
 </section>
 
-<!-- ====================================================== -->
-<!--              DAY 7 — DRIVE TO LESCUN                   -->
-<!-- ====================================================== -->
 <section>
 <div class="day-header">
-  <div class="day-number">Day 7 · Monday, May 19</div>
-  <h2>Departure — Drive to the Pyrenees</h2>
+  <div class="day-number">Day 7 · Tuesday, May 19</div>
+  <h2>Drive to Lescun (Pyrenees)</h2>
 </div>
 <div class="day-body">
-
-<p>Travel day. ~3.5 hours of driving from wine country to mountain country. Plan one stop midway. Arrive in Lescun by mid-afternoon.</p>
-
+<p>Checkout and drive south toward Lescun. Expect ~3–3.5 hours driving time depending on stops; plan for a relaxed morning and one scenic stop if desired.</p>
 <div class="timeline">
-  <div class="time-block" data-title="Pack up & depart">
-    <span class="time-label">8:30–9:00 AM</span> <span class="core-tag">core</span>
-    <p>Checkout from the Logis de Colette. Load the car. Last look at the vineyards. Head south.</p>
-  </div>
-  <div class="time-block" data-title="Drive south">
-    <span class="time-label">9:00 AM – 12:30 PM</span> <span class="core-tag">core</span>
-    <p>Drive south toward the Pyrenees. The route takes you through flat agricultural country, then gradually into foothills. Stop midway in <strong>Pau</strong> or <strong>Oloron-Sainte-Marie</strong> — both are pleasant towns for a coffee and leg stretch. Pau has a boulevard with panoramic Pyrenees views on a clear day.</p>
-  </div>
-  <div class="time-block" data-title="Lunch stop">
-    <span class="time-label">12:00–1:00 PM</span>
-    <p>Lunch in Pau, Oloron-Sainte-Marie, or wherever you find yourself. Don't skip this — Lucy needs out of the car, and you need real food before the mountain roads.</p>
-  </div>
-  <div class="time-block" data-title="Final stretch to Lescun">
-    <span class="time-label">1:00–2:30 PM</span> <span class="core-tag">core</span>
-    <p>The last hour is the most dramatic — the road narrows into the Aspe Valley, climbing through forests and past mountain streams. Lescun is at the end of a winding D-road off the valley floor. Drive carefully. Enjoy the scenery change.</p>
-  </div>
-  <div class="time-block" data-title="Arrive in Lescun">
-    <span class="time-label">2:30–3:00 PM</span>
-    <p>Arrive at the <a href="lescun.html">Lescun Airbnb</a>. Settle in. The mountain air hits different.</p>
-  </div>
+  <div class="time-block" data-title="Checkout and pack"><span class="time-label">8:00–9:00 AM</span><p>Pack, load the car, and check for any last-minute items at the Airbnb. Confirm route and rest stops.</p></div>
+  <div class="time-block" data-title="Drive to Lescun"><span class="time-label">9:30 AM–1:00 PM</span><p>Drive south via A62/A65 then D-roads into the foothills. Consider a quick lunch stop in Pau or a picnic en route.</p></div>
+  <div class="time-block" data-title="Arrive Lescun"><span class="time-label">Afternoon</span><p>Arrive in Lescun, check into lodging, and take a short walk to stretch legs — the mountain air is a big change from Bordeaux.</p></div>
 </div>
-
+<div class="tip"><strong>Fuel & supplies:</strong> Fill the tank before leaving Saint-Émilion and grab snacks for the drive; grocery options become sparse once you pass Pau.</div>
 </div>
 </section>
 
-<!-- ========== PRACTICAL NOTES ========== -->
-<section>
-<h2>Practical Notes — Saint-Émilion</h2>
-
-<h3>Getting Around</h3>
-<p><strong>You need the car for everything here.</strong> The village itself is walkable (15 minutes end to end), but the Logis, vineyards, and surrounding countryside all require driving. The Logis has free parking on premises. Parking in Saint-Émilion village: use the lot below (Parking de la Barbanne or Parking de la Porte Bouqueyre). Don't try to drive into the old town — the streets are medieval-width.</p>
-
-<h3>Wine Tasting with a Baby</h3>
-<ul>
-  <li><strong>It works better than you'd think.</strong> Small producers are usually families themselves. They're not running Napa-style tasting rooms — they're inviting you into their home. Mention Lucy when you book.</li>
-  <li><strong>One person drives.</strong> This is non-negotiable. Spit or limit yourself if you're behind the wheel. The roads between vineyards are narrow.</li>
-  <li><strong>Morning visits are best.</strong> Lucy is happiest in the morning, and the cellars are cooler before midday.</li>
-</ul>
-
-<h3>Groceries</h3>
-<ul>
-  <li><strong>Saint-Émilion village</strong> has a few small shops and an épicerie, but selection is limited and prices are tourist-adjusted.</li>
-  <li><strong>Carrefour Libourne</strong> (~15 min northwest) — your main grocery run. Stock up for cooking at the Logis: diapers, wipes, formula, groceries, wine. Do this on arrival day or the next morning. There are also pharmacies in Libourne.</li>
-  <li><strong>No washer/dryer at the Logis.</strong> Plan to do laundry at the Lescun Airbnb instead. Pack accordingly — you'll need enough clean clothes to get through Saint-Émilion without washing.</li>
-</ul>
-
-<h3>What to Eat & Drink</h3>
-<ul>
-  <li><strong>Local wines:</strong> Saint-Émilion Grand Cru, Pomerol, Côtes de Bordeaux. Red, always. Merlot-dominant. Rich, velvety, age-worthy. Drink what the locals pour.</li>
-  <li><strong>Local food:</strong> Entrecôte à la Bordelaise (rib steak with red wine/shallot sauce), duck confit, foie gras, canelés (caramelized pastry, Bordeaux specialty). Cheese: Ossau-Iraty (Basque sheep's milk) if you see it — foreshadowing for the Pyrenees leg.</li>
-  <li><strong>Canelés:</strong> The Bordeaux pastry. Small, caramelized, custardy. Buy them from a bakery — they should be slightly crispy outside, soft inside. Lucy will try to eat yours.</li>
-</ul>
-</section>
-
-<!-- ========== FOOTER ========== -->
+<!-- FOOTER -->
 <div style="text-align:center; padding:40px 0 20px; border-top:1px solid var(--border); margin-top:50px;">
-  <p style="font-size:0.85em; color:var(--muted);">Prepared March 2026. Verify hours, prices, and reservation requirements before travel.<br>
-  Santé. 🍷</p>
+  <p style="font-size:0.85em; color:var(--muted);">Prepared March 2026. Verify hours, prices, and reservation requirements before travel.<br>Santé. 🍷</p>
 </div>
 
 </div>
@@ -579,27 +430,26 @@
     return L.marker(ll, {icon: emojiIcon(emoji, opt)}).addTo(map).bindPopup((opt ? '<em style="color:' + accent + '">Optional:</em> ' : '') + '<strong>' + label + '</strong>');
   }
 
-  // Saint-Émilion area map
-  var village = [44.8954, -0.1545];
-  var m = L.map('map-area', {scrollWheelZoom: true}).setView([44.87, -0.35], 11);
+  var village = [44.893084, -0.156123];
+  var m = L.map('map-area', {scrollWheelZoom: true}).setView(village, 13);
   L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18}).addTo(m);
 
-  addMarker(m, [44.8880, -0.1620], '\uD83C\uDFE0', 'Logis de Colette — 7 Mazerat', false);
-  addMarker(m, village, '\uD83C\uDFDB\uFE0F', 'Saint-\u00c9milion Village', false);
+  addMarker(m, [44.891574, -0.168394], '\uD83C\uDFE0', 'Logis de Colette — 7 Mazerat', false);
+  addMarker(m, village, '\uD83C\uDFDB\uFE0F', 'Saint-Émilion Village', false);
   addMarker(m, [44.8270, -0.5580], '\uD83D\uDE82', 'Bordeaux Saint-Jean (car pickup)', false);
-  addMarker(m, [44.9290, -0.2050], '\uD83D\uDED2', 'Carrefour Libourne (groceries)', true);
-  // Wineries
-  addMarker(m, [44.8944, -0.1560], '\uD83C\uDF77', 'Couvent des Jacobins (Grand Cru Classé)', false);
-  addMarker(m, [44.8930, -0.1490], '\uD83C\uDF77', 'Château Villemaurine', false);
-  addMarker(m, [44.9180, -0.1280], '\uD83C\uDF77', 'Château Bernateau (5-min drive)', true);
-  addMarker(m, [44.8870, -0.1380], '\uD83C\uDF77', 'Château Coutet (20-min walk)', true);
-  addMarker(m, [44.8700, -0.1050], '\uD83C\uDF77', 'Château de Ferrand (6 km)', true);
+  addMarker(m, [44.901140, -0.220654], '\uD83D\uDED2', 'Carrefour Libourne (groceries)', true);
+  addMarker(m, [44.894591, -0.155092], '\uD83C\uDF77', 'Couvent des Jacobins (Grand Cru Classé)', false);
+  addMarker(m, [44.895456, -0.154242], '\uD83C\uDF77', 'Château Villemaurine', false);
+  addMarker(m, [44.881063, -0.102546], '\uD83C\uDF77', 'Château Bernateau (5-min drive)', true);
+  addMarker(m, [44.920552, -0.186362], '\uD83C\uDF77', 'Château La Dominique (5 km)', true);
+  addMarker(m, [44.888583, -0.140932], '\uD83C\uDF77', 'Château Troplong Mondot (Michelin restaurant)', true);
 
-  // Driving route: Bordeaux → A89 → Saint-Émilion (direct, not via Libourne)
   L.polyline([
-    [44.8270, -0.5580], [44.8350, -0.5300], [44.8400, -0.5000], [44.8500, -0.4500],
-    [44.8600, -0.4000], [44.8700, -0.3500], [44.8750, -0.3000], [44.8800, -0.2500],
-    [44.8850, -0.2200], [44.8900, -0.1900], [44.8954, -0.1545]
+    [44.827, -0.558], [44.8457, -0.5386], [44.8533, -0.5384], [44.8586, -0.5302],
+    [44.8633, -0.5299], [44.8683, -0.5047], [44.8673, -0.4488], [44.8778, -0.4175],
+    [44.8752, -0.3993], [44.884, -0.3217], [44.8792, -0.2964], [44.8703, -0.2782],
+    [44.8672, -0.2474], [44.8731, -0.2327], [44.8882, -0.2185], [44.9104, -0.2128],
+    [44.9099, -0.1841], [44.8954, -0.1547]
   ], {
     color: navy, weight: 3, opacity: 0.4, dashArray: '8,6', lineCap: 'round'
   }).addTo(m);
