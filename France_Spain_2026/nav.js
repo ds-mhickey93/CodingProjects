@@ -270,15 +270,26 @@
 
     // collect events from the rendered leg-cards
     var events = [];
+    function cleanTitle(t){ if(!t) return t; return t.split(/\s*[–—-]\s*/)[0].trim(); }
     document.querySelectorAll('details.leg-card').forEach(function(det){
       try {
-        var title = det.querySelector('summary strong') ? det.querySelector('summary strong').textContent.trim() : (det.querySelector('summary') && det.querySelector('summary').textContent.trim());
+        var titleRaw = det.querySelector('summary strong') ? det.querySelector('summary strong').textContent.trim() : (det.querySelector('summary') && det.querySelector('summary').textContent.trim());
+        var title = cleanTitle(titleRaw) || 'Trip';
         var dateDt = Array.from(det.querySelectorAll('.leg-body dt')).find(function(d){ return /date/i.test(d.textContent); });
         var dateTxt = dateDt ? (dateDt.nextElementSibling && dateDt.nextElementSibling.textContent.trim()) : null;
         var range = parseDateRange(dateTxt);
-        if (range) events.push({ title: title || 'Trip', start: range[0], end: range[1] });
+        if (range) events.push({ title: title, start: range[0], end: range[1] });
       } catch(e){ /* ignore */ }
     });
+
+    // manual override events (specific flights / returns)
+    function makeDate(y,m,d){ return new Date(y,m,d); }
+    // May 12 DEN-CDG Flight
+    events.push({ title: 'DEN-CDG Flight', start: makeDate(2026,4,12), end: makeDate(2026,4,12) });
+    // May 25 Return to Paris
+    events.push({ title: 'Return to Paris', start: makeDate(2026,4,25), end: makeDate(2026,4,25) });
+    // May 26 CDG-DEN Flight
+    events.push({ title: 'CDG-DEN Flight', start: makeDate(2026,4,26), end: makeDate(2026,4,26) });
 
     if (!events.length) return;
 

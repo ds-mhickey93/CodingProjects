@@ -79,15 +79,26 @@ details.leg-card .leg-body .full dd{
   hyphens:auto;
 }
 
+/* Also apply two-column layout to any dd inside leg-body to ensure coverage */
+details.leg-card .leg-body dd{
+  column-count:2;
+  column-gap:18px;
+}
+
 /* Tighter calendar: smaller cells, subtler pills */
-#trip-calendar-wrap{max-width:520px}
+#trip-calendar-wrap{max-width:420px}
 #trip-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px}
-.cal-day{background:linear-gradient(180deg, #fff 0%, #fbfbfb 100%);border:1px solid rgba(0,0,0,0.04);border-radius:6px;padding:6px;min-height:48px;position:relative;transition:background 180ms ease}
-.cal-day .day-num{position:absolute;top:6px;right:8px;font-size:0.78em;color:var(--muted)}
+.cal-day{background:linear-gradient(180deg, #fff 0%, #fbfbfb 100%);border:1px solid rgba(0,0,0,0.04);border-radius:6px;padding:8px;min-height:72px;position:relative;transition:background 180ms ease}
+.cal-day .day-num{position:absolute;top:8px;right:8px;font-size:0.82em;color:var(--muted)}
 .event-pill{display:block;padding:4px 6px;border-radius:6px;color:white;font-weight:700;font-size:0.78em;margin-top:22px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* when a day is colored by JS, make the day number white for contrast */
 .cal-day[style*="background:"] .day-num{color:#fff}
-.event-label{color:#fff}
+.event-label{color:#fff;font-weight:400}
+/* Days of week header: white text on subtle dark band */
+.day-header{font-weight:700;text-align:center;color:#fff;background:#4a1a2e;padding:6px 4px;border-radius:4px}
+
+/* Hide legend entirely per preference */
+#calendar-legend{display:none}
 .day-header{font-weight:700;text-align:center;color:var(--muted);font-size:0.78em}
 #calendar-legend .legend-item{display:inline-flex;align-items:center;gap:6px;padding:6px;border-radius:6px;border:1px solid rgba(0,0,0,0.04);background:#fff;font-size:0.88em}
 .legend-swatch{width:12px;height:12px;border-radius:3px;display:inline-block}
