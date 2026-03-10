@@ -344,7 +344,7 @@
         var label = document.createElement('div');
         label.className = 'event-label';
         label.style.color = '#fff';
-        label.style.fontWeight = '700';
+        label.style.fontWeight = '400';
         label.style.marginTop = '18px';
         label.style.fontSize = '0.82em';
         label.style.overflow = 'hidden';
