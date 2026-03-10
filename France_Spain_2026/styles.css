@@ -713,8 +713,9 @@ li { margin-bottom: 4px; }
 
 /* keep wine icon at original size */
 .rt-dest-icon.wine {
-  width: 48px;
-  height: 48px;
+  width: 38px; /* 20% smaller than 48px */
+  height: 38px;
+  bottom: 30px; /* raise slightly above other icons */
 }
 
 /* Prevent internal elements from clipping absolutely-positioned icons */
