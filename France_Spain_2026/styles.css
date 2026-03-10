@@ -737,10 +737,6 @@ li { margin-bottom: 4px; }
 }
 
 /* remove grid background on map tiles */
-.leaflet-container,
-.leaflet-tile {
-  background: none !important;
-}
 .rt-name {
   position: absolute;
   top: 28px; left: 50%;
