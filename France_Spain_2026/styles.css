@@ -674,7 +674,7 @@ li { margin-bottom: 4px; }
   align-items: center;
   justify-content: center;
   margin: 20px 0 52px;
-  padding: 120px 12px 260px;
+  padding: 56px 12px 120px;
   overflow-x: auto;
   /* allow tall destination icons to extend vertically without being clipped */
   overflow-y: visible;
@@ -706,15 +706,17 @@ li { margin-bottom: 4px; }
   transform: translateX(-50%);
   z-index: 2200;
   line-height: 0;
-  opacity: 0.85;
+  opacity: 0.95;
+  width: 120px;
+  height: 120px;
 }
 
 /* Prevent internal elements from clipping absolutely-positioned icons */
 .rt-leg, .rt-stop { overflow: visible; }
 /* Make destination SVG icons larger for better readability */
 .rt-dest-icon svg {
-  width: 160px !important;
-  height: 160px !important;
+  width: 100% !important;
+  height: 100% !important;
   display: block;
   pointer-events: none;
 }
