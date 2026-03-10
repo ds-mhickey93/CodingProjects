@@ -150,10 +150,12 @@
       var titleEl = card.querySelector('h3');
       var titleHTML = titleEl ? titleEl.outerHTML : '';
 
-      // Build a short summary from Dates and Lodging fields (if present)
+      // Build a short summary containing only: city name + (Hotel|Airbnb) + accommodation name
       var divs = Array.from(card.querySelectorAll('div'));
       var dateText = '';
       var lodgingText = '';
+      var lodgingName = '';
+      var lodgingType = '';
       divs.forEach(function(d) {
         var dt = d.querySelector('dt');
         var dd = d.querySelector('dd');
@@ -161,10 +163,30 @@
         var key = dt.textContent.trim().toLowerCase();
         var val = dd.textContent.trim();
         if (!dateText && key.indexOf('date') === 0) dateText = val;
-        if (!lodgingText && key.indexOf('lodg') === 0) lodgingText = val;
+        if (!lodgingText && key.indexOf('lodg') === 0) {
+          lodgingText = val;
+          // Prefer linked name (strong inside <a> or the <a> text)
+          var a = d.querySelector('dd a');
+          if (a) {
+            var s = a.querySelector && a.querySelector('strong');
+            lodgingName = (s ? s.textContent : a.textContent).trim();
+            if (/airbnb\.com/i.test(a.getAttribute('href') || '')) lodgingType = 'Airbnb';
+            else if (/hotel|h\u00f4tel/i.test(a.textContent || '')) lodgingType = 'Hotel';
+            else lodgingType = '';
+          } else {
+            // Fallback: take the first text segment before a separator
+            var txtNode = dd.childNodes && dd.childNodes.length ? (dd.childNodes[0].textContent || dd.textContent) : dd.textContent;
+            if (txtNode) {
+              var tname = txtNode.split('·')[0].split('\n')[0].trim();
+              lodgingName = tname;
+            }
+            if (/hotel|h\u00f4tel/i.test(val)) lodgingType = 'Hotel';
+            else if (/airbnb/i.test(val)) lodgingType = 'Airbnb';
+          }
+        }
       });
 
-      // Fix missing separators caused by <br> -> textContent concatenation
+      // Keep full lodging text intact in the expanded body, but normalize separators there
       if (lodgingText && /Hosted by/i.test(lodgingText)) {
         if (!/·\s*Hosted by/i.test(lodgingText)) {
           lodgingText = lodgingText.replace(/\s*Hosted by/i, ' · Hosted by');
@@ -173,8 +195,11 @@
 
       var summaryParts = [];
       if (titleEl) summaryParts.push(titleEl.textContent.trim());
-      if (dateText) summaryParts.push(dateText);
-      if (lodgingText) summaryParts.push(lodgingText.replace(/\s+/g,' '));
+      var lodgingSummary = '';
+      if (lodgingName) {
+        lodgingSummary = (lodgingType ? (lodgingType + ': ') : '') + lodgingName;
+      }
+      if (lodgingSummary) summaryParts.push(lodgingSummary);
 
       // If there's an image in the card, extract it and use as a small thumbnail
       var thumbHTML = '';
