@@ -368,9 +368,21 @@
         label.style.overflow = 'hidden';
         label.style.textOverflow = 'ellipsis';
         label.style.whiteSpace = 'nowrap';
-        // shorten title if necessary
+        // date-based label overrides (avoid ellipses for these key dates)
+        var dKey = cur.getDate();
+        var overrideMap = {
+          25: 'Return to Paris',
+          26: 'CDG-DEN Flight',
+          16: 'Saint-Émilion',
+          22: 'San Sebastian'
+        };
         var t = matched.title || '';
-        if (t.length > 18) t = t.substring(0,15) + '\u2026';
+        if (overrideMap[dKey]) {
+          t = overrideMap[dKey];
+        } else {
+          // keep reasonable length but avoid ellipses where possible
+          if (t.length > 22) t = t.substring(0,22);
+        }
         label.textContent = t;
         cell.appendChild(label);
       }
