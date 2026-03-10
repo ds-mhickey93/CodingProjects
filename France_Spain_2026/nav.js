@@ -164,6 +164,13 @@
         if (!lodgingText && key.indexOf('lodg') === 0) lodgingText = val;
       });
 
+      // Fix missing separators caused by <br> -> textContent concatenation
+      if (lodgingText && /Hosted by/i.test(lodgingText)) {
+        if (!/·\s*Hosted by/i.test(lodgingText)) {
+          lodgingText = lodgingText.replace(/\s*Hosted by/i, ' · Hosted by');
+        }
+      }
+
       var summaryParts = [];
       if (titleEl) summaryParts.push(titleEl.textContent.trim());
       if (dateText) summaryParts.push(dateText);
