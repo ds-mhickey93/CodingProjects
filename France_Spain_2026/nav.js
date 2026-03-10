@@ -176,14 +176,23 @@
       if (dateText) summaryParts.push(dateText);
       if (lodgingText) summaryParts.push(lodgingText.replace(/\s+/g,' '));
 
-      // If the card contains images, use the first as a small thumbnail
-      var img = card.querySelector('img');
-      var imgHTML = '';
-      if (img && img.src) {
-        imgHTML = '<img class="dest-thumb" src="' + img.getAttribute('src') + '" alt="' + (titleEl ? titleEl.textContent.trim() : '') + ' image'> ';
+      // If there's an image in the card, extract it and use as a small thumbnail
+      var thumbHTML = '';
+      try {
+        var imgEl = card.querySelector('img');
+        if (imgEl && imgEl.getAttribute('src')) {
+          var src = imgEl.getAttribute('src');
+          var alt = imgEl.getAttribute('alt') || '';
+          thumbHTML = '<img class="dest-thumb" src="' + src + '" alt="' + alt + '">';
+          // remove original image from the card so it doesn't duplicate in body
+          imgEl.parentNode && imgEl.parentNode.removeChild(imgEl);
+        }
+      } catch (e) {
+        // ignore image extraction errors
       }
 
-      var summaryHTML = imgHTML + '<strong style="margin-right:8px;">' + (summaryParts.shift() || '') + '</strong>' + (summaryParts.join(' · ') || '');
+      var summaryMain = '<strong style="margin-right:8px;">' + (summaryParts.shift() || '') + '</strong>' + (summaryParts.join(' · ') || '');
+      var summaryHTML = (thumbHTML ? thumbHTML : '') + '<span>' + summaryMain + '</span>';
 
       // Create details wrapper
       var details = document.createElement('details');
