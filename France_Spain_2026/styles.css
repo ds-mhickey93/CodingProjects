@@ -718,6 +718,11 @@ li { margin-bottom: 4px; }
   bottom: 30px; /* raise slightly above other icons */
 }
 
+/* nudge Lescun and Donostia icons down a bit for visual balance */
+.rt-dest-icon.lower {
+  bottom: 18px; /* drop further */
+}
+
 /* Prevent internal elements from clipping absolutely-positioned icons */
 .rt-leg, .rt-stop { overflow: visible; }
 /* Make destination SVG icons larger for better readability */
@@ -729,6 +734,12 @@ li { margin-bottom: 4px; }
   pointer-events: none;
   object-fit: contain;
   /* if the source has a white background, multiply lets it blend into the page color */
+}
+
+/* remove grid background on map tiles */
+.leaflet-container,
+.leaflet-tile {
+  background: none !important;
 }
 .rt-name {
   position: absolute;
