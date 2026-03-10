@@ -328,6 +328,31 @@
     if (!container) return;
     container.innerHTML = '';
 
+    // find reusable SVG icons from the route timeline (plane, train, car)
+    var svgIconSrc = {};
+    try {
+      svgIconSrc.plane = document.querySelector('.rt-leg.flight .rt-icon svg') || document.querySelector('.route-timeline .flight .rt-icon svg') || null;
+      svgIconSrc.train = document.querySelector('.rt-leg.train .rt-icon svg') || document.querySelector('.route-timeline .train .rt-icon svg') || null;
+      svgIconSrc.car   = document.querySelector('.rt-leg.car .rt-icon svg')   || document.querySelector('.route-timeline .car .rt-icon svg')   || null;
+    } catch(e){ svgIconSrc = {plane:null,train:null,car:null}; }
+
+    // explicit per-day color overrides and icon assignments
+    var dateColorOverrides = {
+      // force May 16 to Saint-Émilion color, May 22 to San Sebastian color
+      16: map['Saint-Émilion'] || map['Saint-Emilion'],
+      22: map['San Sebastian'] || map['San Sebasti\u00e1n']
+    };
+
+    // use logical keys that map to the SVG sources above; fall back to emoji if SVG missing
+    var dateIconOverrides = {
+      12: ['plane'],
+      16: ['train','car'],
+      19: ['car'],
+      22: ['car'],
+      25: ['car','train'],
+      26: ['plane']
+    };
+
     // day-of-week headers (Sun..Sat)
     var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
     days.forEach(function(d){ var h = document.createElement('div'); h.className='day-header'; h.textContent = d; container.appendChild(h); });
@@ -391,6 +416,60 @@
           // keep reasonable length but avoid ellipses where possible
           if (t.length > 22) t = t.substring(0,22);
         }
+
+        // apply any per-day color overrides (fixes for May 16 and May 22)
+        if (dateColorOverrides && dateColorOverrides[dKey]) {
+          color = dateColorOverrides[dKey];
+          cell.style.background = color;
+        }
+
+        // render icons for specific days — clone SVGs from the timeline when available
+        if (dateIconOverrides && dateIconOverrides[dKey]) {
+          var icons = dateIconOverrides[dKey];
+          var iconsEl = document.createElement('div');
+          iconsEl.className = 'day-icons';
+          iconsEl.setAttribute('aria-hidden','true');
+          iconsEl.style.display = 'inline-flex';
+          iconsEl.style.gap = '6px';
+          iconsEl.style.alignItems = 'center';
+          iconsEl.style.marginTop = '6px';
+
+          icons.forEach(function(ic){
+            var appended = false;
+            if (ic === 'plane' || ic === 'train' || ic === 'car') {
+              var src = svgIconSrc[ic];
+              if (src) {
+                try {
+                  var clone = src.cloneNode(true);
+                  // normalize size for calendar: small square icon
+                  clone.removeAttribute('class');
+                  clone.style.width = '24px';
+                  clone.style.height = '24px';
+                  clone.style.display = 'inline-block';
+                  clone.style.verticalAlign = 'middle';
+                  if (ic === 'plane') {
+                    try { clone.style.fill = '#666666'; } catch(e) {}
+                    try { clone.style.stroke = '#666666'; } catch(e) {}
+                  }
+                  iconsEl.appendChild(clone);
+                  appended = true;
+                } catch(e) { appended = false; }
+              }
+            }
+            if (!appended) {
+              // fallback to emoji if SVG not present
+              var span = document.createElement('span');
+              span.style.fontSize = '24px';
+              span.textContent = (ic === 'plane' ? '✈️' : (ic === 'train' ? '🚆' : (ic === 'car' ? '🚕' : ic)) );
+              iconsEl.appendChild(span);
+            }
+          });
+
+          cell.appendChild(iconsEl);
+          // nudge the label down a bit if icons present
+          label.style.marginTop = '8px';
+        }
+
         label.textContent = t;
         cell.appendChild(label);
       }
