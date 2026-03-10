@@ -707,7 +707,13 @@ li { margin-bottom: 4px; }
   z-index: 2200;
   line-height: 0;
   opacity: 0.95;
-  width: 48px; /* increased to match more-detailed Eiffel SVG */
+  width: 60px; /* 25% larger than previous 48px */
+  height: 60px;
+}
+
+/* keep wine icon at original size */
+.rt-dest-icon.wine {
+  width: 48px;
   height: 48px;
 }
 
