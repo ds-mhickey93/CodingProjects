@@ -183,7 +183,8 @@
         if (imgEl && imgEl.getAttribute('src')) {
           var src = imgEl.getAttribute('src');
           var alt = imgEl.getAttribute('alt') || '';
-          thumbHTML = '<img class="dest-thumb" src="' + src + '" alt="' + alt + '">';
+          // wrap thumbnail in a link so it can be clicked to open the full image
+          thumbHTML = '<a href="' + src + '" class="dest-thumb-link"><img class="dest-thumb" src="' + src + '" alt="' + alt + '"></a>';
           // remove original image from the card so it doesn't duplicate in body
           imgEl.parentNode && imgEl.parentNode.removeChild(imgEl);
         }
@@ -206,4 +207,38 @@
       console.warn('Could not make leg-card collapsible', e);
     }
   });
+
+  // --- Lightbox behavior for destination thumbnails ---
+  // Create a single reusable lightbox element and attach click handlers
+  (function(){
+    var lb = document.createElement('div');
+    lb.className = 'lightbox';
+    lb.innerHTML = '<span class="close">✕</span><img src="" alt="">';
+    document.body.appendChild(lb);
+    var lbImg = lb.querySelector('img');
+    var lbClose = lb.querySelector('.close');
+
+    function show(src, alt){
+      lbImg.src = src;
+      lbImg.alt = alt || '';
+      lb.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+    function hide(){
+      lb.style.display = 'none';
+      lbImg.src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('click', function(e){
+      var a = e.target.closest && e.target.closest('.dest-thumb-link');
+      if (a) {
+        e.preventDefault();
+        show(a.href, a.querySelector('img') && a.querySelector('img').alt);
+        return;
+      }
+      if (e.target === lb || e.target === lbClose) hide();
+    });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') hide(); });
+  })();
 })();

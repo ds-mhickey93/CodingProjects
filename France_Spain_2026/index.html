@@ -40,8 +40,15 @@ details.leg-card .leg-body dt {
 /* Slight spacing for definition terms */
 .ref-card dt { margin-right:4px; }
 
+
 /* Destination thumbnail in summary */
 .dest-thumb{width:48px;height:48px;object-fit:cover;border-radius:6px;border:1px solid var(--border);display:inline-block;margin-right:8px}
+
+/* Lightbox for clickable thumbnails */
+.dest-thumb{cursor:pointer}
+.lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.75);z-index:2000}
+.lightbox img{max-width:92%;max-height:86%;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.6)}
+.lightbox .close{position:absolute;top:18px;right:22px;color:white;font-size:22px;cursor:pointer}
 
 </style>
 </head>
@@ -221,6 +228,7 @@ details.leg-card .leg-body dt {
 <!-- San Sebastián -->
 <dl class="leg-card">
   <h3><a href="san-sebastian.html">🇪🇸 San Sebastián</a></h3>
+  <img src="donostia_hero.png" alt="San Sebastián" style="display:block;max-width:140px;border-radius:8px;margin:8px 0;">
   <div>
     <dt>Dates</dt>
     <dd>May 22–25 &middot; 3 nights</dd>
