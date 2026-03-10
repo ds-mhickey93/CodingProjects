@@ -193,14 +193,17 @@
         }
       }
 
-      var summaryParts = [];
-      if (titleEl) summaryParts.push(titleEl.textContent.trim());
-      if (dateText) summaryParts.push(dateText);
+      var lines = [];
+      if (titleEl) lines.push(titleEl.textContent.trim());
+      if (dateText) {
+        var dparts = dateText.split('·').map(function(s){ return s.trim(); });
+        dparts.forEach(function(p){ if (p) lines.push(p); });
+      }
       var lodgingSummary = '';
       if (lodgingName) {
         lodgingSummary = (lodgingType ? (lodgingType + ': ') : '') + lodgingName;
       }
-      if (lodgingSummary) summaryParts.push(lodgingSummary);
+      if (lodgingSummary) lines.push(lodgingSummary);
 
       // If there's an image in the card, extract it and use as a small thumbnail
       var thumbHTML = '';
@@ -218,7 +221,9 @@
         // ignore image extraction errors
       }
 
-      var summaryMain = '<strong style="margin-right:8px;">' + (summaryParts.shift() || '') + '</strong>' + (summaryParts.join(' · ') || '');
+      var firstLine = (lines.shift() || '');
+      var restHtml = lines.map(function(l){ return '<span class="summary-line" style="display:block;color:var(--muted);font-size:0.95em;">' + l + '</span>'; }).join('');
+      var summaryMain = '<div class="summary-block"><strong style="display:block;margin-bottom:4px;">' + firstLine + '</strong>' + restHtml + '</div>';
       var summaryHTML = (thumbHTML ? thumbHTML : '') + '<span>' + summaryMain + '</span>';
 
       // Create details wrapper
