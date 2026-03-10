@@ -375,10 +375,9 @@ details.leg-card .leg-body dt {
     var total = s + 4;
     return L.divIcon({
       className: 'custom-image-icon',
-      html: '<div style="width:'+total+'px;height:'+total+'px;
-                 display:flex;align-items:center;justify-content:center;">
-               <img src="'+url+'" style="width:'+s+'px;height:'+s+'px;">
-             </div>',
+      html: '<div style="width:' + total + 'px; height:' + total + 'px; display:flex; align-items:center; justify-content:center;">' +
+            '<img src="' + url + '" style="width:' + s + 'px; height:' + s + 'px;">' +
+            '</div>',
       iconSize: [total, total],
       iconAnchor: [total/2, total/2],
       popupAnchor: [0, -total/2]
