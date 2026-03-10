@@ -176,7 +176,14 @@
       if (dateText) summaryParts.push(dateText);
       if (lodgingText) summaryParts.push(lodgingText.replace(/\s+/g,' '));
 
-      var summaryHTML = '<strong style="margin-right:8px;">' + (summaryParts.shift() || '') + '</strong>' + (summaryParts.join(' · ') || '');
+      // If the card contains images, use the first as a small thumbnail
+      var img = card.querySelector('img');
+      var imgHTML = '';
+      if (img && img.src) {
+        imgHTML = '<img class="dest-thumb" src="' + img.getAttribute('src') + '" alt="' + (titleEl ? titleEl.textContent.trim() : '') + ' image'> ';
+      }
+
+      var summaryHTML = imgHTML + '<strong style="margin-right:8px;">' + (summaryParts.shift() || '') + '</strong>' + (summaryParts.join(' · ') || '');
 
       // Create details wrapper
       var details = document.createElement('details');
