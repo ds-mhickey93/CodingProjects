@@ -611,6 +611,11 @@
     color: carColor, weight: 2.5, opacity: 0.7, dashArray: '6,6', lineCap: 'round'
   }).addTo(m3).bindPopup('<strong>Drive</strong><br>San Sebasti\u00e1n \u2192 Biarritz<br>~35 min');
 
+  // === force each map to redraw now that everything is visible ===
+  [m1, m2, mb, m2b, m3].forEach(function(mm){
+    if(mm) mm.invalidateSize();
+  });
+
   // INOUI return: Biarritz → Paris
   L.polyline([
     biarr, [43.72, -1.18], [44.22, -0.76], [44.82, -0.40],
