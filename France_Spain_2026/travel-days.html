@@ -537,21 +537,22 @@
   var boundsB = [];
   // place icons by type
   var stopData = [
-    {coords:[44.8265, -0.5560], emoji:'🚆'}, // Saint-Jean Station train
-    {coords:[44.8250, -0.5568], emoji:'🚋'}, // Tram Stop Saint-Jean
-    {coords:[44.8428, -0.5702], emoji:'🚋'}, // Tram Stop Bourse
-    {coords:[44.8415, -0.5698], emoji:'🏛'}, // Place de la Bourse
-    {coords:[44.8380, -0.5693], emoji:'🏛'}, // Porte Cailhau
-    {coords:[44.8384, -0.5696], emoji:'🍽'}, // Chez Fred food
-    {coords:[44.8407, -0.5721], emoji:'🏛'}, // Place du Parlement
-    {coords:[44.8409, -0.5724], emoji:'🍽'}, // L'Autre Petit Bois food
-    {coords:[44.8371, -0.5728], emoji:'🍽'}, // Boulangerie Louis Lamour food
-    {coords:[44.8376, -0.5777], emoji:'🏛'}, // Cathédrale Saint-André
-    {coords:[44.8376, -0.5766], emoji:'🏛'}, // Tour Pey-Berland
-    {coords:[44.8412, -0.5795], emoji:'🍽'}  // L'Alchimiste Café food
+    {coords:[44.8265, -0.5560], emoji:'🚆', name:'Saint-Jean Station'},
+    {coords:[44.8250, -0.5568], emoji:'🚋', name:'Tram Stop Saint-Jean'},
+    {coords:[44.8428, -0.5702], emoji:'🚋', name:'Tram Stop Bourse'},
+    {coords:[44.8415, -0.5698], emoji:'🏛', name:'Place de la Bourse'},
+    {coords:[44.8380, -0.5693], emoji:'🏛', name:'Porte Cailhau'},
+    {coords:[44.8384, -0.5696], emoji:'🍽', name:'Chez Fred'},
+    {coords:[44.8407, -0.5721], emoji:'🏛', name:'Place du Parlement'},
+    {coords:[44.8409, -0.5724], emoji:'🍽', name:"L'Autre Petit Bois"},
+    {coords:[44.8371, -0.5728], emoji:'🍽', name:'Boulangerie Louis Lamour'},
+    {coords:[44.8376, -0.5777], emoji:'🏛', name:'Cathédrale Saint-André'},
+    {coords:[44.8376, -0.5766], emoji:'🏛', name:'Tour Pey-Berland'},
+    {coords:[44.8412, -0.5795], emoji:'🍽', name:'L\'Alchimiste Café'}
   ];
   stopData.forEach(function(s){
-    L.marker(s.coords, {icon: emojiIcon(s.emoji, 28)}).addTo(mb).bindPopup(s.emoji + ' ' + s.coords);
+    L.marker(s.coords, {icon: emojiIcon(s.emoji, 28)}).addTo(mb)
+      .bindPopup('<strong>' + s.name + '</strong>');
     boundsB.push(s.coords);
   });
   if(boundsB.length) mb.fitBounds(boundsB, {padding:[20,20]});
