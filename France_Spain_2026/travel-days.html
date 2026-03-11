@@ -176,13 +176,11 @@
 
 <p><strong>Getting back</strong></p>
 <p>Tram back to Saint-Jean → collect bags → pick up car from Avis → autoroute to Saint-Émilion (~37 min) + grocery stop on the way.</p>
-
 <!-- Bordeaux stopover mini-map -->
 <div style="background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:18px; margin:20px 0 0 0;">
   <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px;">Bordeaux Stopover Map</div>
   <div id="map-bordeaux-stop" style="height:300px; border-radius:8px; border:1px solid var(--border);"></div>
 </div>
-
 </div>
 </section>
 
@@ -414,8 +412,9 @@
   var navy = '#4a1a2e';
   var carColor = '#8b6f4e';
   var returnBlue = '#4a6e8b';
+  // switch to plain OSM standard tiles (retina off) to avoid grey/noise issues
   var tileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-  var tileAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>';
+  var tileAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>';
 
   function emojiIcon(emoji, size) {
     var s = size || 34;
@@ -517,42 +516,27 @@
   L.marker(oloron, {icon: waypointIcon('\u26EA', 30)}).addTo(m2)
     .bindPopup('<strong>Oloron-Sainte-Marie</strong><br>Lunch stop (~2 hrs in)<br>Historic cathedral town');
 
-  // --- MAP 0B — Bordeaux stopover detail map ---
+  // ══════════════════════════════════════════════════════════════
+  //  MAP 0B — Bordeaux stopover detail map
+  // ══════════════════════════════════════════════════════════════
   var mb = L.map('map-bordeaux-stop', {scrollWheelZoom: true}).setView([44.84, -0.56], 14);
   L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false, errorTileUrl:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII='}).addTo(mb);
-  var bStops = [
-    [44.8265, -0.5560], // Saint-Jean Station
-    [44.8250, -0.5568], // Tram Stop Saint-Jean
-    [44.8428, -0.5702], // Tram Stop Bourse
-    [44.8415, -0.5698], // Place de la Bourse
-    [44.8380, -0.5693], // Porte Cailhau
-    [44.8384, -0.5696], // Chez Fred
-    [44.8407, -0.5721], // Place du Parlement
-    [44.8409, -0.5724], // L'Autre Petit Bois
-    [44.8371, -0.5728], // Boulangerie Louis Lamour
-    [44.8376, -0.5777], // Cathédrale Saint-André
-    [44.8376, -0.5766], // Tour Pey-Berland
-    [44.8412, -0.5795]  // L'Alchimiste Café
-  ];
   var boundsB = [];
-  // place icons by type
   var stopData = [
-    {coords:[44.8265, -0.5560], emoji:'🚆', name:'Saint-Jean Station'},
-    {coords:[44.8250, -0.5568], emoji:'🚋', name:'Tram Stop Saint-Jean'},
-    {coords:[44.8428, -0.5702], emoji:'🚋', name:'Tram Stop Bourse'},
-    {coords:[44.8415, -0.5698], emoji:'🏛', name:'Place de la Bourse'},
+    {coords:[44.8265, -0.5560], emoji:'🚆', name:'Bordeaux Saint-Jean Station'},
+    {coords:[44.8250, -0.5568], emoji:'🚋', name:'Tram Stop (Saint-Jean)'},
+    {coords:[44.8428, -0.5702], emoji:'🚋', name:'Tram Stop (Bourse)'},
+    {coords:[44.8415, -0.5698], emoji:'🏛', name:'Place de la Bourse & Miroir d\'Eau'},
     {coords:[44.8380, -0.5693], emoji:'🏛', name:'Porte Cailhau'},
     {coords:[44.8384, -0.5696], emoji:'🍽', name:'Chez Fred'},
     {coords:[44.8407, -0.5721], emoji:'🏛', name:'Place du Parlement'},
     {coords:[44.8409, -0.5724], emoji:'🍽', name:"L'Autre Petit Bois"},
     {coords:[44.8371, -0.5728], emoji:'🍽', name:'Boulangerie Louis Lamour'},
     {coords:[44.8376, -0.5777], emoji:'🏛', name:'Cathédrale Saint-André'},
-    {coords:[44.8376, -0.5766], emoji:'🏛', name:'Tour Pey-Berland'},
-    {coords:[44.8412, -0.5795], emoji:'🍽', name:'L\'Alchimiste Café'}
+    {coords:[44.8412, -0.5795], emoji:'🍽', name:"L'Alchimiste Café"}
   ];
   stopData.forEach(function(s){
-    L.marker(s.coords, {icon: emojiIcon(s.emoji, 28)}).addTo(mb)
-      .bindPopup('<strong>' + s.name + '</strong>');
+    L.marker(s.coords, {icon: emojiIcon(s.emoji, 28)}).addTo(mb).bindPopup('<strong>' + s.name + '</strong>');
     boundsB.push(s.coords);
   });
   if(boundsB.length) mb.fitBounds(boundsB, {padding:[20,20]});
@@ -612,11 +596,6 @@
     color: carColor, weight: 2.5, opacity: 0.7, dashArray: '6,6', lineCap: 'round'
   }).addTo(m3).bindPopup('<strong>Drive</strong><br>San Sebasti\u00e1n \u2192 Biarritz<br>~35 min');
 
-  // === force each map to redraw now that everything is visible ===
-  [m1, m2, mb, m2b, m3].forEach(function(mm){
-    if(mm) mm.invalidateSize();
-  });
-
   // INOUI return: Biarritz → Paris
   L.polyline([
     biarr, [43.72, -1.18], [44.22, -0.76], [44.82, -0.40],
@@ -634,38 +613,37 @@
   L.marker(montpar, {icon: emojiIcon('\uD83D\uDE84', 34)}).addTo(m3)
     .bindPopup('<strong>Paris Montparnasse</strong><br>Arrive ~3\u20134 PM<br>Transfer to CDG');
 
-})();
-
-// make each major section collapsible
-(function(){
+  // make each <section> collapsible by wrapping it in a <details>
   document.querySelectorAll('section').forEach(function(sec){
-    var header = sec.querySelector('.day-header');
-    var body = sec.querySelector('.day-body');
-    if (header && body) {
-      var det = document.createElement('details');
-      det.open = true;
-      var sum = document.createElement('summary');
-      sum.appendChild(header);
-      det.appendChild(sum);
-      det.appendChild(body);
-      // move any other nodes inside section (maps etc) into details after the body
-      var node = body.nextSibling;
-      while(node){
-        var next = node.nextSibling;
-        det.appendChild(node);
-        node = next;
+    var h2 = sec.querySelector('h2');
+    if(!h2) return;
+    var det = document.createElement('details');
+    det.className = sec.className || '';
+    det.open = true;
+    var sum = document.createElement('summary');
+    sum.appendChild(h2.cloneNode(true));
+    det.appendChild(sum);
+    // move remaining children into details
+    var wrapper = document.createElement('div');
+    while(sec.childNodes.length){
+      var node = sec.firstChild;
+      if(node === sum || node.tagName && node.tagName.toLowerCase() === 'h2'){
+        sec.removeChild(node);
+        continue;
       }
-      sec.appendChild(det);
-      det.addEventListener('toggle', function(){
-        // if opened, resize any Leaflet maps inside
-        if(det.open){
-          det.querySelectorAll('.leaflet-container').forEach(function(el){
-            if(el._leaflet_map) el._leaflet_map.invalidateSize();
-          });
-        }
-      });
+      wrapper.appendChild(node);
     }
+    det.appendChild(wrapper);
+    sec.parentNode.replaceChild(det, sec);
+    det.addEventListener('toggle', function(){
+      if(det.open){
+        det.querySelectorAll('.leaflet-container').forEach(function(el){
+          if(el._leaflet_map) el._leaflet_map.invalidateSize();
+        });
+      }
+    });
   });
+
 })();
 </script>
 <script src="nav.js"></script>
