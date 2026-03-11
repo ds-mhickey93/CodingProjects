@@ -134,6 +134,59 @@
 </section>
 
 <!-- ====================================================== -->
+<!--  BORDEAUX STOPOVER — MAY 16                          -->
+<section>
+<div class="day-header">
+  <div class="day-number">Stopover · Saturday, May 16</div>
+  <h2>Bordeaux Stopover</h2>
+</div>
+<div class="day-body">
+
+<p><strong>Logistics first</strong></p>
+<ul>
+  <li>Drop bags at the station consigne before anything else. Staffed, a few euros per bag, inside the station. Budget 10–15 minutes.</li>
+  <li>Take tram C or D from outside the main exit. 7 minutes to the city centre. Buy tickets from the machine at the stop.</li>
+  <li>You have roughly 60–90 minutes. No hard deadline — just want groceries en route and to arrive before dark (sunset ~9:15 PM).</li>
+</ul>
+
+<p><strong>The stops — in order, cut short whenever needed</strong></p>
+<ol>
+  <li><strong>Place de la Bourse &amp; Miroir d'Eau</strong> (15–20 min)<br>
+      The centrepiece of Bordeaux. Grand 18th-century stone square facing the river, with a wide shallow reflecting pool in front of it. The highlight of the visit. Don't rush it. Lucy will love the water.
+  </li>
+  <li><strong>Porte Cailhau</strong> (5–10 min, 3 min walk south)<br>
+      A 15th-century medieval city gate right on the riverfront — ornate and striking, free to look at. Jarring contrast to the elegant stonework everywhere else. Chez Fred has a terrace directly in front of it if you want a drink here. Slightly overpriced but the view earns it.
+  </li>
+  <li><strong>Place du Parlement</strong> (10–20 min, 3 min walk inland)<br>
+      A beautiful arcaded square, a bit quieter and more local than the Bourse. Two options here:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<em>Sit down at L'Autre Petit Bois</em> — casual, honest, good value. Simple toasts, cheese dishes, wine by the glass. Good if you want food.<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<em>Grab something to walk with from Boulangerie Louis Lamour</em> (2 min away on Rue Ravez) — one of the best boulangeries in the city. Get the kouign-amann.
+  </li>
+  <li><strong>Cathédrale Saint-André &amp; Tour Pey-Berland</strong> (10–15 min, 10 min walk west — only if time and Lucy allow)<br>
+      One of the great Gothic cathedrals of France. The enormous open square around it gives you space to wander. Don't attempt the bell tower with a baby, but the exterior is impressive. L'Alchimiste — the best specialty coffee in Bordeaux — is right around the corner.
+  </li>
+</ol>
+
+<p><strong>What to avoid</strong></p>
+<ul>
+  <li>Restaurants with terraces directly facing the Miroir d'Eau — tourist pricing, mediocre food</li>
+  <li>Anything with a menu in four languages or photos of every dish</li>
+  <li>Anything on Rue Sainte-Catherine</li>
+</ul>
+
+<p><strong>Getting back</strong></p>
+<p>Tram back to Saint-Jean → collect bags → pick up car from Avis → autoroute to Saint-Émilion (~37 min) + grocery stop on the way.</p>
+
+<!-- Bordeaux stopover mini-map -->
+<div style="background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:18px; margin:20px 0 0 0;">
+  <div style="font-size:0.82em; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px;">Bordeaux Stopover Map</div>
+  <div id="map-bordeaux-stop" style="height:300px; border-radius:8px; border:1px solid var(--border);"></div>
+</div>
+
+</div>
+</section>
+
+<!-- ====================================================== -->
 <!--  SAINT-ÉMILION → LESCUN — MAY 19                      -->
 <!-- ====================================================== -->
 <section>
@@ -464,6 +517,30 @@
   L.marker(oloron, {icon: waypointIcon('\u26EA', 30)}).addTo(m2)
     .bindPopup('<strong>Oloron-Sainte-Marie</strong><br>Lunch stop (~2 hrs in)<br>Historic cathedral town');
 
+  // --- MAP 0B — Bordeaux stopover detail map ---
+  var mb = L.map('map-bordeaux-stop', {scrollWheelZoom: true}).setView([44.84, -0.56], 14);
+  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18}).addTo(mb);
+  var bStops = [
+    [44.8265, -0.5560], // Saint-Jean Station
+    [44.8250, -0.5568], // Tram Stop Saint-Jean
+    [44.8428, -0.5702], // Tram Stop Bourse
+    [44.8415, -0.5698], // Place de la Bourse
+    [44.8380, -0.5693], // Porte Cailhau
+    [44.8384, -0.5696], // Chez Fred
+    [44.8407, -0.5721], // Place du Parlement
+    [44.8409, -0.5724], // L'Autre Petit Bois
+    [44.8371, -0.5728], // Boulangerie Louis Lamour
+    [44.8376, -0.5777], // Cathédrale Saint-André
+    [44.8376, -0.5766], // Tour Pey-Berland
+    [44.8412, -0.5795]  // L'Alchimiste Café
+  ];
+  var boundsB = [];
+  bStops.forEach(function(c){
+    L.circleMarker(c, {radius:6, color:'#4a1a2e', fill:true, fillColor:'#fff', fillOpacity:1, weight:2}).addTo(mb);
+    boundsB.push(c);
+  });
+  if(boundsB.length) mb.fitBounds(boundsB, {padding:[20,20]});
+
   // ══════════════════════════════════════════════════════════════
   //  MAP 2B — Lescun → San Sebastián
   // ══════════════════════════════════════════════════════════════
@@ -535,6 +612,30 @@
   L.marker(montpar, {icon: emojiIcon('\uD83D\uDE84', 34)}).addTo(m3)
     .bindPopup('<strong>Paris Montparnasse</strong><br>Arrive ~3\u20134 PM<br>Transfer to CDG');
 
+})();
+
+// make each major section collapsible
+(function(){
+  document.querySelectorAll('section').forEach(function(sec){
+    var header = sec.querySelector('.day-header');
+    var body = sec.querySelector('.day-body');
+    if (header && body) {
+      var det = document.createElement('details');
+      det.open = true;
+      var sum = document.createElement('summary');
+      sum.appendChild(header);
+      det.appendChild(sum);
+      det.appendChild(body);
+      // move any other nodes inside section (maps etc) into details after the body
+      var node = body.nextSibling;
+      while(node){
+        var next = node.nextSibling;
+        det.appendChild(node);
+        node = next;
+      }
+      sec.appendChild(det);
+    }
+  });
 })();
 </script>
 <script src="nav.js"></script>
