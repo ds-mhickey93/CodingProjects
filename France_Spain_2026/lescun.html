@@ -431,7 +431,7 @@
 (function() {
   var navy = '#4a1a2e';
   var accent = '#8b6f4e';
-  var tileUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+  var tileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   var tileAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>';
 
   function emojiIcon(emoji, isOptional) {
@@ -452,7 +452,7 @@
   // Lescun area map
   var lescun = [42.935, -0.634];
   var m = L.map('map-area', {scrollWheelZoom: true}).setView([42.95, -0.65], 12);
-  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false}).addTo(m);
+  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false, errorTileUrl:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII='}).addTo(m);
 
   // Airbnb marker (updated coords and label)
   addMarker(m, [42.927744, -0.640291], '\uD83C\uDFE0', 'Airbnb: La Bourdette', false);

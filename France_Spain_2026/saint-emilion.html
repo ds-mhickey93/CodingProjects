@@ -412,7 +412,7 @@
 (function() {
   var navy = '#4a1a2e';
   var accent = '#8b6f4e';
-  var tileUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+  var tileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   var tileAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>';
 
   function emojiIcon(emoji, isOptional) {
@@ -432,7 +432,7 @@
 
   var village = [44.893084, -0.156123];
   var m = L.map('map-area', {scrollWheelZoom: true}).setView(village, 13);
-  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false}).addTo(m);
+  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false, errorTileUrl:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII='}).addTo(m);
 
   addMarker(m, [44.891574, -0.168394], '\uD83C\uDFE0', 'Logis de Colette — 7 Mazerat', false);
   addMarker(m, village, '\uD83C\uDFDB\uFE0F', 'Saint-Émilion Village', false);

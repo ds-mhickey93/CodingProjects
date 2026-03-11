@@ -354,7 +354,7 @@
 (function() {
   var navy = '#4a1a2e';
   var accent = '#8b6f4e';
-  var tileUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+  var tileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   var tileAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>';
 
   function emojiIcon(emoji, isOptional) {
@@ -375,7 +375,7 @@
   // San Sebastián city map
   var laConcha = [43.3183, -1.9850];
   var m = L.map('map-area', {scrollWheelZoom: true}).setView([43.3200, -1.9850], 14);
-  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false}).addTo(m);
+  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false, errorTileUrl:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII='}).addTo(m);
 
   // Beaches
   addMarker(m, [43.3183, -1.9850], '\uD83C\uDFD6\uFE0F', 'Playa de La Concha', false);

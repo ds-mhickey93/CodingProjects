@@ -414,7 +414,7 @@
   var navy = '#4a1a2e';
   var carColor = '#8b6f4e';
   var returnBlue = '#4a6e8b';
-  var tileUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+  var tileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   var tileAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>';
 
   function emojiIcon(emoji, size) {
@@ -459,7 +459,7 @@
   var m1 = L.map('map-paris-bordeaux', {scrollWheelZoom: true}).fitBounds(
     [[44.50, -1.00], [49.15, 3.00]]
   );
-  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false}).addTo(m1);
+  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false, errorTileUrl:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII='}).addTo(m1);
 
   // INOUI train route
   L.polyline([
@@ -494,7 +494,7 @@
   var m2 = L.map('map-stemil-lescun', {scrollWheelZoom: true}).fitBounds(
     [[42.70, -0.90], [45.15, 0.15]]
   );
-  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false}).addTo(m2);
+  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false, errorTileUrl:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII='}).addTo(m2);
 
   // Route: Saint-Émilion → Lescun (A89 west → A630 → A62 → A65 → Oloron → Aspe Valley)
   L.polyline([
@@ -519,7 +519,7 @@
 
   // --- MAP 0B — Bordeaux stopover detail map ---
   var mb = L.map('map-bordeaux-stop', {scrollWheelZoom: true}).setView([44.84, -0.56], 14);
-  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false}).addTo(mb);
+  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false, errorTileUrl:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII='}).addTo(mb);
   var bStops = [
     [44.8265, -0.5560], // Saint-Jean Station
     [44.8250, -0.5568], // Tram Stop Saint-Jean
@@ -564,7 +564,7 @@
   var m2b = L.map('map-lescun-sanseb', {scrollWheelZoom: true}).fitBounds(
     [[42.30, -2.30], [43.60, 0.00]]
   );
-  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false}).addTo(m2b);
+  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false, errorTileUrl:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII='}).addTo(m2b);
 
   // Route: Lescun → San Sebastián (D294 → N134 → Somport → Canfranc → Jaca → Pamplona)
   L.polyline([
@@ -600,7 +600,7 @@
   var m3 = L.map('map-return', {scrollWheelZoom: true}).fitBounds(
     [[42.80, -2.50], [49.15, 3.00]]
   );
-  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false}).addTo(m3);
+  L.tileLayer(tileUrl, {attribution: tileAttr, maxZoom: 18, detectRetina:false, errorTileUrl:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII='}).addTo(m3);
 
   // Car: San Sebastián → Biarritz (A-8/E-70 coastal)
   L.polyline([
