@@ -148,6 +148,24 @@
   // Leaflet sometimes renders grey tiles when the container is hidden or not yet laid out.
   // Run a pass after the window loads to force any existing maps to redraw.  Individual
   // pages may also call invalidateSize in more specific contexts (e.g. toggling details).
+  // attempt to rebuild maps entirely if the grey patch persists
+  function rebuildMapElement(el) {
+    var mm = el._leaflet_map;
+    if (!mm) return;
+    var center = mm.getCenter();
+    var zoom = mm.getZoom();
+    // capture tile layers and other layers so we can re-add them
+    var saved = [];
+    mm.eachLayer(function(l) { saved.push(l); });
+    // remove old map instance
+    mm.remove();
+    var newm = L.map(el.id, {scrollWheelZoom: true}).setView(center, zoom);
+    // reattach tile layers first, then everything else
+    saved.forEach(function(l) { newm.addLayer(l); });
+    // swap reference so later code still works
+    el._leaflet_map = newm;
+  }
+
   window.addEventListener('load', function(){
     var doResize = function(){
       document.querySelectorAll('.leaflet-container').forEach(function(el){
@@ -173,6 +191,11 @@
     doResize();
     setTimeout(doResize, 200);
     setTimeout(doResize, 1000);
+    // final brutal pass: rebuild the map entirely in case anything
+    // at the low level was corrupted.  this runs after the other delays
+    setTimeout(function(){
+      document.querySelectorAll('.leaflet-container').forEach(rebuildMapElement);
+    }, 300);
   });
 
   // --- Make destination leg-cards collapsible and compact ---
