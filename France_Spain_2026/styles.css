@@ -1,3 +1,56 @@
+/* ===== Collapsible Packing Sections ===== */
+.collapsible {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: white;
+  margin: 18px 0;
+  overflow: hidden;
+}
+.collapsible summary,
+.collapse-toggle {
+  cursor: pointer;
+  font-size: 1.18em;
+  font-weight: 600;
+  color: var(--navy);
+  font-family: 'Georgia', 'Times New Roman', serif;
+  letter-spacing: 0.01em;
+  padding: 16px 22px;
+  background: var(--cream);
+  border: none;
+  outline: none;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.18s;
+  box-shadow: none;
+  border-bottom: 1px solid var(--border);
+  border-radius: 6px 6px 0 0;
+}
+.collapsible summary:hover,
+.collapse-toggle:hover {
+  background: var(--highlight);
+}
+.collapsible[open] summary,
+.collapsible .collapse-toggle.open {
+  background: var(--highlight);
+}
+.collapsible .collapse-content {
+  padding: 18px 22px 22px 22px;
+  background: white;
+}
+.collapse-toggle::before {
+  content: '\25B8';
+  color: var(--accent);
+  font-size: 0.95em;
+  margin-right: 8px;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+.collapse-toggle.open::before {
+  transform: rotate(90deg);
+}
 /* ============================================
    France & Spain 2026 — Shared Styles
    ============================================ */
